@@ -309,7 +309,7 @@ function Nav(props) {
                                 <li>
                                   <a
                                     className="dropdown-item"
-                                    href="./pages/signin.html"
+                                    href="/login"
                                   >
                                     Login
                                   </a>
@@ -317,7 +317,7 @@ function Nav(props) {
                                 <li>
                                   <a
                                     className="dropdown-item"
-                                    href="./pages/signup.html"
+                                    href="./register"
                                   >
                                     Register
                                   </a>
@@ -325,7 +325,7 @@ function Nav(props) {
                                 <li>
                                   <a
                                     className="dropdown-item"
-                                    href="./pages/forget-password.html"
+                                    href="/forgot-password"
                                   >
                                     Forgot Password
                                   </a>
