@@ -141,7 +141,7 @@ function Nav(props) {
                                 <li>
                                   <a
                                     className="dropdown-item"
-                                    href="./pages/list-with-map.html"
+                                    href="/listings"
                                   >
                                     List With Map
                                   </a>

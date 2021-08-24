@@ -4,11 +4,15 @@ import Home from "./Components/Home";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
 import ForgotPassword from "./Components/ForgotPassword";
+import Listings from "./Components/Listings";
 
 function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/listings">
+          <Listings />
+        </Route>
         <Route path="/forgot-password">
           <ForgotPassword />
         </Route>
