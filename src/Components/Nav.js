@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import logo from '../logo.svg';
 
 function Nav(props) {
@@ -14,12 +15,9 @@ function Nav(props) {
         <div className="row">
           <div className="col-md-12">
             <nav className="navbar navbar-expand-lg">
-              <a className="navbar-brand" href="/">
-                <img
-                  src={logo}
-                  alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                />
-              </a>
+              <Link className="navbar-brand" to="/">
+                <h3>Rezerve Homes</h3>
+              </Link>
               <button
                 className="navbar-toggler collapsed"
                 type="button"
@@ -35,37 +33,10 @@ function Nav(props) {
               </button>
               <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto ms-lg-3">
-                  <li className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle"
-                      href="/"
-                      id="homeDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/">
                       Home
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <a className="dropdown-item" href="./index.html">
-                          Classic
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="./pages/modern.html">
-                          Modern
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          className="dropdown-item"
-                          href="./pages/hotel-finder.html"
-                        >
-                          Hotel <span className="badge bg-primary">New</span>
-                        </a>
-                      </li>
-                    </ul>
+                    </Link>
                   </li>
                   <li className="nav-item dropdown menu_list">
                     <a
@@ -92,7 +63,7 @@ function Nav(props) {
                           <div className="dropdown-img">
                             <div className="dropdown-img-caption">
                               <h2 className="text-white mb-1">
-                                Want Experience on Rentkit ?
+                                Want Experience on Rezerve Homes ?
                               </h2>
                               <p className="mb-4">
                                 Experience a level of our quality in both design
