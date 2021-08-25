@@ -6,17 +6,13 @@ import Login from "./Components/Login";
 import ForgotPassword from "./Components/ForgotPassword";
 import Listings from "./Components/Listings";
 import ListSingle from "./Components/ListSingle";
+import NotFound from "./Components/NotFound";
+import Layout from "./Components/Layout";
 
 function App() {
   return (
     <Router>
       <Switch>
-      <Route path="/listing-single">
-          <ListSingle />
-        </Route>
-        <Route path="/listings">
-          <Listings />
-        </Route>
         <Route path="/forgot-password">
           <ForgotPassword />
         </Route>
@@ -26,8 +22,19 @@ function App() {
         <Route path="/register">
           <Register />
         </Route>
-        <Route path="/">
-          <Home />
+        <Layout>
+          <Route path="/listing-single">
+            <ListSingle />
+          </Route>
+          <Route path="/listings">
+            <Listings />
+          </Route>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+        </Layout>
+        <Route path="*">
+          <NotFound />
         </Route>
       </Switch>
     </Router>

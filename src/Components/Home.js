@@ -1,11 +1,8 @@
 import React from "react";
-import Nav from "./Nav";
-import Footer from "./Footer";
 
 function Home(props) {
   return (
     <div>
-      <Nav />
       <div className="d-flex flex-wrap w-100">
         <div className="flex-1" style={{ minWidth: 0 }}>
           <div className="w-100">
@@ -1039,7 +1036,6 @@ function Home(props) {
               </div>
             </div>
           </div>
-          <Footer />
         </div>
       </div>
     </div>
