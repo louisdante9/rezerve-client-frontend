@@ -5,11 +5,15 @@ import Register from "./Components/Register";
 import Login from "./Components/Login";
 import ForgotPassword from "./Components/ForgotPassword";
 import Listings from "./Components/Listings";
+import ListSingle from "./Components/ListSingle";
 
 function App() {
   return (
     <Router>
       <Switch>
+      <Route path="/listing-single">
+          <ListSingle />
+        </Route>
         <Route path="/listings">
           <Listings />
         </Route>

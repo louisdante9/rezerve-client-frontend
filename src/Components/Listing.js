@@ -107,7 +107,7 @@ function Listing({ name, location, price, rating, ratingCount }) {
         <div className="col-md-7 col-12">
           <div>
             <h4 className="mb-0">
-              <a href="list-single.html" className="text-inherit">
+              <a href="/listing-single" className="text-inherit">
                 {name}
               </a>
             </h4>
