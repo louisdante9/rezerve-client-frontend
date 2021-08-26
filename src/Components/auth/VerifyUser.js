@@ -1,35 +1,34 @@
 import React from "react";
 
-function ForgotPassword(props) {
+function VerifyUser() {
   return (
     <div className="container">
       <div className="row d-flex align-items-center min-vh-100 justify-content-end">
         <div className="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
           <div className="card border-0 shadow">
             <div className="card-body p-8">
-              <h3 className="mb-1">Recover Account</h3>
+              <h3 className="mb-1">Verify Account</h3>
               <p>Follow these simple steps to reset your account:</p>
               <ul className="list-unstyled">
-                <li>1. Enter your email address</li>
-                <li>2. Wait for your recovery details to be sent.</li>
-                <li>3. Follow as given instructions in your mail account.</li>
+                <li>1. Enter the token sent to your email address</li>
+                <li>2. Click on verify button to verify account.</li>
               </ul>
               <form>
                 <div className="mb-3">
                   <label for="email" className="form-label">
-                    Email
+                    Verification Token
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    id="email"
+                    id="verificationCode"
                     aria-describedby="email"
-                    placeholder="example@gmail.com"
+                    placeholder="6678888hhhjnbhgbg"
                     required=""
                   />
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">
-                  Send
+                  Verify
                 </button>
               </form>
             </div>
@@ -40,4 +39,4 @@ function ForgotPassword(props) {
   );
 }
 
-export default ForgotPassword;
+export default VerifyUser;

@@ -1,12 +1,13 @@
 import React from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
+import { Outlet } from "react-router-dom";
 
 function Layout(props) {
   return (
     <div class="listinghalfmap-body">
       <Nav />
-      <main>{props.children}</main>
+      <Outlet />
       <Footer />
     </div>
   );

@@ -1,39 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"
 import { registerUser } from "../../../actions/auth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 function RegisterForm({ registerUser }) {
-  const { values, errors, handleChange, handleBlur, handleSubmit, touched } =
-    useFormik({
-      initialValues: {
-        firstname: "",
-        lastname: "",
-        email: "",
-        password: "",
-        confirmPass: ""
-      },
-      validateOnBlur: true,
-      validateOnChange: true,
-      validationSchema: Yup.object().shape({
-        firstname: Yup.string().required("First name is required"),
-        lastname: Yup.string().required("Last name is required"),
-        email: Yup.string()
-          .email("Must be a valid email")
-          .max(255)
-          .required("Email is required"),
-        password: Yup.string().max(255).required("Password is required"),
-        confirmPass: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-      }),
-      onSubmit: (values) => {
-        // alert(JSON.stringify(values, null, 2));
-        console.log("submission was successful", values);
-        // registerUser("hello");
-      },
-    });
-    console.log(errors)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const { values, errors, handleChange, handleBlur, handleSubmit } = useFormik({
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      confirmPass: "",
+    },
+    validateOnBlur: true,
+    validateOnChange: true,
+    validationSchema: Yup.object().shape({
+      firstname: Yup.string().required("First name is required"),
+      lastname: Yup.string().required("Last name is required"),
+      email: Yup.string()
+        .email("Must be a valid email")
+        .max(255)
+        .required("Email is required"),
+      password: Yup.string().max(255).required("Password is required"),
+      confirmPass: Yup.string().oneOf(
+        [Yup.ref("password"), null],
+        "Passwords must match"
+      ),
+    }),
+    onSubmit: (values) => {
+      setLoading(!loading);
+      const { firstname, lastname, email, password } = values;
+      dispatch(registerUser({ firstname, lastname, email, password }, navigate));
+    },
+  });
+  console.log(errors);
   return (
     <div className="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
       <div className="card border-0 shadow">
@@ -136,7 +141,7 @@ function RegisterForm({ registerUser }) {
               className="btn btn-primary btn-block"
               onClick={handleSubmit}
             >
-              Sign Up
+              Sign{loading ? "ing" : ""} in
             </button>
           </form>
           <div className="mt-3">
