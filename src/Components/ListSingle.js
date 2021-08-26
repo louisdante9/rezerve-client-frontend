@@ -1,4 +1,5 @@
 import React from "react";
+import postImg from '../Assets/images/post-single-img.jpg'
 
 function ListSingle(props) {
   return (
@@ -8,7 +9,7 @@ function ListSingle(props) {
           className="py-22 position-relative rounded-3"
           style={{
             background:
-              "url(../assets/images/post-single-img.jpg) no-repeat center center",
+              `url(${postImg}) no-repeat center center`,
           }}
         >
           <div className="row">

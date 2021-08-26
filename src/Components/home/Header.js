@@ -1,9 +1,12 @@
 import { ReactComponent as Search } from "../../Assets/icons/search.svg";
+import heroImg from '../../Assets/images/hero-img-3.jpg'
+
 const Header = () => (
 	<div className="position-relative">
 		<div className="py-md-23 py-22 " style={{
 			backgroundSize: "cover",
-			backgroundPosition: "50%", backgroundImage: "url(../assets/images/hero-img/hero-img-3.jpg)"
+			backgroundPosition: "50%", 
+			backgroundImage: `url(${heroImg})`
 		}}>
 		</div>
 		<div className="mt-n22">

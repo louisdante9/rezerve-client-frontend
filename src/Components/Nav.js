@@ -4,13 +4,8 @@ import logo from '../logo.svg';
 
 function Nav(props) {
   return (
-    <div
-      className="
-      nav-header nav-header-classic
-      menu-space
-      header-position header-white
-    "
-    >
+    <div class="nav-header nav-header-classic shadow">
+
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">

@@ -4,7 +4,7 @@ import Footer from "./Footer";
 
 function Layout(props) {
   return (
-    <div>
+    <div class="listinghalfmap-body">
       <Nav />
       <main>{props.children}</main>
       <Footer />

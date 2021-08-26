@@ -2,13 +2,7 @@ import React from "react";
 
 function NotFound(props) {
   return (
-    <div
-      style={{
-        background:
-          "url(../ assets / images / error.jpg) no- repeat center center fixed",
-        backgroundSize: "cover",
-      }}
-    >
+    <div>
       <div className="container">
         <div className="row align-items-center min-vh-100 ">
           <div className="offset-lg-2 col-lg-8 col-md-12 col-12">

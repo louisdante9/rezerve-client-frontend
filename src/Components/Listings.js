@@ -35,7 +35,7 @@ function Listings(props) {
   ]);
   const [showFilter, setShowFilter] = useState(false);
   return (
-    <div>
+    <>
       {showFilter && <FilterModal close={() => setShowFilter(false)} />}
       <div className="container-fluid">
         <div className="row">
@@ -159,7 +159,7 @@ function Listings(props) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
