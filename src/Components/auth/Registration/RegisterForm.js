@@ -1,6 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
+import { registerUser } from "../../../actions/auth";
 
-function RegisterForm(props) {
+function RegisterForm({ registerUser }) {
+  const submitHandler = () => {
+    console.log("submission was successful");
+  };
   return (
     <div className="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
       <div className="card border-0 shadow">
@@ -52,7 +57,10 @@ function RegisterForm(props) {
               </p>
             </div>
 
-            <button type="submit" className="btn btn-primary btn-block">
+            <button
+              className="btn btn-primary btn-block"
+              onClick={(event) => submitHandler()}
+            >
               Sign Up
             </button>
           </form>
@@ -70,4 +78,4 @@ function RegisterForm(props) {
   );
 }
 
-export default RegisterForm;
+export default connect(() => ({}), { registerUser })(RegisterForm);
