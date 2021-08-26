@@ -11,12 +11,12 @@ function ForgotPassword(props) {
               <p>Follow these simple steps to reset your account:</p>
               <ul className="list-unstyled">
                 <li>1. Enter your email address</li>
-                <li>2. Wait for your recovery details to be sent.</li>
+                <li>2. Wait htmlFor your recovery details to be sent.</li>
                 <li>3. Follow as given instructions in your mail account.</li>
               </ul>
               <form>
                 <div className="mb-3">
-                  <label for="email" className="form-label">
+                  <label htmlFor="email" className="form-label">
                     Email
                   </label>
                   <input

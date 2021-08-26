@@ -15,7 +15,7 @@ function VerifyUser() {
               </ul>
               <form>
                 <div className="mb-3">
-                  <label for="email" className="form-label">
+                  <label htmlFor="email" className="form-label">
                     Verification Token
                   </label>
                   <input

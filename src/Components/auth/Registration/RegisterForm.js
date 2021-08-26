@@ -46,7 +46,7 @@ function RegisterForm({ registerUser }) {
           <h3 className="mb-4">Create Your Account</h3>
           <form>
             <div className="mb-3">
-              <label for="firstname" className="form-label">
+              <label htmlFor="firstname" className="form-label">
                 First name
               </label>
               <input
@@ -62,7 +62,7 @@ function RegisterForm({ registerUser }) {
               {errors.firstname && <span>{errors.firstname}</span>}
             </div>
             <div className="mb-3">
-              <label for="lastname" className="form-label">
+              <label htmlFor="lastname" className="form-label">
                 Last name
               </label>
               <input
@@ -78,7 +78,7 @@ function RegisterForm({ registerUser }) {
               {errors.lastname && <span>{errors.lastname}</span>}
             </div>
             <div className="mb-3">
-              <label for="email" className="form-label">
+              <label htmlFor="email" className="form-label">
                 Email address
               </label>
               <input
@@ -95,7 +95,7 @@ function RegisterForm({ registerUser }) {
               {errors.email && <span>{errors.email}</span>}
             </div>
             <div className="mb-3">
-              <label for="password" className="form-label">
+              <label htmlFor="password" className="form-label">
                 Password
               </label>
               <input
@@ -112,7 +112,7 @@ function RegisterForm({ registerUser }) {
               {errors.password && <span>{errors.password}</span>}
             </div>
             <div className="mb-3">
-              <label for="confirm-password" className="form-label">
+              <label htmlFor="confirm-password" className="form-label">
                 Confirm Password
               </label>
               <input

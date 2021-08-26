@@ -10,7 +10,7 @@ function Login(props) {
               <h3 className="mb-4">Welcome back to Rentkit</h3>
               <form>
                 <div className="mb-3">
-                  <label for="email" className="form-label">
+                  <label htmlFor="email" className="form-label">
                     Email address
                   </label>
                   <input
@@ -22,7 +22,7 @@ function Login(props) {
                   />
                 </div>
                 <div className="mb-3">
-                  <label for="password" className="form-label">
+                  <label htmlFor="password" className="form-label">
                     Password
                   </label>
                   <input
@@ -49,7 +49,7 @@ function Login(props) {
                       className="form-check-input"
                       id="rememberme"
                     />
-                    <label className="form-check-label" for="rememberme">
+                    <label className="form-check-label" htmlFor="rememberme">
                       Remember Me
                     </label>
                   </div>

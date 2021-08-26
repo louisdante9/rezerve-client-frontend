@@ -64,7 +64,7 @@ const Contact = () => (
               {/* <!-- form --> */}
               <form class="row needs-validation" novalidate>
                 <div class="mb-3 col-md-6">
-                  <label for="fname" class="form-label">First Name <span class="text-danger">*</span></label>
+                  <label htmlFor="fname" class="form-label">First Name <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="fname" placeholder="First Name" required />
                   <div class="invalid-feedback">
                     Please write a firstname.
@@ -72,7 +72,7 @@ const Contact = () => (
                 </div>
                 {/* <!-- last name --> */}
                 <div class="mb-3 col-md-6">
-                  <label for="lname" class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <label htmlFor="lname" class="form-label">Last Name <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="lname" placeholder="Last Name" required />
                   <div class="invalid-feedback">
                     Please write a lastname.
@@ -80,7 +80,7 @@ const Contact = () => (
                 </div>
                 {/* <!-- email --> */}
                 <div class="mb-3 col-md-12">
-                  <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                  <label htmlFor="email" class="form-label">Email <span class="text-danger">*</span></label>
                   <input type="email" class="form-control" id="email" placeholder="Email Id" required />
                   <div class="invalid-feedback">
                     Please provide your email id.
@@ -88,7 +88,7 @@ const Contact = () => (
                 </div>
                 {/* <!-- message --> */}
                 <div class="mb-3 col-md-12">
-                  <label for="message" class="form-label">Message</label>
+                  <label htmlFor="message" class="form-label">Message</label>
                   <textarea class="form-control " rows="3" placeholder="Message" id="message"></textarea>
 
                 </div>
