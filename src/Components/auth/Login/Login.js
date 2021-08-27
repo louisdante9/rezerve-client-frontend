@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -9,7 +9,6 @@ function Login(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { errors: error } = useSelector((state) => state.setCurrentUser);
-  console.log(error, "%%");
   const [loading, setLoading] = useState(false);
   const { handleBlur, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
