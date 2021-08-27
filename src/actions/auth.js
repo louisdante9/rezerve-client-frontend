@@ -29,7 +29,6 @@ export const registerUser = (user, navigate) => (dispatch) => {
     .post(`${API}/user/register`, user)
     .then((res) => navigate('/verify-user'))
     .catch((err) => {
-      console.log(err.response.data, 'err')
       dispatch({
         type: "USER_SIGNUP_ERRORS",
         payload: err.response.data,
@@ -37,14 +36,14 @@ export const registerUser = (user, navigate) => (dispatch) => {
     });
 };
 
-export function SigninRequest(userData, navigate) {
-  return dispatch => axios.post(`${API}/login`, userData)
+export function signinRequest(userData, navigate) {
+  return dispatch => axios.post(`${API}/user/login`, userData)
     .then(res => {
       const token = registerToken(res.data);
       dispatch(setCurrentUser(decode(token)));
       navigate('/app/listings');
     }).catch(err => {
-      dispatch({ type: "USER_LOGIN_ERROR", payload: err });
+      dispatch({ type: "USER_LOGIN_ERROR", payload: err.response.data });
     })
 }
 

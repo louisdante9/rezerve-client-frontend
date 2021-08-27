@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -150,7 +149,7 @@ function RegisterForm() {
               className="btn btn-primary btn-block"
               onClick={handleSubmit}
             >
-              Sign{loading ? "ing" : ""} in
+              Sign{loading ? "ing" : ""} up
             </button>
           </form>
           <div className="mt-3">

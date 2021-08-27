@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { signinRequest } from "../../../actions/auth";
 
 function Login(props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { errors: error } = useSelector((state) => state.setCurrentUser);
+  console.log(error, "%%");
+  const [loading, setLoading] = useState(false);
+  const { handleBlur, handleChange, handleSubmit, errors } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object().shape({
+      email: Yup.string()
+        .email("Must be a valid email")
+        .max(255)
+        .required("Email is required"),
+      password: Yup.string().max(255).required("Password is required"),
+    }),
+    onSubmit: (values) => {
+      setLoading(!loading);
+      dispatch(signinRequest(values, navigate)).then(() => setLoading(false));
+    },
+  });
   return (
     <div className="container">
       <div className="row d-flex align-items-center min-vh-100 justify-content-end">
@@ -8,6 +35,13 @@ function Login(props) {
           <div className="card shadow border-0">
             <div className="card-body p-8">
               <h3 className="mb-4">Welcome back to Rentkit</h3>
+              {Object.keys(error).length ? (
+                <span style={{ color: "red", fontSize: "12px" }}>
+                  {error.message || error.error}
+                </span>
+              ) : (
+                ""
+              )}
               <form>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
@@ -17,9 +51,13 @@ function Login(props) {
                     type="email"
                     className="form-control"
                     id="email"
+                    name="email"
                     placeholder="Enter email"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.email && <span>{errors.email}</span>}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label">
@@ -29,9 +67,13 @@ function Login(props) {
                     type="password"
                     className="form-control"
                     id="password"
+                    name="password"
                     placeholder="**********"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.password && <span>{errors.password}</span>}
                 </div>
                 <div
                   className="
@@ -59,8 +101,12 @@ function Login(props) {
                     </a>
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">
-                  Sign In
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block"
+                  onClick={handleSubmit}
+                >
+                  Sign{loading ? "ing" : ""} in
                 </button>
               </form>
               <div className="mt-4">
