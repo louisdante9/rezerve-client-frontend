@@ -5,8 +5,7 @@ import routes from "./routes";
 
 
 function App() {
-  // const { isAuthenticated } = useSelector((state) => state.setCurrentUser);
-  const isAuthenticated = false
+  const { isAuthenticated } = useSelector((state) => state.setCurrentUser);
   const routing = useRoutes(routes(isAuthenticated));
   return (
     <>

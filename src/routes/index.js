@@ -24,12 +24,13 @@ const routes = (isSignedIn) => [
       element: isSignedIn ? <Layout /> : <Navigate to="/login" />,
       children: [
         { path: 'favourites', element: <Favourite /> },
+        { path: 'listings', element: <Listings /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },
     {
       path: '/',
-      element: !isSignedIn ? <MainLayout /> : <Navigate to="/app/dashboard" />,
+      element: !isSignedIn ? <MainLayout /> : <Navigate to="/app/listings" />,
       children: [
         { path: 'login', element: <Login /> },
         { path: 'home', element: <Home /> },

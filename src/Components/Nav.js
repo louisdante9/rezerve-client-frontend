@@ -4,7 +4,7 @@ import logo from '../logo.svg';
 
 function Nav(props) {
   return (
-    <div class="nav-header nav-header-classic shadow">
+    <div className="nav-header nav-header-classic shadow">
 
       <div className="container-fluid">
         <div className="row">

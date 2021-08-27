@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { verifyUserRequest } from "../../actions/auth";
+
 
 function VerifyUser() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { errors: error } = useSelector((state) => state.setCurrentUser);
+  const [loading, setLoading] = useState(false);
+  const { values, errors, handleChange, handleBlur, handleSubmit } = useFormik({
+    initialValues: {
+      activationCode: "",
+    },
+    validateOnBlur: true,
+    validateOnChange: true,
+    validationSchema: Yup.object().shape({
+      activationCode: Yup.string().required("activationCode is required"),
+    }),
+
+    onSubmit: (values) => {
+      setLoading(!loading);
+      dispatch(verifyUserRequest(values, navigate))
+    },
+  });
   return (
     <div className="container">
       <div className="row d-flex align-items-center min-vh-100 justify-content-end">
@@ -21,16 +47,25 @@ function VerifyUser() {
                   <input
                     type="text"
                     className="form-control"
-                    id="verificationCode"
-                    aria-describedby="email"
-                    placeholder="6678888hhhjnbhgbg"
+                    id="activationCode"
+                    aria-describedby="activationCode"
+                    name="activationCode"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.activationCode}
+                    placeholder="0ta4d72e-....-4vc6-....-7b1fec0ad90b"
                     required=""
                   />
+                  {errors.activationCode && <span>{errors.activationCode}</span>}
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">
+                <button 
+                type="submit" 
+                onClick={handleSubmit}
+                className="btn btn-primary btn-block">
                   Verify
                 </button>
               </form>
+              {error?.error && <span style={{color: 'red', fontSize: '15px', marginBottom: '10px', display: 'block'}}>{error.error}</span>}
             </div>
           </div>
         </div>

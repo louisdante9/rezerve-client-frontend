@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
-import { registerUser } from "../../../actions/auth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { registerUser } from "../../../actions/auth";
 
-function RegisterForm({ registerUser }) {
+function RegisterForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { errors: error } = useSelector((state) => state.setCurrentUser);
   const [loading, setLoading] = useState(false);
+  useEffect(()=> {
+    if(error.error) {
+      setLoading(!loading)
+    }
+  }, [error])
+
   const { values, errors, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: {
       firstname: "",
@@ -35,10 +44,10 @@ function RegisterForm({ registerUser }) {
     onSubmit: (values) => {
       setLoading(!loading);
       const { firstname, lastname, email, password } = values;
-      dispatch(registerUser({ firstname, lastname, email, password }, navigate));
+      dispatch(registerUser({ firstname, lastname, email, password }, navigate))
     },
   });
-  console.log(errors);
+  
   return (
     <div className="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
       <div className="card border-0 shadow">
@@ -127,11 +136,11 @@ function RegisterForm({ registerUser }) {
               />
               {errors.confirmPass && <span>{errors.confirmPass}</span>}
             </div>
-
+            {error?.error && <span style={{color: 'red', fontSize: '15px', marginBottom: '10px', display: 'block'}}>{error.error}</span>}
             <div className="mb-2">
               <p className="text-sm">
                 By signing up you agree to Rental
-                <strong className="text-dark">Terms and Conditions</strong>
+                <strong className="text-dark"> Terms and Conditions </strong>
                 and <strong className="text-dark">Privacy Policy.</strong>
               </p>
             </div>
@@ -146,7 +155,7 @@ function RegisterForm({ registerUser }) {
           </form>
           <div className="mt-3">
             <p className="mb-0">
-              Already have an account?
+              Already have an account?{" "}
               <span className="ml-3">
                 <a href="/login">Login</a>
               </span>

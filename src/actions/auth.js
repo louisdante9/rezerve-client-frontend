@@ -3,7 +3,16 @@ import jwtDecode from 'jwt-decode';
 // import swal from 'sweetalert';
 import setAuthToken from "../utils/setAuthToken";
 
-const API = "http://localhost:6000/v1";
+const API = "http://localhost:9000";
+
+
+export function setCurrentUser(user) {
+  return {
+    type: "USER_AUTHENTICATED",
+    user
+  };
+}
+
 
 function decode(token) {
     return jwtDecode(token);
@@ -15,14 +24,42 @@ function registerToken({ token }) {
   return token;
 }
 
-export const registerUser = (user, history) => (dispatch) => {
+export const registerUser = (user, navigate) => (dispatch) => {
   axios
-    .post(`${API}/users/register`, user)
-    .then((res) => history.push("/verifyToken"))
+    .post(`${API}/user/register`, user)
+    .then((res) => navigate('/verify-user'))
     .catch((err) => {
+      console.log(err.response.data, 'err')
       dispatch({
         type: "USER_SIGNUP_ERRORS",
         payload: err.response.data,
       });
     });
 };
+
+export function SigninRequest(userData, navigate) {
+  return dispatch => axios.post(`${API}/login`, userData)
+    .then(res => {
+      const token = registerToken(res.data);
+      dispatch(setCurrentUser(decode(token)));
+      navigate('/app/listings');
+    }).catch(err => {
+      dispatch({ type: "USER_LOGIN_ERROR", payload: err });
+    })
+}
+
+export function verifyUserRequest(activationCode, navigate) {
+  return dispatch => axios.patch(`${API}/user/activate`, activationCode).then(res => {
+    console.log(res.data, 'res')
+    const token = registerToken(res.data);
+    dispatch(setCurrentUser({ type: "VEIFICATION_SUCCESS", token }));
+    navigate('/app/listings')
+  }).catch(err => {
+    console.log(err.response)
+
+    // dispatch({
+    //   type: "VERIFICATION_FAILURE",
+    //   payload: err.response.data
+    // });
+  })
+}

@@ -2,7 +2,8 @@ import isEmpty from 'lodash/isEmpty';
 
 export const initialState = {
   isAuthenticated: false,
-  user: {}
+  user: {},
+  errors: {}
 };
 
 const setCurrentUser = (state = initialState, action = {}) => {
@@ -13,7 +14,9 @@ const setCurrentUser = (state = initialState, action = {}) => {
       return { ...state, isAuthenticated: !isEmpty(action.user), user, role: user?.role };
     }
     case "USER_SIGNUP_ERRORS":
-      return action.payload;
+      return {errors: {...action.payload }}
+    case "USER_LOGIN_ERROR":
+      return {errors: {...action.payload }}
     
     default: return state;
 
