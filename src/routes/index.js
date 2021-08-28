@@ -34,6 +34,7 @@ const routes = (isSignedIn) => [
       children: [
         { path: 'login', element: <Login /> },
         { path: 'home', element: <Home /> },
+        { path: 'about-us', element: <About /> },
         { path: 'register', element: <Register /> },
         { path: 'forgot-password', element: <ForgotPassword /> },
         { path: 'verify-user', element: <VerifyUser /> },

@@ -5,8 +5,8 @@ import Footer from '../Footer'
 import Header from './Header'
 import { Popular } from './PopularDetination'
 import CustomerPointer from "./CustomerPointers";
-import { TopTrends } from './TopTrends'
-import { BestDeals } from './BestDeals'
+// import { TopTrends } from './TopTrends'
+// import { BestDeals } from './BestDeals'
 import { Travel } from './Travel'
 import CtaBanner from "./CtaBanner";
 
@@ -21,8 +21,8 @@ function Home(props) {
       <Header />
       <Popular />
       <CustomerPointer />
-      <TopTrends />
-      <BestDeals />
+      {/* <TopTrends />
+      <BestDeals /> */}
       <Travel />
       <CtaBanner />
       <Footer />

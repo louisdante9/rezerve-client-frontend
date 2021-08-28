@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from 'react-router-dom'
-import logo from '../logo.svg';
+import { Link } from "react-router-dom";
+import logo from "../logo.svg";
 
 function Nav(props) {
   return (
     <div className="nav-header nav-header-classic shadow">
-
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">
@@ -26,7 +25,10 @@ function Nav(props) {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <div
+                className="collapse navbar-collapse"
+                id="navbarSupportedContent"
+              >
                 <ul className="navbar-nav me-auto ms-lg-3">
                   <li className="nav-item">
                     <Link className="nav-link" to="/">
@@ -107,7 +109,7 @@ function Nav(props) {
                                 <li>
                                   <a
                                     className="dropdown-item"
-                                    href="/listings"
+                                    href="/app/listings"
                                   >
                                     List With Map
                                   </a>
@@ -273,10 +275,7 @@ function Nav(props) {
                               </h5>
                               <ul className="mega-menu-list list-unstyled">
                                 <li>
-                                  <a
-                                    className="dropdown-item"
-                                    href="/login"
-                                  >
+                                  <a className="dropdown-item" href="/login">
                                     Login
                                   </a>
                                 </li>
@@ -314,7 +313,10 @@ function Nav(props) {
                     >
                       Blog
                     </a>
-                    <ul className="dropdown-menu" aria-labelledby="blogDropdown">
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="blogDropdown"
+                    >
                       <li>
                         <a href="./pages/blog.html" className="dropdown-item">
                           Blog
