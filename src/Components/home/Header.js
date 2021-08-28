@@ -1,5 +1,6 @@
 import { ReactComponent as Search } from "../../Assets/icons/search.svg";
-import heroImg from '../../Assets/images/hero-img-3.jpg'
+// import heroImg from '../../Assets/images/hero-img-3.jpg'
+const heroImg = 'https://images.unsplash.com/photo-1460317442991-0ec209397118?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80'
 
 const Header = () => (
 	<div className="position-relative">
@@ -14,7 +15,7 @@ const Header = () => (
 				<div className="row">
 					<div className="offset-xl-1 col-xl-10 col-md-12 col-12">
 						<div className="mb-md-12">
-							<h1 className="text-white display-4 mb-2 fw-bold">Find the Great Hotels</h1>
+							<h1 className="text-white display-4 mb-2 fw-bold">Find a Great Home</h1>
 							<p className="text-white">Find and book rental rooms, hotels, villa, things to do, and trip.</p>
 						</div>
 						<div className="card border-0 p-2 search-form rounded-md-pill smooth-shadow-md  ">

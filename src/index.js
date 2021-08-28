@@ -1,17 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import thunk from 'redux-thunk';
+import jwt from 'jsonwebtoken';
+import { BrowserRouter as Router  } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import dotenv from 'dotenv';
+import { applyMiddleware, createStore, compose } from 'redux';
+import rootReducer from './reducers';
+import { setCurrentUser } from './actions/auth';
 import './index.css';
+import setAuthToken from './utils/setAuthToken';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+dotenv.config()
+
+const middleware = applyMiddleware(thunk);
+const configureStore = (state = {}) => createStore(
+  rootReducer,
+  state,
+  compose(
+    middleware,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const store = configureStore();
+const { localStorage } = window;
+const jwtToken = localStorage && localStorage.getItem('token');
+const decodedToken = jwt.decode(jwtToken);
+if (decodedToken) {
+  const hasExpired = decodedToken.exp - (Date.now() / 1000) < 0;
+  if (!hasExpired) {
+    setAuthToken(jwtToken);
+    store.dispatch(setCurrentUser(decodedToken));
+  } else {
+    localStorage.removeItem('token');
+  }
+}
+
+const app = (
+  <Provider store={store}>
+    <Router>
+      <App/>
+    </Router>
+  </Provider>
+);
+
+ReactDOM.render(app, document.getElementById('root'));
+

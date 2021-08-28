@@ -8,30 +8,30 @@ const Checkout = () => (
               <h4 class="mb-4 border-bottom pb-2">Your Information</h4>
               <form class="row">
                 <div class="mb-3 col-md-6">
-                  <label for="fname" class="form-label">First Name <span class="text-danger">*</span></label>
+                  <label htmlFor="fname" class="form-label">First Name <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="fname" placeholder="First Name" required="" />
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="lname" class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <label htmlFor="lname" class="form-label">Last Name <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" required="" id="lname" placeholder="Last Name" />
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                  <label htmlFor="email" class="form-label">Email <span class="text-danger">*</span></label>
                   <input type="email" class="form-control" required="" id="email" placeholder="Email Id" />
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="confirm-email" class="form-label">Confirm Email <span
+                  <label htmlFor="confirm-email" class="form-label">Confirm Email <span
                     class="text-danger">*</span></label>
                   <input type="email" class="form-control" required="" id="confirm-email"
                     placeholder="Confirm Email Id" />
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="message" class="form-label">Your Message For Us <span
+                  <label htmlFor="message" class="form-label">Your Message htmlFor Us <span
                     class="text-danger">*</span></label>
                   <textarea class="form-control" required="" rows="3" placeholder="Message" id="message"></textarea>
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="mobile" class="form-label"> Mobile Phone Number <span
+                  <label htmlFor="mobile" class="form-label"> Mobile Phone Number <span
                     class="text-danger">*</span></label>
                   <input type="text" class="form-control" required="" id="mobile" placeholder="Mobile Number" />
                 </div>
@@ -45,56 +45,56 @@ const Checkout = () => (
                       <input id="visa" class="radio-button" type="radio" name="radio" checked />
                       <div class="radio-img">
                         <img src="../assets/images/visa.png" alt="Rentkit Directory & Listing Bootstrap 5 Theme" />
-                        <label for="visa"></label>
+                        <label htmlFor="visa"></label>
                       </div>
                     </div>
                     <div class="position-relative">
                       <input id="discover" class="radio-button" type="radio" name="radio" />
                       <div class="radio-img">
                         <img src="../assets/images/discover.png" alt="Rentkit Directory & Listing Bootstrap 5 Theme" />
-                        <label for="discover"></label>
+                        <label htmlFor="discover"></label>
                       </div>
                     </div>
                     <div class="position-relative">
                       <input id="mastercard" class="radio-button" type="radio" name="radio" />
                       <div class="radio-img">
                         <img src="../assets/images/mastercard.png" alt="Rentkit Directory & Listing Bootstrap 5 Theme" />
-                        <label for="mastercard"></label>
+                        <label htmlFor="mastercard"></label>
                       </div>
                     </div>
                     <div class="position-relative">
                       <input id="american-express" class="radio-button" type="radio" name="radio" />
                       <div class="radio-img">
                         <img src="../assets/images/american-express.png" alt="Rentkit Directory & Listing Bootstrap 5 Theme" />
-                        <label for="american-express"></label>
+                        <label htmlFor="american-express"></label>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="cardname" class="form-label">Name on Card <span class="text-danger">*</span></label>
+                  <label htmlFor="cardname" class="form-label">Name on Card <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" required="" id="cardname" placeholder="Name on Card" />
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="cardnumber" class="form-label">Credit Card Number <span
+                  <label htmlFor="cardnumber" class="form-label">Credit Card Number <span
                     class="text-danger">*</span></label>
                   <input type="text" class="form-control" required="" id="cardnumber" placeholder="Name on Card" />
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="month" class="form-label">Month <span class="text-danger">*</span></label>
+                  <label htmlFor="month" class="form-label">Month <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" required="" id="month" placeholder="Month" />
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="year" class="form-label">Year <span class="text-danger">*</span></label>
+                  <label htmlFor="year" class="form-label">Year <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" required="" id="year" placeholder="Year" />
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="securitycode" class="form-label">Security Code <span
+                  <label htmlFor="securitycode" class="form-label">Security Code <span
                     class="text-danger">*</span></label>
                   <input type="text" class="form-control" required="" id="securitycode" placeholder="***" />
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="billing" class="form-label">Billing Country <span class="text-danger">*</span></label>
+                  <label htmlFor="billing" class="form-label">Billing Country <span class="text-danger">*</span></label>
                   <select class="select2" id="billing">
                     <option selected>United States</option>
                     <option value="1">United Kingdom</option>
@@ -103,13 +103,13 @@ const Checkout = () => (
                   </select>
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="street-address" class="form-label">Street Address <span
+                  <label htmlFor="street-address" class="form-label">Street Address <span
                     class="text-danger">*</span></label>
                   <input type="text" class="form-control" required="" id="street-address"
                     placeholder=" e.g. 300 Tetrick Road Fort Myers, London 33912" />
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="city" class="form-label">Town/City<span class="text-danger">*</span></label>
+                  <label htmlFor="city" class="form-label">Town/City<span class="text-danger">*</span></label>
                   <select class="select2" id="city">
                     <option selected>New York</option>
                     <option value="1">Liverpool</option>
@@ -118,7 +118,7 @@ const Checkout = () => (
                   </select>
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="state" class="form-label">State/Province<span class="text-danger">*</span></label>
+                  <label htmlFor="state" class="form-label">State/Province<span class="text-danger">*</span></label>
                   <select class="select2" id="state">
                     <option selected>American Samoa</option>
                     <option value="1">Scotland</option>
@@ -127,7 +127,7 @@ const Checkout = () => (
                   </select>
                 </div>
                 <div class="mb-3 col-md-4">
-                  <label for="zipcode" class="form-label">Zipcode<span class="text-danger">*</span></label>
+                  <label htmlFor="zipcode" class="form-label">Zipcode<span class="text-danger">*</span></label>
                   <input class="form-control" placeholder="" type="text" id="zipcode" />
                 </div>
                 <div class="col-md-12 mt-4">
@@ -141,10 +141,10 @@ const Checkout = () => (
                   </ul>
                 </div>
                 <div class="mb-3 col-md-12">
-                  <label for="message-for-host" class="form-label">Message For Host <span
+                  <label htmlFor="message-htmlFor-host" class="form-label">Message htmlFor Host <span
                     class="text-danger">*</span></label>
                   <textarea class="form-control" rows="3" placeholder="Write Your Message"
-                    id="message-for-host"></textarea>
+                    id="message-htmlFor-host"></textarea>
                 </div>
                 <div class="col-md-12">
                   <h5 class="mb-4 mt-2 border-bottom pb-2">Review And Book</h5>

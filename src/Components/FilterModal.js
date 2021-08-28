@@ -52,7 +52,7 @@ function FilterModal({ close }) {
                     />
                     <label
                       className="btn btn-outline-secondary btn-sm"
-                      for="apartment"
+                      htmlFor="apartment"
                     >
                       Apartment
                     </label>
@@ -65,7 +65,7 @@ function FilterModal({ close }) {
                     <input type="checkbox" className="btn-check" id="house" />
                     <label
                       className="btn btn-outline-secondary btn-sm"
-                      for="house"
+                      htmlFor="house"
                     >
                       House
                     </label>
@@ -78,7 +78,7 @@ function FilterModal({ close }) {
                     <input type="checkbox" className="btn-check" id="duplex" />
                     <label
                       className="btn btn-outline-secondary btn-sm"
-                      for="duplex"
+                      htmlFor="duplex"
                     >
                       Duplex
                     </label>
@@ -91,7 +91,7 @@ function FilterModal({ close }) {
                     <input type="checkbox" className="btn-check" id="condo" />
                     <label
                       className="btn btn-outline-secondary btn-sm"
-                      for="condo"
+                      htmlFor="condo"
                     >
                       Condo
                     </label>
@@ -104,7 +104,7 @@ function FilterModal({ close }) {
                     <input type="checkbox" className="btn-check" id="room" />
                     <label
                       className="btn btn-outline-secondary btn-sm"
-                      for="room"
+                      htmlFor="room"
                     >
                       Room
                     </label>
@@ -121,7 +121,7 @@ function FilterModal({ close }) {
                     />
                     <label
                       className="btn btn-outline-secondary btn-sm"
-                      for="townhouse"
+                      htmlFor="townhouse"
                     >
                       Townhouse
                     </label>
@@ -243,7 +243,7 @@ function FilterModal({ close }) {
                     />
                     <label
                       className="btn btn-outline-secondary btn-sm"
-                      for="dogallowed"
+                      htmlFor="dogallowed"
                     >
                       Dog Allowed
                     </label>
@@ -260,7 +260,7 @@ function FilterModal({ close }) {
                     />
                     <label
                       className="btn btn-outline-secondary btn-sm"
-                      for="catallowed"
+                      htmlFor="catallowed"
                     >
                       Cat Allowed
                     </label>
@@ -282,7 +282,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck1"
                         />
-                        <label className="form-check-label" for="customCheck1">
+                        <label className="form-check-label" htmlFor="customCheck1">
                           Washer/Dryer Hookups
                         </label>
                       </div>
@@ -293,7 +293,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck2"
                         />
-                        <label className="form-check-label" for="customCheck2">
+                        <label className="form-check-label" htmlFor="customCheck2">
                           Air Conditioning
                         </label>
                       </div>
@@ -304,7 +304,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck3"
                         />
-                        <label className="form-check-label" for="customCheck3">
+                        <label className="form-check-label" htmlFor="customCheck3">
                           Semi-Furniture
                         </label>
                       </div>
@@ -314,7 +314,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck4"
                         />
-                        <label className="form-check-label" for="customCheck4">
+                        <label className="form-check-label" htmlFor="customCheck4">
                           Patio
                         </label>
                       </div>
@@ -325,7 +325,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck5"
                         />
-                        <label className="form-check-label" for="customCheck5">
+                        <label className="form-check-label" htmlFor="customCheck5">
                           Hardwood Floors
                         </label>
                       </div>
@@ -336,7 +336,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck6"
                         />
-                        <label className="form-check-label" for="customCheck6">
+                        <label className="form-check-label" htmlFor="customCheck6">
                           Walk-in Closets
                         </label>
                       </div>
@@ -347,7 +347,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck7"
                         />
-                        <label className="form-check-label" for="customCheck7">
+                        <label className="form-check-label" htmlFor="customCheck7">
                           Wi-Fi
                         </label>
                       </div>
@@ -358,7 +358,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck8"
                         />
-                        <label className="form-check-label" for="customCheck8">
+                        <label className="form-check-label" htmlFor="customCheck8">
                           Pool
                         </label>
                       </div>
@@ -371,7 +371,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck9"
                         />
-                        <label className="form-check-label" for="customCheck9">
+                        <label className="form-check-label" htmlFor="customCheck9">
                           Evelator
                         </label>
                       </div>
@@ -382,7 +382,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck10"
                         />
-                        <label className="form-check-label" for="customCheck10">
+                        <label className="form-check-label" htmlFor="customCheck10">
                           Wheelchair Accessible
                         </label>
                       </div>
@@ -393,7 +393,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck11"
                         />
-                        <label className="form-check-label" for="customCheck11">
+                        <label className="form-check-label" htmlFor="customCheck11">
                           Garden
                         </label>
                       </div>
@@ -404,7 +404,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck12"
                         />
-                        <label className="form-check-label" for="customCheck12">
+                        <label className="form-check-label" htmlFor="customCheck12">
                           Furnished
                         </label>
                       </div>
@@ -415,7 +415,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck13"
                         />
-                        <label className="form-check-label" for="customCheck13">
+                        <label className="form-check-label" htmlFor="customCheck13">
                           High Rise
                         </label>
                       </div>
@@ -426,7 +426,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck14"
                         />
-                        <label className="form-check-label" for="customCheck14">
+                        <label className="form-check-label" htmlFor="customCheck14">
                           Utilities Included
                         </label>
                       </div>
@@ -437,7 +437,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck15"
                         />
-                        <label className="form-check-label" for="customCheck15">
+                        <label className="form-check-label" htmlFor="customCheck15">
                           Balcony Included
                         </label>
                       </div>
@@ -448,7 +448,7 @@ function FilterModal({ close }) {
                           className="form-check-input"
                           id="customCheck16"
                         />
-                        <label className="form-check-label" for="customCheck16">
+                        <label className="form-check-label" htmlFor="customCheck16">
                           Student Friendly
                         </label>
                       </div>

@@ -35,7 +35,7 @@ function ListSingle(props) {
               <div className="card mb-4">
                 <div className="card-body p-4">
                   <h2 className="mb-2">
-                    Modern & flexible home for one day outing
+                    Modern & flexible home htmlFor one day outing
                   </h2>
                   <p className="mb-4 fs-6">Ahmedabad, Gujarat,India</p>
                   <div className="text-sm">
@@ -138,7 +138,7 @@ function ListSingle(props) {
                         </li>
                         <li className="list-item">
                           <span className="mdi mdi-television me-2 text-dark fs-5"></span>
-                          Desk for work
+                          Desk htmlFor work
                         </li>
                         <li className="list-item">
                           <span className="mdi mdi-washing-machine me-2 text-dark fs-5"></span>
@@ -312,14 +312,14 @@ function ListSingle(props) {
                         <div className="col-md-9">
                           <div>
                             <h5 className="fw-bold mb-2">
-                              Superb Place for stay
+                              Superb Place htmlFor stay
                             </h5>
                             <p>
                               The place is too good, the staff was very
                               cooperative &responsive at any given time. What I
                               appreciate the most is they arranged our stay in
                               these times of crisis by doing their best in all
-                              manner. We are very grateful to them for that.
+                              manner. We are very grateful to them htmlFor that.
                             </p>
                             <span className="mdi mdi-star text-primary"></span>
                             <span className="mdi mdi-star text-primary"></span>
@@ -338,7 +338,7 @@ function ListSingle(props) {
                   <h4 className="mb-3">Leave Your Review</h4>
                   <form className="row">
                     <div className="mb-3 col-6">
-                      <label for="reviewtitle" className="form-label">
+                      <label htmlFor="reviewtitle" className="form-label">
                         Name <span className="text-danger">*</span>
                       </label>
                       <input
@@ -352,7 +352,7 @@ function ListSingle(props) {
                       />
                     </div>
                     <div className="mb-3 col-6">
-                      <label for="reviewemail" className="form-label">
+                      <label htmlFor="reviewemail" className="form-label">
                         Email <span className="text-danger">*</span>
                       </label>
                       <input
@@ -366,7 +366,7 @@ function ListSingle(props) {
                       />
                     </div>
                     <div className="mb-3 col-12">
-                      <label for="reviewtitle" className="form-label">
+                      <label htmlFor="reviewtitle" className="form-label">
                         Review Title <span className="text-danger">*</span>
                       </label>
                       <input
@@ -464,7 +464,7 @@ function ListSingle(props) {
                       </div>
                     </div>
                     <div className="mb-3 col-12 mt-3">
-                      <label for="reviewdescription" className="form-label">
+                      <label htmlFor="reviewdescription" className="form-label">
                         Write Your Experience
                       </label>
                       <textarea
