@@ -1,4 +1,23 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getApartments } from "../../actions/apartment";
+
 export const Popular = () => {
+  const dispatch = useDispatch();
+  const { apartments } = useSelector((state) => state.apartments);
+
+  const fetchApartments = async () => {
+    console.log("I was called");
+    await dispatch(getApartments());
+  };
+
+  useEffect(() => {
+    console.log("I was here");
+    fetchApartments();
+  }, []);
+
+  console.log("appp----", apartments);
+
   const places = [
     {
       name: "Lagos",
@@ -42,23 +61,17 @@ export const Popular = () => {
               </p>
             </div>
           </div>
-          {places.map(({ name, numbers, price, image }) => (
-            <div className="col-xl-3 col-md-6 col-12">
+          {apartments.slice(0, 4).map(({ _id, location, price, img }) => (
+            <div key={_id} className="col-xl-3 col-md-6 col-12">
               <a className="text-white" href="/app/listings">
                 <div className="position-relative text-white mb-4">
                   <div className="overlay-bg">
-                    <img
-                      src={image}
-                      className="card-img"
-                      alt="..."
-                    />
+                    <img src={img} className="card-img" alt="..." />
                   </div>
                   <div className="position-absolute text-white mt-n4 bottom-0 ps-4 pb-4 ">
-                    <h3 className="mb-1 text-white fw-bold">{name}</h3>
-                    <p className="fs-6 mb-n1 fw-bold">
-                      {numbers} places to stay
-                    </p>
-                    <p className="fs-6 mb-0 fw-bold">Avg {price}/night</p>
+                    <h3 className="mb-1 text-white fw-bold">{location}</h3>
+                    {/* <p className="fs-6 mb-n1 fw-bold">50 places to stay</p> */}
+                    <p className="fs-6 mb-0 fw-bold">Avg N{price}/night</p>
                   </div>
                 </div>
               </a>
