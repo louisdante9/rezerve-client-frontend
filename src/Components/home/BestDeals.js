@@ -1,127 +1,81 @@
 export const BestDeals = () => (
-    <div className="pt-8">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 col-12">
-              <div className="mb-6">
-                <h2 className="mb-0">Best deals on hotels</h2>
+  <div className="container mt-n23">
+        <div className="row">
+          <div className="col-md-12 col-sm-12 col-12">
+            <div className="mb-6">
+              <h2 className="mb-1">Our Customer Reviews </h2>
+              <p>Happy guest stay longer! At Rentkit we care about matching quality.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="row ">
+          <div className="col-lg-4 col-md-6 col-12">
+            <div className="card mb-4 mb-md-0">
+              <div className="card-body p-5">
+                <h3 className="h4 mb-2">It was absolutely lovely</h3>
+                <p className="mb-4 ">Nam risus dui consequatet magna vitae blandit hendrerit risustesque ante varius
+                  iaculis feugiat nulla metustiam auctor malesuada.</p>
+                <div className="d-flex justify-content-between">
+                  <div className="text-primary align-self-center text-sm">
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star-half"></span>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <img src="../assets/images/avatar-1.jpg"  alt="Rentkit Directory & Listing Bootstrap 5 Theme" className="avatar-xs rounded-circle me-2"/>
+                    <span className="text-sm  font-weight-semi-bold">James Duncan</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-6 col-12">
-              <a className="text-reset" href="#">
-                <div className="card smooth-shadow-sm border-0 mb-4 mb-lg-0">
-                  <div className="card-img">
-                    <img src="../assets/images/listing-img-7.jpg" alt="" className="rounded-top img-fluid" />
-                    <div className="bg-white rounded-1 position-absolute end-0 mt-n6 px-2 me-3">
-                      <span className="fs-6 text-dark lh-1 fw-bold"> $2,500.00</span>
-                    </div>
+          <div className="col-lg-4 col-md-6 col-12">
+            <div className="card mb-4 mb-md-0">
+              <div className="card-body p-5">
+                <h3 className="h4 mb-2">Had an amazing time</h3>
+                <p className="mb-4 ">Sollicitudin purus ante id fermentum libero luctusivamus vel imperdiet eniroin
+                  sit ametonec dictum mollis dolor porttitort convvariun.</p>
+                <div className="d-flex justify-content-between">
+                  <div className="text-primary align-self-center text-sm">
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star-half"></span>
                   </div>
-                  <div className="card-body">
-                    <h5 className="mb-0">Taj Mahal Palace</h5>
-                    <p className="text-sm font-weight-semi-bold mb-2">Daman, Daman and Diu, India</p>
-                    <span className="badge bg-success-100 text-success rounded-pill mb-3">14% less than usual
-
-                    </span>
-                    <div className="fs-6 text-primary">
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>   
-                      <i className="bi bi-star-half">
-                      </i> <span className="ms-2 text-muted">
-                        <span className="text-dark fw-bold">4.9</span> (612)</span>
-                    </div>
-
-
+                  <div className="d-flex align-items-center">
+                    <img src="../assets/images/avatar-3.jpg"  alt="Rentkit Directory & Listing Bootstrap 5 Theme" className="avatar-xs rounded-circle me-2"/>
+                    <span className="text-sm  font-weight-semi-bold">Richard Jason</span>
                   </div>
                 </div>
-              </a>
-
-
-            </div>
-            <div className="col-lg-3 col-md-6 col-12">
-              <a className="text-reset" href="#">
-                <div className="card smooth-shadow-sm border-0 mb-4 mb-lg-0">
-                  <div className="card-img">
-                    <img src="../assets/images/listing-img-8.jpg" alt="" className="rounded-top img-fluid" />
-                    <div className="bg-white rounded-1 position-absolute end-0 mt-n6 px-2 me-3">
-                      <span className="fs-6 text-dark lh-1 fw-bold"> $3,100.00</span>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    <h5 className="mb-0">Hotel Sahara Star</h5>
-                    <p className="text-sm font-weight-semi-bold mb-2">Vile Parle, Mumbai</p>
-                    <span className="badge bg-success-100 text-success rounded-pill mb-3">33% less than usual
-
-                    </span>
-                    <div className="fs-6 text-primary">
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>   <i className="bi bi-star-fill"></i>   <i className="bi bi-star-half"></i> <span className="ms-2 text-muted"><span className="text-dark fw-bold">4.4</span> (32)</span>
-                    </div>
-
-
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-6 col-12">
-              <a className="text-reset" href="#">
-                <div className="card smooth-shadow-sm border-0 mb-4 mb-lg-0">
-                  <div className="card-img">
-                    <img src="../assets/images/listing-img-9.jpg" alt="" className="rounded-top img-fluid" />
-                    <div className="bg-white rounded-1 position-absolute end-0 mt-n6 px-2 me-3">
-                      <span className="fs-6 text-dark lh-1 fw-bold"> $3,100.00</span>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    <h5 className="mb-0">The Empresa Hotel</h5>
-                    <p className="text-sm font-weight-semi-bold mb-2">Andheri West, Mumbai</p>
-                    <span className="badge bg-success-100 text-success rounded-pill mb-3">43% less than usual
-
-                    </span>
-                    <div className="fs-6 text-primary">
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>   <i className="bi bi-star-fill"></i>   <i className="bi bi-star-half"></i> <span className="ms-2 text-muted"><span className="text-dark fw-bold">4.1</span> (2612)</span>
-                    </div>
-
-
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-6 col-12">
-              <a className="text-reset" href="#">
-                <div className="card smooth-shadow-sm border-0 mb-4 mb-lg-0">
-                  <div className="card-img">
-                    <img src="../assets/images/listing-img-10.jpg" alt="" className="rounded-top img-fluid" />
-                    <div className="bg-white rounded-1 position-absolute end-0 mt-n6 px-2 me-3">
-                      <span className="fs-6 text-dark lh-1 fw-bold"> $4,200.00</span>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    <h5 className="mb-0">Novotel Juhu Beach</h5>
-                    <p className="text-sm font-weight-semi-bold mb-2">Andheri West, Mumbai</p>
-                    <span className="badge bg-success-100 text-success rounded-pill mb-3">24% less than usual
-
-                    </span>
-                    <div className="fs-6 text-primary">
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-half"></i> <span className="ms-2 text-muted"><span className="text-dark fw-bold">4.6</span> (62)</span>
-                    </div>
-                  </div>
-
-                </div>
-              </a>
+              </div>
             </div>
           </div>
-          <hr className="mt-14" />
+          <div className="col-lg-4 col-md-6 col-12 d-md-none d-lg-block">
+            <div className="card mb-4 mb-md-0">
+              <div className="card-body p-5">
+                <h3 className="h4 mb-2">It was absolutely lovely</h3>
+                <p className="mb-4 ">Nam risus dui consequatet risustesque ante varius iaculis nibh ieuismod leouce
+                  feugiat nulla metustiam auctor malesuada.</p>
+                <div className="d-flex justify-content-between">
+                  <div className="text-primary align-self-center text-sm">
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star"></span>
+                    <span className="mdi mdi-star-half"></span>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <img src="../assets/images/avatar-1.jpg"  alt="Rentkit Directory & Listing Bootstrap 5 Theme" className="w-100 avatar-xs rounded-circle me-2"/>
+                    <span className="text-sm  font-weight-semi-bold">James Duncan</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 )

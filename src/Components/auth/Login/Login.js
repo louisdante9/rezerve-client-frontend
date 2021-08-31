@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { signinRequest } from "../../../actions/auth";
+import { signinRequest } from "../../../actions";
 
 function Login(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { errors: error } = useSelector((state) => state.setCurrentUser);
+  console.log(error)
   const [loading, setLoading] = useState(false);
   const { handleBlur, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
@@ -24,7 +25,7 @@ function Login(props) {
     }),
     onSubmit: (values) => {
       setLoading(!loading);
-      dispatch(signinRequest(values, navigate)).then(() => setLoading(false));
+      dispatch(signinRequest(values, navigate));
     },
   });
   return (
@@ -34,13 +35,7 @@ function Login(props) {
           <div className="card shadow border-0">
             <div className="card-body p-8">
               <h3 className="mb-4">Welcome back to Rentkit</h3>
-              {Object.keys(error).length ? (
-                <span style={{ color: "red", fontSize: "12px" }}>
-                  {error.message || error.error}
-                </span>
-              ) : (
-                ""
-              )}
+              {error?.error && <span style={{color: 'red', fontSize: '12px', marginBottom: '10px', display: 'block'}}>{error.error}</span>}
               <form>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">

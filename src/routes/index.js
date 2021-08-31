@@ -25,6 +25,7 @@ const routes = (isSignedIn) => [
       children: [
         { path: 'favourites', element: <Favourite /> },
         { path: 'listings', element: <Listings /> },
+        { path: 'listing/:id', element: <ListSingle /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },

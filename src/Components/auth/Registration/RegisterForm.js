@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { registerUser } from "../../../actions/auth";
+import { registerUser } from "../../../actions";
 
 function RegisterForm() {
   const dispatch = useDispatch();
@@ -135,7 +135,7 @@ function RegisterForm() {
               />
               {errors.confirmPass && <span>{errors.confirmPass}</span>}
             </div>
-            {error?.error && <span style={{color: 'red', fontSize: '15px', marginBottom: '10px', display: 'block'}}>{error.error}</span>}
+            {error?.error && <span style={{color: 'red', fontSize: '12px', marginBottom: '10px', display: 'block'}}>{error.error}</span>}
             <div className="mb-2">
               <p className="text-sm">
                 By signing up you agree to Rental

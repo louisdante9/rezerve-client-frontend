@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { verifyUserRequest } from "../../actions/auth";
+import { verifyUserRequest } from "../../actions";
 
 
 function VerifyUser() {

@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import dotenv from 'dotenv';
 import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from './reducers';
-import { setCurrentUser } from './actions/auth';
+import { setCurrentUser } from './actions';
 import './index.css';
 import setAuthToken from './utils/setAuthToken';
 import App from './App';
@@ -20,8 +20,8 @@ const configureStore = (state = {}) => createStore(
   state,
   compose(
     middleware,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 

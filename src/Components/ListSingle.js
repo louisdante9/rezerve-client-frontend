@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom'
+import { AiOutlineCheckSquare } from "react-icons/ai";
+import { convertNumToCurrency } from '../utils'
 import postImg from '../Assets/images/post-single-img.jpg'
+import { favouriteRequest, getFavouriteRequest, delFavouriteRequest, singleListing } from '../actions'
+
 
 function ListSingle(props) {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { user } = useSelector((state) => state.setCurrentUser)
+  const { favourites } = useSelector((state) => state.favourite)
+  const { property } = useSelector((state) => state.getListings)
+
+  useEffect(() => {
+    dispatch(getFavouriteRequest({ userId: user.id }))
+    dispatch(singleListing({ apartmentId: id, userId: user.id }))
+  }, []);
+
+
+  const handleFavourite = () => {
+    favourites.find(f => f.apartment === id)
+      ? dispatch(delFavouriteRequest({ apartmentId: id, userId: user.id }))
+      : dispatch(favouriteRequest({ apartmentId: id, userId: user.id }))
+  }
+  console.log(property, 'property')
   return (
     <div>
       <div className="container mt-5">
@@ -9,16 +33,19 @@ function ListSingle(props) {
           className="py-22 position-relative rounded-3"
           style={{
             background:
-              `url(${postImg}) no-repeat center center`,
+              `url(${property?.apartment?.img[0] || '/assets/images/post-single-img.jpg'}) no-repeat center center`,
           }}
         >
           <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
               <div className="position-absolute bottom-0 mb-5 ms-5">
                 <div>
-                  <a href="/" className="btn btn-white btn-sm">
-                    <span className="mdi mdi-heart me-1 text-danger"></span>Save
-                  </a>
+                  <div
+                    onClick={handleFavourite}
+                    style={{ marginRight: '10px' }}
+                    className="btn btn-white btn-sm">
+                    <span className={property.favourited ? "mdi mdi-heart me-1 text-danger" : "mdi mdi-heart me-1"}></span>Save
+                  </div>
                   <a href="#gallery" className="btn btn-white btn-sm">
                     View Photos
                   </a>
@@ -35,25 +62,25 @@ function ListSingle(props) {
               <div className="card mb-4">
                 <div className="card-body p-4">
                   <h2 className="mb-2">
-                    Modern & flexible home htmlFor one day outing
+                    {property?.apartment?.propertyName}
                   </h2>
-                  <p className="mb-4 fs-6">Ahmedabad, Gujarat,India</p>
+                  <p className="mb-4 fs-6">{property?.apartment?.address}, {property?.apartment?.state}</p>
                   <div className="text-sm">
                     <span className="me-2">
                       <i className="mdi mdi-account text-primary"></i>
-                      <span className="ms-2">4 Guest</span>
+                      <span className="ms-2">{property?.apartment?.noOfguest} Guest</span>
                     </span>
                     <span className="me-2">
                       <i className="mdi mdi-home text-primary"></i>
-                      <span className="ms-2">3 Bedroom</span>
+                      <span className="ms-2">{property?.apartment?.noOfRooms}  Bedroom</span>
                     </span>
                     <span className="me-2">
                       <i className="mdi mdi-bed-empty text-primary"></i>
-                      <span className="ms-2">3 Bed</span>
+                      <span className="ms-2">{property?.apartment?.noOfRooms}  Bed</span>
                     </span>
                     <span className="me-2">
                       <i className="mdi mdi-scale-bathroom text-primary"></i>
-                      <span className="ms-2">3 Bath</span>
+                      <span className="ms-2">{property?.apartment?.noOfBaths} Bath</span>
                     </span>
                   </div>
                 </div>
@@ -62,22 +89,7 @@ function ListSingle(props) {
                 <div className="card-body p-4">
                   <h4>Overview</h4>
                   <p>
-                    Convallis nulla felis id lacus. Nam lectus duiultricies ac
-                    augue ultrices mattis pellentesque one neqpulvinar quam
-                    turpissit amet suscipit turpis elementum in.auris laoreet
-                    porttitor lacus non rhoncusulla congue augue at sagittis
-                    volutpat, arcu ipsum prpurus.Praesent dictum, arcu eu
-                    convallis accumsan, neque turpis convallis elit, nec lacinia
-                    neque tortor id mauris.
-                  </p>
-                  <p className="mb-0">
-                    Phasellus eu leo rhoncus, cursus erat id, volutpat nisl.
-                    Proin sed laoreet felis. Aenean sollicitudin dictum augue,
-                    non scelerisque nulla cursus vitae. Mauris molestie, tellus
-                    sed vehicula ultricies, ex arcu semper nibh, eu malesuada
-                    turpis metus a orci. Pellentesque consequat, tortor sit amet
-                    hendrerit ornare, mi erat ultricies eros, placerat auctor
-                    lacus erat a tortorefficitur non. Maecenas a molestie lorem.
+                    {property?.apartment?.description}
                   </p>
                 </div>
               </div>
@@ -87,69 +99,28 @@ function ListSingle(props) {
                   <div className="row">
                     <div className="col-md-6">
                       <ul className="list-group list-unstyled">
-                        <li className="list-item">
-                          <span className="mdi mdi-air-conditioner me-2 text-dark fs-5"></span>
-                          Air conditioning
+                        {property?.apartment?.amenities.split(',').slice(0,4).map((amenity)=>(
+                          <li className="list-item">
+                          <AiOutlineCheckSquare />
+                          {amenity}
                         </li>
-                        <li className="list-item">
-                          <span
-                            className="
-                              mdi mdi-television-classic
-                              me-2
-                              text-dark
-                              fs-5
-                            "
-                          ></span>
-                          TV
-                        </li>
-                        <li className="list-item">
-                          <span
-                            className="
-                              mdi mdi-car-brake-parking
-                              me-2
-                              text-dark
-                              fs-5
-                            "
-                          ></span>
-                          Free parking on premises
-                        </li>
-                        <li className="list-item">
-                          <span className="mdi mdi-pool me-2 text-dark fs-5"></span>
-                          Pool
-                        </li>
+                        ))}
                       </ul>
                     </div>
                     <div className="col-md-6">
                       <ul className="list-group list-unstyled">
-                        <li className="list-item">
-                          <span
-                            className="
-                              mdi mdi-thermometer-lines
-                              me-2
-                              text-dark
-                              fs-5
-                            "
-                          ></span>
-                          Heating
+                      {property?.apartment?.amenities.split(',').slice(4, ).map((amenity)=>(
+                          <li className="list-item">
+                          <AiOutlineCheckSquare />
+                          {amenity}
                         </li>
-                        <li className="list-item">
-                          <span className="mdi mdi-toilet me-2 text-dark fs-5"></span>
-                          Toiletteries
-                        </li>
-                        <li className="list-item">
-                          <span className="mdi mdi-television me-2 text-dark fs-5"></span>
-                          Desk htmlFor work
-                        </li>
-                        <li className="list-item">
-                          <span className="mdi mdi-washing-machine me-2 text-dark fs-5"></span>
-                          Washing machine
-                        </li>
+                        ))}
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="card mb-4">
+              {/* <div className="card mb-4">
                 <div className="card-body p-4">
                   <h4>Reviews</h4>
                   <div className="row border-bottom mb-5 pb-5 mt-3">
@@ -332,8 +303,8 @@ function ListSingle(props) {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="card mb-4">
+              </div> */}
+              {/* <div className="card mb-4">
                 <div className="card-body p-4">
                   <h4 className="mb-3">Leave Your Review</h4>
                   <form className="row">
@@ -489,19 +460,39 @@ function ListSingle(props) {
                     </div>
                   </form>
                 </div>
-              </div>
+              </div> */}
               <div className="card mb-4" id="gallery">
                 <div className="card-body p-4">
                   <h4 className="mb-4">Gallery</h4>
                   <div className="zoom-gallery">
                     <div className="row">
-                      <div className="col-md-4">
+                      {property?.apartment?.img.length ? property?.apartment?.img.map((p) => (
+                        <div className="col-md-4">
+                          <a
+                            href="/assets/images/gallery-zoom-img-1.jpg"
+                            title="Gallery Image Rentkit Directory Bootstrap 5 Template"
+                          >
+                            <img
+                              src={p}
+                              className="img-fluid rounded-3 mb-4"
+                              alt="Rentkit Directory & Listing Bootstrap 5 Theme"
+                              style={{ height: '121px', width: '100%' }}
+                            />
+                          </a>
+                        </div>
+                      )) : (
+                        <div className="card-body p-4">
+                          <h4 className="mb-1">No Photo available</h4>
+                        </div>
+                      )
+                      }
+                      {/* <div className="col-md-4">
                         <a
-                          href="../assets/images/gallery-zoom-img-1.jpg"
+                          href="/assets/images/gallery-zoom-img-1.jpg"
                           title="Gallery Image Rentkit Directory Bootstrap 5 Template"
                         >
                           <img
-                            src="../assets/images/gallery-img-1.jpg"
+                            src="/assets/images/gallery-img-1.jpg"
                             className="img-fluid rounded-3 mb-4"
                             alt="Rentkit Directory & Listing Bootstrap 5 Theme"
                           />
@@ -509,11 +500,11 @@ function ListSingle(props) {
                       </div>
                       <div className="col-md-4">
                         <a
-                          href="../assets/images/gallery-zoom-img-2.jpg"
+                          href="/assets/images/gallery-zoom-img-2.jpg"
                           title="Gallery Image Rentkit Directory Bootstrap 5 Template"
                         >
                           <img
-                            src="../assets/images/gallery-img-2.jpg"
+                            src="/assets/images/gallery-img-2.jpg"
                             className="img-fluid rounded-3 mb-4"
                             alt="Rentkit Directory & Listing Bootstrap 5 Theme"
                           />
@@ -521,11 +512,11 @@ function ListSingle(props) {
                       </div>
                       <div className="col-md-4">
                         <a
-                          href="../assets/images/gallery-zoom-img-3.jpg"
+                          href="/assets/images/gallery-zoom-img-3.jpg"
                           title="Gallery Image Rentkit Directory Bootstrap 5 Template"
                         >
                           <img
-                            src="../assets/images/gallery-img-3.jpg"
+                            src="/assets/images/gallery-img-3.jpg"
                             className="img-fluid rounded-3 mb-4"
                             alt="Rentkit Directory & Listing Bootstrap 5 Theme"
                           />
@@ -533,11 +524,11 @@ function ListSingle(props) {
                       </div>
                       <div className="col-md-4">
                         <a
-                          href="../assets/images/gallery-zoom-img-4.jpg"
+                          href="/assets/images/gallery-zoom-img-4.jpg"
                           title="Gallery Image Rentkit Directory Bootstrap 5 Template"
                         >
                           <img
-                            src="../assets/images/gallery-img-4.jpg"
+                            src="/assets/images/gallery-img-4.jpg"
                             className="img-fluid rounded-3 mb-4 mb-lg-0"
                             alt="Rentkit Directory & Listing Bootstrap 5 Theme"
                           />
@@ -545,108 +536,63 @@ function ListSingle(props) {
                       </div>
                       <div className="col-md-4">
                         <a
-                          href="../assets/images/gallery-zoom-img-3.jpg"
+                          href="/assets/images/gallery-zoom-img-3.jpg"
                           title="Gallery Image Rentkit Directory Bootstrap 5 Template"
                         >
                           <img
-                            src="../assets/images/gallery-img-3.jpg"
+                            src="/assets/images/gallery-img-3.jpg"
                             className="img-fluid rounded-3 mb-4 mb-lg-0"
                             alt="Rentkit Directory & Listing Bootstrap 5 Theme"
                           />
                         </a>
                       </div>
                       <div className="col-md-4">
-                        <a href="../assets/images/gallery-zoom-img-2.jpg">
+                        <a href="/assets/images/gallery-zoom-img-2.jpg">
                           <img
-                            src="../assets/images/gallery-img-2.jpg"
+                            src="/assets/images/gallery-img-2.jpg"
                             className="img-fluid rounded-3 mb-4 mb-lg-0"
                             alt="Rentkit Directory & Listing Bootstrap 5 Theme"
                           />
                         </a>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="card mb-4">
-                <div className="card-body p-4">
-                  <h4 className="mb-3">Video</h4>
-                  <div
-                    className="
-                      d-flex
-                      justify-content-center
-                      position-relative
-                      rounded
-                      py-16
-                      border-white border
-                      rounded-lg
-                    "
-                    style={{
-                      backgroundImage: "url(../assets/images/featured-img.jpg)",
-                    }}
-                  >
-                    <a
-                      className="
-                        popup-youtube
-                        icon-shape
-                        rounded-circle
-                        icon-xl
-                        text-decoration-none
-                        bg-white
-                        fs-3
-                      "
-                      href="https://www.youtube.com/watch?v=nb9gtT-BqRc"
-                    >
-                      <i className="mdi mdi-play"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
+
               <div className="card mb-4">
                 <div className="card-body p-4">
                   <h4 className="mb-1">Location</h4>
                   <p>
-                    Juana Henery’s place is located in Ahemedabad, Gujarat,
-                    India
+                    {`${property?.apartment?.propertyName} ${property?.apartment?.propertyType} at located in 
+                    ${property?.apartment?.address}, ${property?.apartment?.city}, ${property?.apartment?.state}`}
                   </p>
                   <div id="detailMap" className="listing-map"></div>
                 </div>
               </div>
               <div className="card mb-4" id="faq">
                 <div className="card-body p-4">
-                  <h4 className="mb-2">Frequently Ask Question</h4>
-                  <p>
-                    Juana Henery’s place is located in Ahemedabad, Gujarat,
-                    India
-                  </p>
+                  <h4 className="mb-2">House rules</h4>
+                  <li>
+                    Check-in: After 12:00 pm.
+                  </li>
+                  <li>
+                    No smoking
+                  </li>
+                  <li>
+                    No pets
+                  </li>
+                  <li>
+                    No parties or events
+                  </li>
                   <div className="mb-3">
-                    <h5 className="mb-1">
-                      Q. How manyhasellus velfelism pcommodo lacus?
-                    </h5>
+                    <h4 className="mb-1">
+                      Health & safety
+                    </h4>
                     <p>
-                      Suspendisse et risus non metus tincidunt aliquam. Aliquam
-                      ornare pellentesque eros necesdere fermentum. Aenean sit
-                      amet tellus nec ante dapibus congue at eget leo.
-                    </p>
-                  </div>
-                  <div className="mb-3">
-                    <h5 className="mb-1">
-                      Q. Is there ferum efficitur feliendulla viverante sit ame?
-                    </h5>
-                    <p>
-                      Phasellus vel felis fringilla pretium purus ucommodo
-                      lacuhasellus laoreet imperdiet arcuatesd posuere. Nunc
-                      posuere semper velit posuere sodales fringilla pretium.
-                    </p>
-                  </div>
-                  <div className="mb-0">
-                    <h5 className="mb-1">
-                      Q. Why estibulum tristiqueorcid lobortis tincidun?
-                    </h5>
-                    <p>
-                      Aliquam efficitur dolor interdum porttitor ultricieaecenas
-                      pretium volutpat commodtid dictum ipsumliquam scelerisque
-                      fermentum elitvel volutpat quam.
+                      Committed to Rezerve's enhanced cleaning process. Show more
+                      Rezerve's social distancing and other COVID-19-related guidelines apply
+                      Carbon monoxide alarm not reported Show more
                     </p>
                   </div>
                 </div>
@@ -657,7 +603,7 @@ function ListSingle(props) {
                 <div className="card mb-4">
                   <div className="card-body p-4">
                     <div className="d-flex align-items-center mb-3">
-                      <h3 className="fw-bold">$120</h3>
+                      <h3 className="fw-bold">{convertNumToCurrency(property?.apartment?.pricePerNight)}</h3>
                       <small className="text-muted ms-2">/ night</small>
                     </div>
                     <div>
@@ -694,7 +640,7 @@ function ListSingle(props) {
                     </div>
                   </div>
                 </div>
-                <div className="card mb-4">
+                {/* <div className="card mb-4">
                   <div className="card-body p-4">
                     <h5 className="mb-0">
                       Hosted by
@@ -702,7 +648,7 @@ function ListSingle(props) {
                     </h5>
                     <div className="text-center mt-4">
                       <img
-                        src="../assets/images/avatar-3.jpg "
+                        src="/assets/images/avatar-3.jpg "
                         alt="Rentkit Directory & Listing Bootstrap 5 Theme"
                         className="rounded-circle avatar avatar-lg mb-2"
                       />
@@ -728,308 +674,13 @@ function ListSingle(props) {
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="d-grid">
                 <a href="#" className="btn btn-light mb-4">
                   <i className="mdi mdi-flag-variant-outline me-1"></i>Report
                   this listing
                 </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="pb-lg-12 pb-7 bg-white" id="similarspace">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 col-12">
-              <div className="mb-8 text-center">
-                <h2 className="mb-0">Similar Places to Stay</h2>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-4 col-12">
-              <div className="mb-4 mb-lg-0">
-                <div className="position-relative">
-                  <div
-                    id="listcarouselTwo"
-                    className="carousel slide"
-                    data-bs-ride="carousel"
-                    data-bs-interval="false"
-                  >
-                    <ol className="carousel-indicators">
-                      <li
-                        data-bs-target="#listcarouselTwo"
-                        data-bs-slide-to="0"
-                        className="active rounded-circle"
-                      ></li>
-                      <li
-                        data-bs-target="#listcarouselTwo"
-                        data-bs-slide-to="1"
-                        className="rounded-circle"
-                      ></li>
-                      <li
-                        data-bs-target="#listcarouselTwo"
-                        data-bs-slide-to="2"
-                        className="rounded-circle"
-                      ></li>
-                    </ol>
-                    <div className="carousel-inner rounded-3">
-                      <div className="carousel-item active">
-                        <img
-                          src="../assets/images/listing-img-4.jpg"
-                          alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          className="w-100"
-                        />
-                      </div>
-                      <div className="carousel-item">
-                        <img
-                          src="../assets/images/listing-img-5.jpg"
-                          alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          className="w-100"
-                        />
-                      </div>
-                      <div className="carousel-item">
-                        <img
-                          src="../assets/images/listing-img-6.jpg"
-                          alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          className="w-100"
-                        />
-                      </div>
-                    </div>
-                    <a
-                      className="carousel-control-prev"
-                      href="#listcarouselTwo"
-                      role="button"
-                      data-bs-slide="prev"
-                    >
-                      <i
-                        className="
-                          mdi mdi-chevron-left
-                          icon-shape icon-xs
-                          bg-white
-                          rounded-circle
-                          fs-4
-                        "
-                      ></i>
-                      <span className="visually-hidden">Previous</span>
-                    </a>
-                    <a
-                      className="carousel-control-next"
-                      href="#listcarouselTwo"
-                      role="button"
-                      data-bs-slide="next"
-                    >
-                      <i
-                        className="
-                          mdi mdi-chevron-right
-                          icon-shape icon-xs
-                          bg-white
-                          rounded-circle
-                          fs-4
-                        "
-                      ></i>
-                      <span className="visually-hidden">Next</span>
-                    </a>
-                  </div>
-                  <div className="btn-wishlist"></div>
-                  <span
-                    className="
-                      badge
-                      bg-danger
-                      position-absolute
-                      start-0
-                      ms-3
-                      mt-3
-                      top-0
-                      z-1
-                    "
-                  >
-                    Featured
-                  </span>
-                </div>
-                <div className="mt-3">
-                  <h4 className="mb-0">
-                    <a href="list-single.html" className="text-inherit">
-                      Beautiful Cozy Home
-                    </a>
-                  </h4>
-                  <p className="text-sm font-weight-semi-bold">
-                    Udaipur, Rajasthan, India
-                  </p>
-                  <div className="d-flex justify-content-between mt-3">
-                    <div>
-                      <span className="h5">$100</span>
-                      <span className="text-sm font-weight-semi-bold ms-1">
-                        /night
-                      </span>
-                    </div>
-                    <div>
-                      <span className="mdi mdi-star me-1 text-primary text-sm"></span>
-                      <span className="font-weight-semi-bold text-sm">
-                        <span className="text-dark">5.0</span> (8)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4 col-12">
-              <div className="mb-4 mb-lg-0">
-                <div className="position-relative">
-                  <a href="list-single.html">
-                    <img
-                      src="../assets/images/listing-img-2.jpg"
-                      alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                      className="w-100 rounded-3"
-                    />
-                  </a>
-                  <div className="btn-wishlist"></div>
-                  <span className="badge bg-info position-absolute start-0 ms-3 mt-3">
-                    Promoted
-                  </span>
-                </div>
-                <div className="mt-3">
-                  <div>
-                    <h4 className="mb-0">
-                      <a href="list-single.html" className="text-inherit">
-                        Affordable Long Term Room
-                      </a>
-                    </h4>
-                    <p className="text-sm font-weight-semi-bold">
-                      Daman, Daman and Diu, India
-                    </p>
-                  </div>
-                  <div className="d-flex justify-content-between mt-3">
-                    <div>
-                      <span className="h5">$250</span>
-                      <span className="text-sm font-weight-semi-bold ms-1">
-                        /night
-                      </span>
-                    </div>
-                    <div>
-                      <span className="mdi mdi-star me-1 text-primary text-sm"></span>
-                      <span className="font-weight-semi-bold text-sm">
-                        <span className="text-dark">4.9</span> (6)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4 col-12">
-              <div className="mb-4 mb-lg-0">
-                <div className="position-relative">
-                  <div
-                    id="listcarouselThird"
-                    className="carousel slide"
-                    data-bs-ride="carousel"
-                    data-bs-interval="false"
-                  >
-                    <ol className="carousel-indicators">
-                      <li
-                        data-bs-target="#listcarouselThird"
-                        data-bs-slide-to="0"
-                        className="active rounded-circle"
-                      ></li>
-                      <li
-                        data-bs-target="#listcarouselThird"
-                        data-bs-slide-to="1"
-                        className="rounded-circle"
-                      ></li>
-                      <li
-                        data-bs-target="#listcarouselThird"
-                        data-bs-slide-to="2"
-                        className="rounded-circle"
-                      ></li>
-                    </ol>
-                    <div className="carousel-inner rounded-3">
-                      <div className="carousel-item active">
-                        <img
-                          src="../assets/images/listing-img-4.jpg"
-                          alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          className="w-100"
-                        />
-                      </div>
-                      <div className="carousel-item">
-                        <img
-                          src="../assets/images/listing-img-5.jpg"
-                          alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          className="w-100"
-                        />
-                      </div>
-                      <div className="carousel-item">
-                        <img
-                          src="../assets/images/listing-img-6.jpg"
-                          alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          className="w-100"
-                        />
-                      </div>
-                    </div>
-                    <a
-                      className="carousel-control-prev"
-                      href="#listcarouselThird"
-                      role="button"
-                      data-bs-slide="prev"
-                    >
-                      <i
-                        className="
-                          mdi mdi-chevron-left
-                          icon-shape icon-xs
-                          bg-white
-                          rounded-circle
-                          fs-4
-                        "
-                      ></i>
-                      <span className="visually-hidden">Previous</span>
-                    </a>
-                    <a
-                      className="carousel-control-next"
-                      href="#listcarouselThird"
-                      role="button"
-                      data-bs-slide="next"
-                    >
-                      <i
-                        className="
-                          mdi mdi-chevron-right
-                          icon-shape icon-xs
-                          bg-white
-                          rounded-circle
-                          fs-4
-                        "
-                      ></i>
-                      <span className="visually-hidden">Next</span>
-                    </a>
-                  </div>
-                  <div className="btn-wishlist"></div>
-                </div>
-                <div className="mt-3">
-                  <h4 className="mb-0">
-                    <a href="list-single.html" className="text-inherit">
-                      Entire 3 BHK Cozy Apartment
-                    </a>
-                  </h4>
-                  <p className="text-sm font-weight-semi-bold">
-                    Ahmedabad, Gujarat, India
-                  </p>
-
-                  <div className="d-flex justify-content-between mt-3">
-                    <div>
-                      <span className="h5">$180</span>
-                      <span className="text-sm font-weight-semi-bold ms-1">
-                        /night
-                      </span>
-                    </div>
-                    <div>
-                      <span className="mdi mdi-star me-1 text-primary text-sm"></span>
-                      <span className="font-weight-semi-bold text-sm">
-                        <span className="text-dark">4.7</span> (4)
-                      </span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
