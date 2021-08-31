@@ -1,38 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+
 import FilterModal from "./FilterModal";
 import Listing from "./Listing";
+import { listingsRequest } from '../actions'
 
-function Listings(props) {
-  const [listings] = useState([
-    {
-      name: "Beautiful Cozy Home",
-      location: "Udaipur, Rajasthan, India",
-      price: "$100",
-      rating: "5.0",
-      ratingCount: "8",
-    },
-    {
-      name: "Affordable Long Term Room",
-      location: "Udaipur, Rajasthan, India",
-      price: "$200",
-      rating: "5.0",
-      ratingCount: "8",
-    },
-    {
-      name: "Entire 3 BHK Cozy Apartment",
-      location: "Udaipur, Rajasthan, India",
-      price: "$200",
-      rating: "5.0",
-      ratingCount: "8",
-    },
-    {
-      name: "Namirta bunglow single beds / room",
-      location: "Udaipur, Rajasthan, India",
-      price: "$100",
-      rating: "5.0",
-      ratingCount: "8",
-    },
-  ]);
+function Listings() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listingsRequest());
+  }, [])
+
+  const { listings, ratingAvg } = useSelector((state) => state.getListings)
+  const getAvg = (id) => ratingAvg.map(r => {
+    if (r._id === id) return r.rating
+  })
+
   const [showFilter, setShowFilter] = useState(false);
   return (
     <>
@@ -44,9 +29,9 @@ function Listings(props) {
               <div className="border-bottom pb-4 mb-4 mt-4">
                 <div className="hero-search-area-form">
                   <h1 className="mb-1">Stays in selected filter</h1>
-                  <p className="mb-4">
+                  {/* <p className="mb-4">
                     On average they rated their stays 4.7 out of 5 stars.
-                  </p>
+                  </p> */}
 
                   <div>
                     <div className="row g-md-3 g-0">
@@ -102,42 +87,45 @@ function Listings(props) {
               <div>
                 <div className="row mb-4 align-items-center">
                   <div className="col-md-6 col-8">
-                    <p className="mb-0">Showing 1 – 8 of 10 results</p>
+                    {/* <p className="mb-0">Showing 1 – 8 of 10 results</p> */}
                   </div>
                   <div className="col-md-6 col-4 text-end">
                     <div>
-                      <a
-                        href="list-with-map.html"
+                      <div
+                        style={{ marginRight: '2px', cursor: 'pointer' }}
+                        onClick={()=> console.log('clicked')}
                         className="
-                      active
-                      icon-shape icon-md
-                      bg-primary
-                      text-white
-                      border-primary
-                      rounded-1
-                    "
+                          icon-shape icon-md
+                          bg-primary
+                          text-white
+                          border-primary
+                          rounded-1"
                       >
-                        <i className="mdi mdi-format-list-bulleted"></i>
-                      </a>
-                      <a
-                        href="grid-with-map.html"
+                        <AiOutlineArrowLeft />
+                      </div>
+                      <div
+                      style={{ cursor: 'pointer' }}
                         className="icon-shape icon-md text-primary border rounded-1"
+                        onClick={()=> console.log('clicked')}
                       >
-                        <i className="mdi mdi-view-grid"></i>
-                      </a>
+                        <AiOutlineArrowRight />
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="row">
                   {listings.map(
-                    ({ name, location, price, rating, ratingCount }, index) => (
+                    ({ propertyName, address, pricePerNight, ratings, booked, _id, img }, index) => (
                       <div key={index}>
                         <Listing
-                          name={name}
-                          location={location}
-                          price={price}
-                          rating={rating}
-                          ratingCount={ratingCount}
+                          name={propertyName}
+                          location={address}
+                          price={pricePerNight}
+                          listingId={_id}
+                          rating={getAvg(_id)}
+                          img={img}
+                          ratingCount={ratings.length}
+                          booked={booked}
                           className="col-md-12 col-12"
                         />
                         <hr className="my-3" />
