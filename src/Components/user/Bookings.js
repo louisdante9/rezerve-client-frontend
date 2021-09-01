@@ -1,15 +1,18 @@
-const Bookings = () => (
+const Bookings = ({ firstname }) => (
   <>
     <div class="row">
       <div class="col-12 mb-6">
-        <h2 class="mb-0">David’s listings</h2>
+        <h2 class="mb-0">{`${firstname
+          .toLowerCase()
+          .slice(0, 1)
+          .toUpperCase()}${firstname.toLowerCase().slice(1)}’s bookings`}</h2>
       </div>
       <div class="col-xl-4 col-md-6 col-12">
         <div class="mb-6">
           <div class="position-relative">
             <div
               id="listcarousel"
-              class="carousel slide "
+              class="carousel slide"
               data-bs-ride="carousel"
               data-bs-interval="false"
             >

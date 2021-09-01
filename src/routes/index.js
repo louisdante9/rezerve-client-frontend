@@ -9,6 +9,7 @@ import Faq from "../Components/others/Faq";
 import Listings from "../Components/Listings";
 import ListSingle from "../Components/ListSingle";
 import Bookings from "../Components/user/Bookings";
+import Favourite from "../Components/user/Favourite";
 import Profile from "../Components/user/Profile";
 import Reviews from "../Components/user/Reviews";
 import NotFound from "../Components/NotFound";
