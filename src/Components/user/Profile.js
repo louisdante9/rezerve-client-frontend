@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import Bookings from "./Bookings";
 import checkedMark from "../../Assets/images/checked-mark.svg";
 import avatar from "../../Assets/images/avatar-3.jpg";

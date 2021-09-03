@@ -1,23 +1,22 @@
 import React from "react";
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineUser } from "react-icons/ai";
-import { logout } from '../actions'
-
-import logo from '../logo.svg';
+import { logout } from "../actions";
 
 function Nav(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.setCurrentUser)
+  const { user } = useSelector((state) => state.setCurrentUser);
   const handleLogout = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
   return (
     <div className="nav-header nav-header-classic shadow">
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">
-            <nav className="navbar navbar-expand-lg" style={{ height: '60px' }}>
+            <nav className="navbar navbar-expand-lg" style={{ height: "60px" }}>
               <Link className="navbar-brand" to="/">
                 <h3>Rezerve Homes</h3>
               </Link>
@@ -98,32 +97,34 @@ function Nav(props) {
                 </ul>
                 {user.firstname ? (
                   <>
-                <div
-                  className="btn btn-primary d-none d-lg-block"
-                  style={{
-                    borderRadius: '21px',
-                    background: 'transparent',
-                    color: '#222222',
-                    cursor: 'default',
-                    marginRight: '5px'
-                  }}
-                >
-                  <AiOutlineUser /> {" "}Hi {user.firstname}
-                </div>
-                <button
-                    className="btn btn-primary d-none d-lg-block"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </button>
-                </>
-                )
-                  : (<Link
+                    <div
+                      className="btn btn-primary d-none d-lg-block"
+                      style={{
+                        borderRadius: "21px",
+                        background: "transparent",
+                        color: "#222222",
+                        cursor: "pointer",
+                        marginRight: "5px",
+                      }}
+                      onClick={() => navigate("/app/profile")}
+                    >
+                      <AiOutlineUser /> Hi {user.firstname}
+                    </div>
+                    <button
+                      className="btn btn-primary d-none d-lg-block"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <Link
                     to="/login"
                     className="btn btn-primary d-none d-lg-block"
                   >
                     Login / Sign up
-                  </Link>)}
+                  </Link>
+                )}
               </div>
             </nav>
           </div>
