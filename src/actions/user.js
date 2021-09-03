@@ -10,7 +10,6 @@ export const getProfile = (userId) => async (dispatch) => {
         type: "GET_PROFILE_SUCCESS",
         payload: data.user,
       });
-      dispatch(getFavourites());
     }
   } catch (error) {
     if (error.response.data) {

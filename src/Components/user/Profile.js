@@ -12,25 +12,23 @@ import { getProfile, getFavourites } from "../../actions/user";
 const Profile = () => {
   const dispatch = useDispatch();
   const { profile, error, favourites } = useSelector((state) => state.user);
-  const { user } = useSelector((state) => state.setCurrentUser);
-
-  const fetchUserProfile = useCallback(() => {
-    dispatch(getProfile(user.id));
-  }, [user.id, dispatch]);
-
-  const fetchUserFavourites = () => {
-    dispatch(getFavourites(user.id));
-  };
+  const {
+    user: { id },
+  } = useSelector((state) => state.setCurrentUser);
 
   useEffect(() => {
+    const fetchUserProfile = () => {
+      dispatch(getProfile(id));
+    };
     fetchUserProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
+    const fetchUserFavourites = () => {
+      dispatch(getFavourites(id));
+    };
     fetchUserFavourites();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, id]);
 
   const [subNavs, setSubNavs] = useState({
     bookings: true,
