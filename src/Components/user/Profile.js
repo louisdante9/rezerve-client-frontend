@@ -128,8 +128,9 @@ const Profile = () => {
                     id="pills-tab"
                     role="tablist"
                   >
-                    {Object.keys(subNavs).map((nav) => (
+                    {Object.keys(subNavs).map((nav, index) => (
                       <li
+                        key={`${nav}${index}`}
                         className="nav-item ml-0"
                         style={{ cursor: "pointer" }}
                         onClick={() => navigationHandler(nav)}
@@ -145,7 +146,9 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            {subNavs.bookings && <Bookings firstname={profile.firstname} />}
+            {subNavs.bookings && (
+              <Bookings firstname={profile.firstname} bookings={favourites} />
+            )}
             {/* {subNavs.reviews && <Reviews />} */}
             {subNavs.favourite && (
               <Favourite
