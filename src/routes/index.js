@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom";
 import Home from "../Components/home/Home";
 import Register from "../Components/auth/Registration/Register";
 import Login from "../Components/auth/Login/Login";
@@ -10,6 +10,7 @@ import Listings from "../Components/Listings";
 import ListSingle from "../Components/ListSingle";
 import Bookings from "../Components/user/Bookings";
 import Favourite from "../Components/user/Favourite";
+import Profile from "../Components/user/Profile";
 import Reviews from "../Components/user/Reviews";
 import NotFound from "../Components/NotFound";
 import Layout from "../Components/Layout";
@@ -22,7 +23,8 @@ const routes = (isSignedIn) => [
     {
       path: 'app',
       element: isSignedIn ? <Layout /> : <Navigate to="/login" />,
-      children: [
+    children: [
+      { path: "profile", element: <Profile /> },
         { path: 'favourites', element: <Favourite /> },
         { path: 'listings', element: <Listings /> },
         { path: 'listing/:id', element: <ListSingle /> },

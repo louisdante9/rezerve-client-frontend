@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineUser } from "react-icons/ai";
-import { logout } from '../actions'
+import { logout } from "../actions";
 
 function Nav(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [profile, setProfile] = useState(null)
   const { user } = useSelector((state) => state.setCurrentUser)
@@ -15,14 +16,14 @@ function Nav(props) {
     }
   }, [user])
   const handleLogout = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
   return (
     <div className="nav-header nav-header-classic shadow">
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">
-            <nav className="navbar navbar-expand-lg" style={{ height: '60px' }}>
+            <nav className="navbar navbar-expand-lg" style={{ height: "60px" }}>
               <Link className="navbar-brand" to="/">
                 <h3>Rezerve Homes</h3>
               </Link>
@@ -128,7 +129,8 @@ function Nav(props) {
                     className="btn btn-primary d-none d-lg-block"
                   >
                     Login / Sign up
-                  </Link>)}
+                  </Link>
+                )}
               </div>
             </nav>
           </div>

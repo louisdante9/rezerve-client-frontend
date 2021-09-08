@@ -6,7 +6,6 @@ export const getApartments = () => (dispatch) => {
   axios
     .get(`${API}/apartments`)
     .then(({ data: { apartments } }) => {
-      console.log("res", apartments);
       dispatch({
         type: "GET_APARTMENTS_SUCCESS",
         payload: apartments,
