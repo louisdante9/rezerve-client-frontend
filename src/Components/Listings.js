@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import { Icon } from 'leaflet';
 import FilterModal from "./FilterModal";
 import Listing from "./Listing";
 import { listingsRequest } from '../actions'
+import 'leaflet/dist/leaflet.css';
+
 
 function Listings() {
   const dispatch = useDispatch();
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     dispatch(listingsRequest());
@@ -18,7 +23,7 @@ function Listings() {
     if (r._id === id) return r.rating
   })
 
-  const [showFilter, setShowFilter] = useState(false);
+  console.log(listings, 'listings')
   return (
     <>
       {showFilter && <FilterModal close={() => setShowFilter(false)} />}
@@ -35,17 +40,16 @@ function Listings() {
 
                   <div>
                     <div className="row g-md-3 g-0">
-                      <div className="col-md-4 mb-3">
-                        <select className="select2">
-                          <option>Where</option>
-                          <option value="Ahmedabad">Ahmedabad</option>
-                          <option value="Surat">Surat</option>
-                          <option value="Rajkot">Rajkot</option>
-                          <option value="Udaipur">Udaipur</option>
-                          <option value="Daman">Daman</option>
-                          <option value="Pune">Pune</option>
-                          <option value="Jaipur">Jaipur</option>
-                        </select>
+                    <div className="col-md-4 mb-3">
+                        <div>
+                          <input
+                            type="text"
+                            id="dateSelect"
+                            name="location"
+                            className="form-control"
+                            placeholder="Where"
+                          />
+                        </div>
                       </div>
                       <div className="col-md-4 mb-3">
                         <div>
@@ -93,7 +97,7 @@ function Listings() {
                     <div>
                       <div
                         style={{ marginRight: '2px', cursor: 'pointer' }}
-                        onClick={()=> console.log('clicked')}
+                        onClick={() => console.log('clicked')}
                         className="
                           icon-shape icon-md
                           bg-primary
@@ -104,9 +108,9 @@ function Listings() {
                         <AiOutlineArrowLeft />
                       </div>
                       <div
-                      style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer' }}
                         className="icon-shape icon-md text-primary border rounded-1"
-                        onClick={()=> console.log('clicked')}
+                        onClick={() => console.log('clicked')}
                       >
                         <AiOutlineArrowRight />
                       </div>
@@ -143,7 +147,22 @@ function Listings() {
           order-md-2
         "
           >
-            <div id="mapid_2" className="listinghalfmap-map map"></div>
+            {/* <div id="mapid_2" className="listinghalfmap-map map"></div> */}
+            {listings.length > 0 && <MapContainer center={[listings[0]?.latitude, listings[0]?.longitude]} zoom={13} scrollWheelZoom={false} style={{ height: '100vh', width: '100wh' }}>
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              
+             { listings.map(({latitude, longitude}, index)=> <Marker
+                key={index}
+                position={[latitude, longitude]}
+                icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}>
+                <Popup>
+                  This is your destination.
+                </Popup>
+              </Marker>)}
+            </MapContainer>} 
           </div>
         </div>
       </div>

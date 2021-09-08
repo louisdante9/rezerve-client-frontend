@@ -41,8 +41,8 @@ function Footer(props) {
               </div>
             </div>
           </div>
-          {/* <div className="col-xl-2 col-lg-2 col-md-4 col-6">
-            <div className="mb-14">
+          <div className="col-xl-2 col-lg-2 col-md-4 col-6">
+            {/* <div className="mb-14">
               <h4 className=" mb-3  text-dark">For Owner</h4>
               <div>
                 <ul className="list-unstyled">
@@ -73,10 +73,10 @@ function Footer(props) {
                   </li>
                 </ul>
               </div>
-            </div>
-          </div> */}
-          {/* <div className="col-xl-2 col-lg-2 col-md-4 col-6">
-            <div className="mb-14">
+            </div> */}
+          </div>
+          <div className="col-xl-2 col-lg-2 col-md-4 col-6">
+            {/* <div className="mb-14">
               <h4 className=" mb-3  text-dark">Company</h4>
               <div>
                 <ul className="list-unstyled">
@@ -112,10 +112,10 @@ function Footer(props) {
                   </li>
                 </ul>
               </div>
-            </div>
-          </div> */}
-          {/* <div className="col-xl-2 col-lg-2 col-md-4 col-6">
-            <div className="mb-14">
+            </div> */}
+          </div>
+          <div className="col-xl-2 col-lg-2 col-md-4 col-6">
+            {/* <div className="mb-14">
               <h4 className=" mb-3  text-dark">Social</h4>
               <div>
                 <ul className="list-unstyled">
@@ -146,8 +146,8 @@ function Footer(props) {
                   </li>
                 </ul>
               </div>
-            </div>
-          </div> */}
+            </div> */}
+          </div>
           <div className="col-xl-4 col-lg-4 col-md-8 col-12">
             <div className="mb-14">
               <h4 className=" mb-3" style={{ color: "white" }}>

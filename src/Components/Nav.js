@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineUser } from "react-icons/ai";
 import { logout } from '../actions'
 
-import logo from '../logo.svg';
-
 function Nav(props) {
   const dispatch = useDispatch();
+  const [profile, setProfile] = useState(null)
   const { user } = useSelector((state) => state.setCurrentUser)
+  useEffect(()=> {
+    if (user) {
+      
+      setProfile(user)
+    }
+  }, [user])
   const handleLogout = () => {
     dispatch(logout())
   }
@@ -96,7 +101,7 @@ function Nav(props) {
                     </a>
                   </li> */}
                 </ul>
-                {user.firstname ? (
+                {profile?.firstname ? (
                   <>
                 <div
                   className="btn btn-primary d-none d-lg-block"
@@ -108,7 +113,7 @@ function Nav(props) {
                     marginRight: '5px'
                   }}
                 >
-                  <AiOutlineUser /> {" "}Hi {user.firstname}
+                  <AiOutlineUser /> {" "}Hi {profile?.firstname}
                 </div>
                 <button
                     className="btn btn-primary d-none d-lg-block"
