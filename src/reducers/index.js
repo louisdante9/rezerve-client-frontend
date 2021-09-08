@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   getListings,
   favourite,
   apartments,
-  user
+  user,
   booking
 });
 
