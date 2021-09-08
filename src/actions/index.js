@@ -43,14 +43,15 @@ export function signinRequest(userData, navigate) {
       dispatch(setCurrentUser(decode(token)));
       navigate('/app/listings');
     }).catch(err => {
-      dispatch({ type: "USER_LOGIN_ERROR", payload: err.response.data });
+      console.log(err.response)
+      // dispatch({ type: "USER_LOGIN_ERROR", payload: err.response.data });
     })
 }
 
 export function verifyUserRequest(activationCode, navigate) {
   return dispatch => axios.patch(`${API}/user/activate`, activationCode).then(res => {
     const token = registerToken(res.data);
-    dispatch(setCurrentUser({ type: "VEIFICATION_SUCCESS", token }));
+    dispatch(setCurrentUser(decode(token)));
     navigate('/app/listings')
   }).catch(err => {
     dispatch({
@@ -113,6 +114,35 @@ export const getFavouriteRequest = ({userId}) => dispatch => {
    })
    .catch((error) => {
      dispatch("FAVOURITES_FAILURE");
+   });
+}
+export const checkAvailability = (obj) => dispatch => {
+ axios.post(`${API}/booking/check`, obj)
+   .then((response) => {
+     console.log(response, 'response')
+     dispatch({type: "CHECK_BOOKING_AVAILABILITY", payload: response.data });
+   })
+   .catch((error) => {
+     dispatch("BOOKING_FAILURE");
+   });
+}
+export const getAllAvailableBookingDate = ({apartmentId}) => dispatch => {
+ axios.get(`${API}/booking/${apartmentId}`)
+   .then((response) => {
+     dispatch({type: "BOOKINGS_SUCCESSFUL", payload: response.data.bookings });
+   })
+   .catch((error) => {
+     dispatch("BOOKING_FAILURE");
+   });
+}
+export const createBooking = (obj) => dispatch => {
+ axios.post(`${API}/booking`, obj)
+   .then((response) => {
+      console.log(response, 'response')
+     dispatch({type: "BOOKING_SUCCESSFUL", payload: response.data.booking });
+   })
+   .catch((error) => {
+     dispatch("BOOKING_FAILURE");
    });
 }
 

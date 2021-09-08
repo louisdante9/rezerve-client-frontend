@@ -27,6 +27,13 @@
 .App-link {
   color: #61dafb;
 }
+/* .rdrDefinedRangesWrapper {
+  display: none;
+} */
+/* 
+.leaflet-container {
+  height: 100%;
+} */
 
 @keyframes App-logo-spin {
   from {

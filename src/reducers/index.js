@@ -4,6 +4,8 @@ import getListings from './listings'
 import favourite from './favourites'
 import user from "./user";
 import apartments from "./apartments";
+import booking from './Bookings'
+
 
 const rootReducer = combineReducers({
   setCurrentUser,
@@ -11,6 +13,7 @@ const rootReducer = combineReducers({
   favourite,
   apartments,
   user
+  booking
 });
 
 export default rootReducer;

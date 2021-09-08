@@ -7,7 +7,14 @@ import { logout } from "../actions";
 function Nav(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.setCurrentUser);
+  const [profile, setProfile] = useState(null)
+  const { user } = useSelector((state) => state.setCurrentUser)
+  useEffect(()=> {
+    if (user) {
+      
+      setProfile(user)
+    }
+  }, [user])
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -95,30 +102,29 @@ function Nav(props) {
                     </a>
                   </li> */}
                 </ul>
-                {user.firstname ? (
+                {profile?.firstname ? (
                   <>
-                    <div
-                      className="btn btn-primary d-none d-lg-block"
-                      style={{
-                        borderRadius: "21px",
-                        background: "transparent",
-                        color: "#222222",
-                        cursor: "pointer",
-                        marginRight: "5px",
-                      }}
-                      onClick={() => navigate("/app/profile")}
-                    >
-                      <AiOutlineUser /> Hi {user.firstname}
-                    </div>
-                    <button
-                      className="btn btn-primary d-none d-lg-block"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <Link
+                <div
+                  className="btn btn-primary d-none d-lg-block"
+                  style={{
+                    borderRadius: '21px',
+                    background: 'transparent',
+                    color: '#222222',
+                    cursor: 'default',
+                    marginRight: '5px'
+                  }}
+                >
+                  <AiOutlineUser /> {" "}Hi {profile?.firstname}
+                </div>
+                <button
+                    className="btn btn-primary d-none d-lg-block"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </>
+                )
+                  : (<Link
                     to="/login"
                     className="btn btn-primary d-none d-lg-block"
                   >
