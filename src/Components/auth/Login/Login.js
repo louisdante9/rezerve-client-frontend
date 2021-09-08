@@ -9,7 +9,6 @@ function Login(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { errors: error } = useSelector((state) => state.setCurrentUser);
-  console.log(error)
   const [loading, setLoading] = useState(false);
   const { handleBlur, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {

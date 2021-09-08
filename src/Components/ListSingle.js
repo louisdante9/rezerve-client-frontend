@@ -1,10 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import moment from 'moment';
 import { useParams } from 'react-router-dom'
+import { DateRange } from 'react-date-range';
 import { AiOutlineCheckSquare } from "react-icons/ai";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import Zoom from 'react-medium-image-zoom'
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import 'react-medium-image-zoom/dist/styles.css'
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import { Icon } from 'leaflet';
+import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import { convertNumToCurrency } from '../utils'
-import postImg from '../Assets/images/post-single-img.jpg'
-import { favouriteRequest, getFavouriteRequest, delFavouriteRequest, singleListing } from '../actions'
+import 'leaflet/dist/leaflet.css';
+import {createBooking} from '../actions'
+
+
+import {
+  favouriteRequest,
+  getFavouriteRequest,
+  delFavouriteRequest,
+  singleListing,
+  checkAvailability,
+  // getAllAvailableBookingDate
+} from '../actions'
 
 
 function ListSingle(props) {
@@ -13,19 +35,84 @@ function ListSingle(props) {
   const { user } = useSelector((state) => state.setCurrentUser)
   const { favourites } = useSelector((state) => state.favourite)
   const { property } = useSelector((state) => state.getListings)
+  // const { bookings } = useSelector((state) => state.booking)
+  const { checks, booked } = useSelector((state) => state.booking)
+  const [loading, setLoading] = useState(false);
+  const [checkedIn, setcheckedIn] = useState(false);
+  const [error, setError] = useState('');
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection'
+    }
+  ]);
+  const config = {
+    public_key: process.env.REACT_APP_PUBLIC_KEY,
+    tx_ref: Date.now(),
+    amount: property?.apartment?.pricePerNight,
+    currency: 'NGN',
+    payment_options: 'card',
+    customer: {
+      email: user?.email,
+      name: `${user?.firstname} ${user?.lastname}`,
+    },
+    meta: {
+      x_action: "LISTING_PAYMENT",
+      x_apartment_id: property?.apartment?._id,
+      x_user_id: user?.id,
+      x_start_date: state.startDate,
+      x_end_date: state.endDate 
+    },
+    customizations: {
+      title: 'my Payment Title',
+      description: 'Payment for items in cart',
+      logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+    },
+  };
+  const handleFlutterPayment = useFlutterwave(config);
+
+  console.log(property,'property')
+  const { handleSubmit } = useFormik({
+    initialValues: {},
+    onSubmit: (values) => {
+      setLoading(!loading);
+      setcheckedIn(false);
+      setError('');
+      const { startDate, endDate } = state[0]
+      if (!endDate) {
+        return setError('A date range is required ')
+      }
+      let start = moment(startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .toISOString()
+      let end = moment(endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .toISOString()
+      console.log(start, end)
+      dispatch(checkAvailability({
+        startDate: start,
+        endDate: end,
+        apartmentId: property?.apartment?._id
+      }));
+    },
+  });
 
   useEffect(() => {
     dispatch(getFavouriteRequest({ userId: user.id }))
     dispatch(singleListing({ apartmentId: id, userId: user.id }))
+    // dispatch(getAllAvailableBookingDate({apartmentId: id}))
   }, []);
 
+  useEffect(() => {
+    if (booked !== undefined && !booked) {
+      setcheckedIn(!booked)
+    }
+  }, [booked])
 
   const handleFavourite = () => {
     favourites.find(f => f.apartment === id)
       ? dispatch(delFavouriteRequest({ apartmentId: id, userId: user.id }))
       : dispatch(favouriteRequest({ apartmentId: id, userId: user.id }))
   }
-  console.log(property, 'property')
   return (
     <div>
       <div className="container mt-5">
@@ -44,7 +131,7 @@ function ListSingle(props) {
                     onClick={handleFavourite}
                     style={{ marginRight: '10px' }}
                     className="btn btn-white btn-sm">
-                    <span className={property.favourited ? "mdi mdi-heart me-1 text-danger" : "mdi mdi-heart me-1"}></span>Save
+                    <span className={favourites.find(f => f.apartment === id) ? "mdi mdi-heart me-1 text-danger" : "mdi mdi-heart me-1"}></span>Save
                   </div>
                   <a href="#gallery" className="btn btn-white btn-sm">
                     View Photos
@@ -99,27 +186,28 @@ function ListSingle(props) {
                   <div className="row">
                     <div className="col-md-6">
                       <ul className="list-group list-unstyled">
-                        {property?.apartment?.amenities.split(',').slice(0,4).map((amenity)=>(
-                          <li className="list-item">
-                          <AiOutlineCheckSquare />
-                          {amenity}
-                        </li>
+                        {property?.apartment?.amenities.split(',').slice(0, 4).map((amenity) => (
+                          <li className="list-item" key={amenity}>
+                            <AiOutlineCheckSquare />{" "}
+                            {amenity}
+                          </li>
                         ))}
                       </ul>
                     </div>
                     <div className="col-md-6">
                       <ul className="list-group list-unstyled">
-                      {property?.apartment?.amenities.split(',').slice(4, ).map((amenity)=>(
-                          <li className="list-item">
-                          <AiOutlineCheckSquare />
-                          {amenity}
-                        </li>
+                        {property?.apartment?.amenities.split(',').slice(4,).map((amenity) => (
+                          <li className="list-item" key={amenity}>
+                            <AiOutlineCheckSquare />
+                            {amenity}
+                          </li>
                         ))}
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
+
               {/* <div className="card mb-4">
                 <div className="card-body p-4">
                   <h4>Reviews</h4>
@@ -467,10 +555,9 @@ function ListSingle(props) {
                   <div className="zoom-gallery">
                     <div className="row">
                       {property?.apartment?.img.length ? property?.apartment?.img.map((p) => (
-                        <div className="col-md-4">
-                          <a
-                            href="/assets/images/gallery-zoom-img-1.jpg"
-                            title="Gallery Image Rentkit Directory Bootstrap 5 Template"
+                        <div className="col-md-4" key={p}>
+                          <Zoom
+                            zoomMargin={40}
                           >
                             <img
                               src={p}
@@ -478,83 +565,14 @@ function ListSingle(props) {
                               alt="Rentkit Directory & Listing Bootstrap 5 Theme"
                               style={{ height: '121px', width: '100%' }}
                             />
-                          </a>
+                          </Zoom>
                         </div>
                       )) : (
                         <div className="card-body p-4">
                           <h4 className="mb-1">No Photo available</h4>
                         </div>
-                      )
-                      }
-                      {/* <div className="col-md-4">
-                        <a
-                          href="/assets/images/gallery-zoom-img-1.jpg"
-                          title="Gallery Image Rentkit Directory Bootstrap 5 Template"
-                        >
-                          <img
-                            src="/assets/images/gallery-img-1.jpg"
-                            className="img-fluid rounded-3 mb-4"
-                            alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          />
-                        </a>
-                      </div>
-                      <div className="col-md-4">
-                        <a
-                          href="/assets/images/gallery-zoom-img-2.jpg"
-                          title="Gallery Image Rentkit Directory Bootstrap 5 Template"
-                        >
-                          <img
-                            src="/assets/images/gallery-img-2.jpg"
-                            className="img-fluid rounded-3 mb-4"
-                            alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          />
-                        </a>
-                      </div>
-                      <div className="col-md-4">
-                        <a
-                          href="/assets/images/gallery-zoom-img-3.jpg"
-                          title="Gallery Image Rentkit Directory Bootstrap 5 Template"
-                        >
-                          <img
-                            src="/assets/images/gallery-img-3.jpg"
-                            className="img-fluid rounded-3 mb-4"
-                            alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          />
-                        </a>
-                      </div>
-                      <div className="col-md-4">
-                        <a
-                          href="/assets/images/gallery-zoom-img-4.jpg"
-                          title="Gallery Image Rentkit Directory Bootstrap 5 Template"
-                        >
-                          <img
-                            src="/assets/images/gallery-img-4.jpg"
-                            className="img-fluid rounded-3 mb-4 mb-lg-0"
-                            alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          />
-                        </a>
-                      </div>
-                      <div className="col-md-4">
-                        <a
-                          href="/assets/images/gallery-zoom-img-3.jpg"
-                          title="Gallery Image Rentkit Directory Bootstrap 5 Template"
-                        >
-                          <img
-                            src="/assets/images/gallery-img-3.jpg"
-                            className="img-fluid rounded-3 mb-4 mb-lg-0"
-                            alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          />
-                        </a>
-                      </div>
-                      <div className="col-md-4">
-                        <a href="/assets/images/gallery-zoom-img-2.jpg">
-                          <img
-                            src="/assets/images/gallery-img-2.jpg"
-                            className="img-fluid rounded-3 mb-4 mb-lg-0"
-                            alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                          />
-                        </a>
-                      </div> */}
+                      )}
+
                     </div>
                   </div>
                 </div>
@@ -567,7 +585,23 @@ function ListSingle(props) {
                     {`${property?.apartment?.propertyName} ${property?.apartment?.propertyType} at located in 
                     ${property?.apartment?.address}, ${property?.apartment?.city}, ${property?.apartment?.state}`}
                   </p>
-                  <div id="detailMap" className="listing-map"></div>
+                  {/* <div id="detailMap" className="listing-map"></div> */}
+                  {property?.apartment?.latitude
+                    && property?.apartment?.longitude
+                    && (<MapContainer center={[property?.apartment?.latitude, property?.apartment?.longitude]} zoom={13} scrollWheelZoom={false}>
+                      <TileLayer
+                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                      <Marker
+                        position={[property?.apartment?.latitude, property?.apartment?.longitude]}
+                        icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}>
+                        <Popup>
+                          This is your destination.
+                          {/* <br /> Easily customizable. */}
+                        </Popup>
+                      </Marker>
+                    </MapContainer>)}
                 </div>
               </div>
               <div className="card mb-4" id="faq">
@@ -607,74 +641,73 @@ function ListSingle(props) {
                       <small className="text-muted ms-2">/ night</small>
                     </div>
                     <div>
-                      <form>
+                      <div>
                         <div className="mb-3">
                           <label className="form-label">Your Stay</label>
                           <div className="input-group mb-3">
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="dateSelect"
-                              placeholder="Select Date"
-                              aria-label="Recipient's username"
+                            <DateRange
+                              editableDateInputs={false}
+                              onChange={(item) => setState([item.selection])}
+                              moveRangeOnFirstSelection={false}
+                              ranges={state}
+                              minDate={new Date()}
+                              staticRanges={[]}
+                              inputRanges={[]}
+                              rangeColors={['#6c4af2']}
+                            //  disabledDates={[ new Date(), new Date('2021/09/07') ]}
                             />
-                            <span className="input-group-text bg-transparent">
-                              <i className="mdi mdi-calendar-month-outline"></i>
-                            </span>
                           </div>
                         </div>
-                        <select className="select2">
-                          <option>Guest</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                        </select>
+                        {error && <span style={{ color: 'red', fontSize: '15px' }}>{error}</span>}
                         <div className="mt-3 d-grid">
-                          <button className="btn btn-primary" type="button">
-                            Check Availability
+                          <button className="btn btn-primary" type="submit" onClick={handleSubmit}>
+                            Check{loading ? "ing" : ""} Availability
                           </button>
+                          {checkedIn && (<button
+                              style={{ marginTop: '5px' }}
+                              className="btn btn-primary"
+                              onClick={() => {
+                                handleFlutterPayment({
+                                  callback: (response) => {
+                                    if(response.status === 'successful'){
+                                      console.log('got here', id, user.id, state, response.transaction_id)
+                                      dispatch(createBooking({
+                                        apartmentId: id, 
+                                        userId: user.id, 
+                                        startDate: moment(state.startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 
+                                        endDate: moment(state.endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 
+                                        transactionId: response.transaction_id
+                                      }))
+                                    }
+                                    closePaymentModal() // this will close the modal programmatically
+                                  },
+                                  onClose: () => { },
+                                });
+                              }}>
+                              <i className="mdi mdi-lock me-2"></i>Book Now
+                            </button>)}
                         </div>
-                      </form>
+                      </div>
                     </div>
                   </div>
                 </div>
-                {/* <div className="card mb-4">
-                  <div className="card-body p-4">
-                    <h5 className="mb-0">
-                      Hosted by
-                      <span className="mdi mdi-medal text-primary float-right"></span>
-                    </h5>
-                    <div className="text-center mt-4">
-                      <img
-                        src="/assets/images/avatar-3.jpg "
-                        alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                        className="rounded-circle avatar avatar-lg mb-2"
-                      />
-                      <h5 className="mb-0">Juana Henry</h5>
-                      <small>joined in january 2017</small>
-                      <p className="mb-0 mx-5 mt-3">
-                        Duis varius finibus felis, a tincidunt sedmauris varius
-                        eudeunc aliquet ipsum odio id luctus quam dapibus sem.
-                      </p>
-                    </div>
-                  </div>
+                {checks.length > 0 && (<div className="card mb-4">
+                  <h5 className="mb-0" style={{ padding: '10px' }}>
+                    Booked Dates
+                    <span
+                      className="mdi mdi-medal text-primary float-right"
+                    ></span>
+                  </h5>
                   <div className="border-top card-body p-4 text-center">
-                    <p className="mb-0">
-                      Response rate: <span className="text-primary">100%</span>
-                    </p>
-                    <p>
-                      Response time:
-                      <span className="text-primary">within an hour</span>
-                    </p>
-                    <div className="d-grid mx-8">
-                      <a href="#" className="btn btn-dark">
-                        Contact Host
-                      </a>
-                    </div>
+                    {checks.map((check) => (
+                      <p className="mb-0" key={check._id}>
+                        <span className="text-primary">{moment(check?.startDate).format('YYYY-MM-DD')}</span>
+                        to <span className="text-primary">{moment(check?.endDate).format('YYYY-MM-DD')}</span>
+                      </p>
+                    ))
+                    }
                   </div>
-                </div> */}
+                </div>)}
               </div>
               <div className="d-grid">
                 <a href="#" className="btn btn-light mb-4">

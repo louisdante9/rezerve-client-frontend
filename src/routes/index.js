@@ -40,7 +40,7 @@ const routes = (isSignedIn) => [
         { path: 'forgot-password', element: <ForgotPassword /> },
         { path: 'verify-user', element: <VerifyUser /> },
         { path: '404', element: <NotFound /> },
-        { path: '/', element: <Navigate to="/home" /> },
+        { path: '/', element: <Navigate to="/login" /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
     }
