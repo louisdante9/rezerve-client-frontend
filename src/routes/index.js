@@ -18,6 +18,7 @@ import MainLayout from "../Components/MainLayout";
 import Checkout from "../Components/others/Checkout";
 import Comingsoon from "../Components/others/Comingsoon";
 import VerifyUser from "../Components/auth/VerifyUser";
+import AddListing from "../Components/AddListing";
 
 const routes = (isSignedIn) => [
     {
@@ -25,7 +26,8 @@ const routes = (isSignedIn) => [
       element: isSignedIn ? <Layout /> : <Navigate to="/login" />,
     children: [
       { path: "profile", element: <Profile /> },
-        { path: 'favourites', element: <Favourite /> },
+      { path: 'favourites', element: <Favourite /> },
+      { path: 'add-listing', element: <AddListing/> },
         { path: 'listings', element: <Listings /> },
         { path: 'listing/:id', element: <ListSingle /> },
         { path: '*', element: <Navigate to="/404" /> }
