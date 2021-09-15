@@ -14,9 +14,10 @@ import 'react-medium-image-zoom/dist/styles.css'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet';
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
+import { usePaystackPayment } from 'react-paystack';
 import { convertNumToCurrency } from '../utils'
 import 'leaflet/dist/leaflet.css';
-import {createBooking} from '../actions'
+import { createBooking } from '../actions'
 
 
 import {
@@ -48,31 +49,62 @@ function ListSingle(props) {
     }
   ]);
   const config = {
-    public_key: process.env.REACT_APP_PUBLIC_KEY,
-    tx_ref: Date.now(),
+    reference: (new Date()).getTime().toString(),
+    email: user?.email,
     amount: property?.apartment?.pricePerNight,
-    currency: 'NGN',
-    payment_options: 'card',
-    customer: {
-      email: user?.email,
-      name: `${user?.firstname} ${user?.lastname}`,
-    },
-    meta: {
-      x_action: "LISTING_PAYMENT",
-      x_apartment_id: property?.apartment?._id,
-      x_user_id: user?.id,
-      x_start_date: state.startDate,
-      x_end_date: state.endDate 
-    },
-    customizations: {
-      title: 'my Payment Title',
-      description: 'Payment for items in cart',
-      logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
-    },
+    publicKey: process.env.REACT_APP_PK_PUBLIC_KEY,
   };
-  const handleFlutterPayment = useFlutterwave(config);
 
-  console.log(property,'property')
+  const onSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+    if (reference.status === 'success') {
+      console.log('got here', id, user.id, state, reference.trxref)
+      dispatch(createBooking({
+        apartmentId: id,
+        userId: user.id,
+        startDate: moment(state.startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
+        endDate: moment(state.endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
+        amount: property?.apartment?.pricePerNight,
+        transactionId: reference.trxref
+      }))
+    }
+  };
+
+  // you can call this function anything
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log('closed')
+  }
+
+  // const config = {
+  //   public_key: process.env.REACT_APP_PUBLIC_KEY,
+  //   tx_ref: Date.now(),
+  //   amount: property?.apartment?.pricePerNight,
+  //   currency: 'NGN',
+  //   payment_options: 'card',
+  //   customer: {
+  //     email: user?.email,
+  //     name: `${user?.firstname} ${user?.lastname}`,
+  //   },
+  //   meta: {
+  //     x_action: "LISTING_PAYMENT",
+  //     x_apartment_id: property?.apartment?._id,
+  //     x_user_id: user?.id,
+  //     x_start_date: state.startDate,
+  //     x_end_date: state.endDate 
+  //   },
+  //   customizations: {
+  //     title: 'my Payment Title',
+  //     description: 'Payment for items in cart',
+  //     logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+  //   },
+  // };
+  // const handleFlutterPayment = useFlutterwave(config);
+  const initializePayment = usePaystackPayment(config);
+
+
+  console.log(property, 'property')
   const { handleSubmit } = useFormik({
     initialValues: {},
     onSubmit: (values) => {
@@ -109,7 +141,7 @@ function ListSingle(props) {
   }, [booked])
 
   const handleFavourite = () => {
-    favourites.find(f => f.apartment === id)
+    favourites.find(f => f.apartment?._id || f.apartment === id)
       ? dispatch(delFavouriteRequest({ apartmentId: id, userId: user.id }))
       : dispatch(favouriteRequest({ apartmentId: id, userId: user.id }))
   }
@@ -131,7 +163,7 @@ function ListSingle(props) {
                     onClick={handleFavourite}
                     style={{ marginRight: '10px' }}
                     className="btn btn-white btn-sm">
-                    <span className={favourites.find(f => f.apartment === id) ? "mdi mdi-heart me-1 text-danger" : "mdi mdi-heart me-1"}></span>Save
+                    <span className={favourites.find(f => f.apartment?._id || f.apartment === id) ? "mdi mdi-heart me-1 text-danger" : "mdi mdi-heart me-1"}></span>Save
                   </div>
                   <a href="#gallery" className="btn btn-white btn-sm">
                     View Photos
@@ -664,28 +696,30 @@ function ListSingle(props) {
                             Check{loading ? "ing" : ""} Availability
                           </button>
                           {checkedIn && (<button
-                              style={{ marginTop: '5px' }}
-                              className="btn btn-primary"
-                              onClick={() => {
-                                handleFlutterPayment({
-                                  callback: (response) => {
-                                    if(response.status === 'successful'){
-                                      console.log('got here', id, user.id, state, response.transaction_id)
-                                      dispatch(createBooking({
-                                        apartmentId: id, 
-                                        userId: user.id, 
-                                        startDate: moment(state.startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 
-                                        endDate: moment(state.endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 
-                                        transactionId: response.transaction_id
-                                      }))
-                                    }
-                                    closePaymentModal() // this will close the modal programmatically
-                                  },
-                                  onClose: () => { },
-                                });
-                              }}>
-                              <i className="mdi mdi-lock me-2"></i>Book Now
-                            </button>)}
+                            style={{ marginTop: '5px' }}
+                            className="btn btn-primary"
+                            onClick={() => {
+                              initializePayment(onSuccess, onClose)
+                              // handleFlutterPayment({
+                              //   callback: (response) => {
+                              //     if(response.status === 'successful'){
+                              //       console.log('got here', id, user.id, state, response.transaction_id)
+                              //       dispatch(createBooking({
+                              //         apartmentId: id, 
+                              //         userId: user.id, 
+                              //         startDate: moment(state.startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 
+                              //         endDate: moment(state.endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 
+                              //         transactionId: response.transaction_id
+                              //          trxref
+                              //       }))
+                              //     }
+                              //     closePaymentModal() // this will close the modal programmatically
+                              //   },
+                              //   onClose: () => { },
+                              // });
+                            }}>
+                            <i className="mdi mdi-lock me-2"></i>Book Now
+                          </button>)}
                         </div>
                       </div>
                     </div>

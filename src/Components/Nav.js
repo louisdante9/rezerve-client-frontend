@@ -9,9 +9,9 @@ function Nav(props) {
   const dispatch = useDispatch();
   const [profile, setProfile] = useState(null)
   const { user } = useSelector((state) => state.setCurrentUser)
-  useEffect(()=> {
+  useEffect(() => {
     if (user) {
-      
+
       setProfile(user)
     }
   }, [user])
@@ -104,25 +104,29 @@ function Nav(props) {
                 </ul>
                 {profile?.firstname ? (
                   <>
-                <div
-                  className="btn btn-primary d-none d-lg-block"
-                  style={{
-                    borderRadius: '21px',
-                    background: 'transparent',
-                    color: '#222222',
-                    cursor: 'default',
-                    marginRight: '5px'
-                  }}
-                >
-                  <AiOutlineUser /> {" "}Hi {profile?.firstname}
-                </div>
-                <button
-                    className="btn btn-primary d-none d-lg-block"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </button>
-                </>
+                    <Link className="nav-link" to="/#">
+                      Host your home
+                    </Link>
+                    <Link
+                      to="/app/profile"
+                      className="btn btn-primary d-none d-lg-block"
+                      style={{
+                        borderRadius: '21px',
+                        background: 'transparent',
+                        color: '#222222',
+                        cursor: 'pointer',
+                        marginRight: '5px'
+                      }}
+                    >
+                      <AiOutlineUser /> {" "}Hi {profile?.firstname}
+                    </Link>
+                    <button
+                      className="btn btn-primary d-none d-lg-block"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </>
                 )
                   : (<Link
                     to="/login"
@@ -130,7 +134,7 @@ function Nav(props) {
                   >
                     Login / Sign up
                   </Link>
-                )}
+                  )}
               </div>
             </nav>
           </div>

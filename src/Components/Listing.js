@@ -18,7 +18,7 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
   const imgLen = img.length;
 
   const handleFavourite = () => {
-    favourites.find(f=> f.apartment === listingId )
+    favourites.find(f=> f.apartment?._id || f.apartment === listingId)
     ? dispatch(delFavouriteRequest({apartmentId: listingId, userId: user.id}))
     : dispatch(favouriteRequest({apartmentId: listingId, userId: user.id}))
   }
@@ -116,7 +116,7 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
               </div>
             </div>
             <div 
-            className={favourites.find(f=> f.apartment === listingId ) ? "btn-wishlist liked" : "btn-wishlist"} 
+            className={favourites.find(f=> f.apartment?._id || f.apartment === listingId) ? "btn-wishlist liked" : "btn-wishlist"} 
             style={{ "hover": {
               background: "#efefef"
             },}}
