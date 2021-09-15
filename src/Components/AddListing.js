@@ -670,41 +670,6 @@ function AddListing(props) {
                     </small>
                   </div>
                 </div>
-                <div className="row mb-2">
-                  <div className="col-lg-12">
-                    <div className="mb-4 border-bottom pb-2">
-                      <h4 className="mb-0">Add your space video</h4>
-                    </div>
-                  </div>
-                  <div className="col-lg-12">
-                    <label for="basic-url" className="form-label">
-                      Default Video Link
-                    </label>
-                    <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="basic-url"
-                        placeholder="https://www.youtube.com/watch?v=VQWgez89JlM"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-12 mb-2 mt-1">
-                    <span>Or</span>
-                  </div>
-                  <div className="col-lg-12">
-                    <div className="mb-3">
-                      <label for="formFile" className="form-label">
-                        Browse Video
-                      </label>
-                      <input
-                        className="form-control"
-                        type="file"
-                        id="formFile"
-                      />
-                    </div>
-                  </div>
-                </div>
                 <div className="row">
                   <div className="col-lg-12">
                     <button

@@ -21,33 +21,33 @@ import VerifyUser from "../Components/auth/VerifyUser";
 import AddListing from "../Components/AddListing";
 
 const routes = (isSignedIn) => [
-    {
-      path: 'app',
-      element: isSignedIn ? <Layout /> : <Navigate to="/login" />,
+  {
+    path: 'app',
+    element: isSignedIn ? <Layout /> : <Navigate to="/login" />,
     children: [
       { path: "profile", element: <Profile /> },
       { path: 'favourites', element: <Favourite /> },
-      { path: 'add-listing', element: <AddListing/> },
-        { path: 'listings', element: <Listings /> },
-        { path: 'listing/:id', element: <ListSingle /> },
-        { path: '*', element: <Navigate to="/404" /> }
-      ]
-    },
-    {
-      path: '/',
-      element: !isSignedIn ? <MainLayout /> : <Navigate to="/app/listings" />,
-      children: [
-        { path: 'login', element: <Login /> },
-        { path: 'home', element: <Home /> },
-        { path: 'about-us', element: <About /> },
-        { path: 'register', element: <Register /> },
-        { path: 'forgot-password', element: <ForgotPassword /> },
-        { path: 'verify-user', element: <VerifyUser /> },
-        { path: '404', element: <NotFound /> },
-        { path: '/', element: <Navigate to="/login" /> },
-        { path: '*', element: <Navigate to="/404" /> }
-      ]
-    }
-  ];
-  
+      { path: 'host', element: <AddListing /> },
+      { path: 'listings', element: <Listings /> },
+      { path: 'listing/:id', element: <ListSingle /> },
+      { path: '*', element: <Navigate to="/404" /> }
+    ]
+  },
+  {
+    path: '/',
+    element: !isSignedIn ? <MainLayout /> : <Navigate to="/app/listings" />,
+    children: [
+      { path: 'login', element: <Login /> },
+      { path: 'home', element: <Home /> },
+      { path: 'about-us', element: <About /> },
+      { path: 'register', element: <Register /> },
+      { path: 'forgot-password', element: <ForgotPassword /> },
+      { path: 'verify-user', element: <VerifyUser /> },
+      { path: '404', element: <NotFound /> },
+      { path: '/', element: <Navigate to="/login" /> },
+      { path: '*', element: <Navigate to="/404" /> }
+    ]
+  }
+];
+
 export default routes;
