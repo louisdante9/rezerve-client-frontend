@@ -3,7 +3,8 @@ import jwtDecode from 'jwt-decode';
 // import swal from 'sweetalert';
 import setAuthToken from "../utils/setAuthToken";
 
-const API = "http://localhost:9000";
+const API = 'https://rezerve.herokuapp.com';
+// const API = "http://localhost:9000";
 
 
 export function setCurrentUser(user) {
@@ -44,7 +45,7 @@ export function signinRequest(userData, navigate) {
       navigate('/app/listings');
     }).catch(err => {
       console.log(err.response)
-      // dispatch({ type: "USER_LOGIN_ERROR", payload: err.response.data });
+      dispatch({ type: "USER_LOGIN_ERROR", payload: err.response.data });
     })
 }
 

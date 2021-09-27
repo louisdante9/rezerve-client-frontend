@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -10,6 +10,12 @@ function Login(props) {
   const navigate = useNavigate();
   const { errors: error } = useSelector((state) => state.setCurrentUser);
   const [loading, setLoading] = useState(false);
+  useEffect(()=> {
+    if(error?.error) {
+      setLoading(false)
+    }
+  }, [error]);
+
   const { handleBlur, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
       email: "",
@@ -34,7 +40,7 @@ function Login(props) {
           <div className="card shadow border-0">
             <div className="card-body p-8">
               <h3 className="mb-4">Welcome back to Rentkit</h3>
-              {error?.error && <span style={{color: 'red', fontSize: '12px', marginBottom: '10px', display: 'block'}}>{error.error}</span>}
+              {error?.error && <span className="errors">{error.error}</span>}
               <form>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
@@ -50,7 +56,7 @@ function Login(props) {
                     onBlur={handleBlur}
                     required
                   />
-                  {errors.email && <span>{errors.email}</span>}
+                  {errors.email && <span className="errors">{errors.email}</span>}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label">
@@ -66,7 +72,7 @@ function Login(props) {
                     onBlur={handleBlur}
                     required
                   />
-                  {errors.password && <span>{errors.password}</span>}
+                  {errors.password && <span className="errors">{errors.password}</span>}
                 </div>
                 <div
                   className="

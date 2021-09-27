@@ -1,6 +1,6 @@
 import axios from "axios";
-
-const API = "http://localhost:9000";
+const API = 'https://rezerve.herokuapp.com';
+// const API = "http://localhost:9000";
 
 export const getApartments = () => (dispatch) => {
   axios

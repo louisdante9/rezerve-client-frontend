@@ -3,12 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineUser } from "react-icons/ai";
 import { logout } from "../actions";
+import { useWindowDimensions } from '../utils'
 
 function Nav(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [profile, setProfile] = useState(null)
   const { user } = useSelector((state) => state.setCurrentUser)
+  const { width } = useWindowDimensions();
+  console.log(width, 'width')
   useEffect(() => {
     if (user) {
 
@@ -45,12 +48,19 @@ function Nav(props) {
                 id="navbarSupportedContent"
               >
                 <ul className="navbar-nav me-auto ms-lg-3">
-                  {/* <li className="nav-item">
-                    <Link className="nav-link" to="/">
-                      Home
+                  {profile?.firstname && width < 991 && (<><li className="nav-item">
+                    <Link className="nav-link" to="/app/profile">
+                      profile
                     </Link>
-                  </li>
-                  <li className="nav-item dropdown">
+                  </li><li className="nav-item">
+                      <div className="nav-link"
+                        style={{ cursor: 'pointer' }}
+                        onClick={handleLogout}
+                      >
+                        logout
+                      </div>
+                    </li></>)}
+                  {/* <li className="nav-item dropdown">
                     <a
                       className="nav-link dropdown-toggle"
                       href="/"
@@ -102,11 +112,11 @@ function Nav(props) {
                     </a>
                   </li> */}
                 </ul>
-                {profile?.firstname ? (
+                {profile?.firstname && width > 991 ? (
                   <>
-                    <Link className="nav-link" to="/#">
+                    {/* <Link className="nav-link" to="/#">
                       Host your home
-                    </Link>
+                    </Link> */}
                     <Link
                       to="/app/profile"
                       className="btn btn-primary d-none d-lg-block"
