@@ -33,6 +33,9 @@
   margin-bottom: 10px;
   display: block;
 }
+button {
+  outline: none !important;
+}
 /* .rdrDefinedRangesWrapper {
   display: none;
 } */

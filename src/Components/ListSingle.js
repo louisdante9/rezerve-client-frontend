@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { useNavigate } from "react-router-dom"
 import moment from 'moment';
 import { useParams } from 'react-router-dom'
@@ -14,7 +13,7 @@ import 'react-date-range/dist/theme/default.css';
 import 'react-medium-image-zoom/dist/styles.css'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet';
-import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
+// import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import { usePaystackPayment } from 'react-paystack';
 import { convertNumToCurrency } from '../utils'
 import 'leaflet/dist/leaflet.css';
@@ -569,12 +568,15 @@ function ListSingle(props) {
                         <div className="col-md-4" key={p}>
                           <Zoom
                             zoomMargin={40}
+                            style={{ 
+                              outline: "none"
+                            }}
                           >
                             <img
                               src={p}
                               className="img-fluid rounded-3 mb-4"
                               alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                              style={{ height: '121px', width: '100%' }}
+                              style={{ height: '121px', width: '250px' }}
                             />
                           </Zoom>
                         </div>
