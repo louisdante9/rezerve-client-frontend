@@ -5,7 +5,7 @@ const Favourite = ({ firstname, favourites }) => (
         <h2 className="mb-0">{`${firstname
           .toLowerCase()
           .slice(0, 1)
-          .toUpperCase()}${firstname.toLowerCase().slice(1)}’s favourite`}</h2>
+          .toUpperCase()}${firstname.toLowerCase().slice(1)} favourites`}</h2>
       </div>
       {favourites.map(
         ({

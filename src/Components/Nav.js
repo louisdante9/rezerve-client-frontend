@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineUser } from "react-icons/ai";
 import { logout } from "../actions";
 import { useWindowDimensions } from '../utils'
+import logo from '../Assets/images/logo.png'
 
 function Nav(props) {
   const navigate = useNavigate();
@@ -11,24 +12,27 @@ function Nav(props) {
   const [profile, setProfile] = useState(null)
   const { user } = useSelector((state) => state.setCurrentUser)
   const { width } = useWindowDimensions();
-  console.log(width, 'width')
   useEffect(() => {
     if (user) {
-
       setProfile(user)
     }
   }, [user])
+
   const handleLogout = () => {
     dispatch(logout());
   };
+
   return (
     <div className="nav-header nav-header-classic shadow">
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">
             <nav className="navbar navbar-expand-lg" style={{ height: "60px" }}>
-              <Link className="navbar-brand" to="/">
+              {/* <Link className="navbar-brand" to="/">
                 <h3>Rezerve Homes</h3>
+              </Link> */}
+              <Link className="navbar-brand" to="/">
+                <img src="/Assets/images/logo.png" alt="logo" height="50"/>
               </Link>
               <button
                 className="navbar-toggler collapsed"

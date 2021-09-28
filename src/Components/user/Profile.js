@@ -62,27 +62,23 @@ const Profile = () => {
                   }}
                 ></div>
                 <div
-                  className="bg-white pt-2 pb-0 rounded-bottom shadow-sm
-                                      row g-0"
+                  className="bg-white pt-2 pb-0 rounded-bottom shadow-sm row g-0"
                 >
                   <div
-                    className="offset-xl-3 col-xl-6 col-md-12
-                                          col-12 mb-4"
+                    className="offset-xl-3 col-xl-6 col-md-12 col-12 mb-4"
                   >
                     <div
-                      className="text-center position-relative
-                                              mt-n10"
+                      className="text-center position-relative mt-n10"
                     >
                       <img
                         src={avatar}
                         className="avatar-lg rounded-circle
-                                                  border-4 border border-white mb-3"
+                          border-4 border border-white mb-3"
                         alt=""
                       />
                       <a
                         href="#!"
-                        className="position-absolute
-                                                  top-0 right-0 ms-n4 mt-3"
+                        className="position-absolute top-0 right-0 ms-n4 mt-3"
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
                         title=""
@@ -102,14 +98,14 @@ const Profile = () => {
                       </p> */}
                       <ul className="list-inline mb-0">
                         <li className="list-inline-item">
-                          <span className="text-dark me-1">8</span>
+                          <span className="text-dark me-1">0</span>
                           Total bookings
                         </li>
                         <li className="list-inline-item">
                           <i
                             className="mdi mdi-circle
-                                                          mdi-8px align-middle
-                                                          text-black-50"
+                            mdi-8px align-middle
+                            text-black-50"
                           ></i>
                         </li>
                         <li className="list-inline-item">
@@ -145,12 +141,13 @@ const Profile = () => {
               </div>
             </div>
             {subNavs.bookings && (
-              <Bookings firstname={profile.firstname} bookings={favourites} />
+              <Bookings firstname={"Your"} bookings={[]} />
             )}
             {/* {subNavs.reviews && <Reviews />} */}
             {subNavs.favourite && (
               <Favourite
-                firstname={profile.firstname}
+                firstname={"Your"}
+                // firstname={profile.firstname}
                 favourites={favourites}
               />
             )}

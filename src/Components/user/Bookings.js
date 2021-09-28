@@ -5,7 +5,7 @@ const Bookings = ({ firstname, bookings }) => (
         <h2 className="mb-0">{`${firstname
           .toLowerCase()
           .slice(0, 1)
-          .toUpperCase()}${firstname.toLowerCase().slice(1)}’s bookings`}</h2>
+          .toUpperCase()}${firstname.toLowerCase().slice(1)} bookings`}</h2>
       </div>
       {bookings.map(
         ({
