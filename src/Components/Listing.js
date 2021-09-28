@@ -138,7 +138,7 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
             </span>
           </div>
         </div>
-        <div className="col-md-7 col-12">
+        <Link to={`/app/listing/${listingId}`} className="col-md-7 col-12">
           <div>
             <h4 className="mb-0">
               <Link to={`/app/listing/${listingId}`} className="text-inherit">
@@ -160,7 +160,7 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
               </span>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

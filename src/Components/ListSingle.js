@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom"
 import moment from 'moment';
 import { useParams } from 'react-router-dom'
 import { DateRange } from 'react-date-range';
@@ -32,6 +33,7 @@ import {
 
 function ListSingle(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useSelector((state) => state.setCurrentUser)
   const { favourites } = useSelector((state) => state.favourite)
@@ -51,23 +53,23 @@ function ListSingle(props) {
   const config = {
     reference: (new Date()).getTime().toString(),
     email: user?.email,
-    amount: property?.apartment?.pricePerNight,
+    amount: parseInt(property?.apartment?.pricePerNight, 10) * 100,
     publicKey: process.env.REACT_APP_PK_PUBLIC_KEY,
   };
 
   const onSuccess = (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
     if (reference.status === 'success') {
-      console.log('got here', id, user.id, state, reference.trxref)
+      const { startDate, endDate } = state[0]
       dispatch(createBooking({
         apartmentId: id,
         userId: user.id,
-        startDate: moment(state.startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
-        endDate: moment(state.endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
+        startDate: moment(startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toISOString(),
+        endDate: moment(endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toISOString(),
         amount: property?.apartment?.pricePerNight,
         transactionId: reference.trxref
       }))
+      navigate('/app/profile')
     }
   };
 
@@ -77,34 +79,12 @@ function ListSingle(props) {
     console.log('closed')
   }
 
-  // const config = {
-  //   public_key: process.env.REACT_APP_PUBLIC_KEY,
-  //   tx_ref: Date.now(),
-  //   amount: property?.apartment?.pricePerNight,
-  //   currency: 'NGN',
-  //   payment_options: 'card',
-  //   customer: {
-  //     email: user?.email,
-  //     name: `${user?.firstname} ${user?.lastname}`,
-  //   },
-  //   meta: {
-  //     x_action: "LISTING_PAYMENT",
-  //     x_apartment_id: property?.apartment?._id,
-  //     x_user_id: user?.id,
-  //     x_start_date: state.startDate,
-  //     x_end_date: state.endDate 
-  //   },
-  //   customizations: {
-  //     title: 'my Payment Title',
-  //     description: 'Payment for items in cart',
-  //     logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
-  //   },
-  // };
-  // const handleFlutterPayment = useFlutterwave(config);
+  const handleNavigate = () => {
+    window.location.reload()
+  }
+
   const initializePayment = usePaystackPayment(config);
 
-
-  console.log(property, 'property')
   const { handleSubmit } = useFormik({
     initialValues: {},
     onSubmit: (values) => {
@@ -119,7 +99,6 @@ function ListSingle(props) {
         .toISOString()
       let end = moment(endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
         .toISOString()
-      console.log(start, end)
       dispatch(checkAvailability({
         startDate: start,
         endDate: end,
@@ -692,9 +671,12 @@ function ListSingle(props) {
                         </div>
                         {error && <span style={{ color: 'red', fontSize: '15px' }}>{error}</span>}
                         <div className="mt-3 d-grid">
+                        {checkedIn ? <button className="btn btn-primary" type="submit" onClick={handleNavigate}>
+                            Check Again
+                          </button> : 
                           <button className="btn btn-primary" type="submit" onClick={handleSubmit}>
                             Check{loading ? "ing" : ""} Availability
-                          </button>
+                          </button>}
                           {checkedIn && (<button
                             style={{ marginTop: '5px' }}
                             className="btn btn-primary"

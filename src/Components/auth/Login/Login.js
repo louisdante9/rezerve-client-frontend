@@ -10,11 +10,17 @@ function Login(props) {
   const navigate = useNavigate();
   const { errors: error } = useSelector((state) => state.setCurrentUser);
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('');
+  useEffect(()=> {
+    setErr('')
+  }, []);
   useEffect(()=> {
     if(error?.error) {
       setLoading(false)
+      setErr(error.error)
     }
   }, [error]);
+
 
   const { handleBlur, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
@@ -39,8 +45,8 @@ function Login(props) {
         <div className="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
           <div className="card shadow border-0">
             <div className="card-body p-8">
-              <h3 className="mb-4">Welcome back to Rentkit</h3>
-              {error?.error && <span className="errors">{error.error}</span>}
+              <h3 className="mb-4">Welcome back to Rezerve Homes</h3>
+              {error?.error && <span className="errors">{err}</span>}
               <form>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">

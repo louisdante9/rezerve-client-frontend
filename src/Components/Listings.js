@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import Select from 'react-select'
+import countryList from 'react-select-country-list'
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
@@ -12,7 +14,13 @@ import 'leaflet/dist/leaflet.css';
 
 function Listings() {
   const dispatch = useDispatch();
+  const [value, setValue] = useState('')
+  const options = useMemo(() => countryList().getData(), [])
+
   const [showFilter, setShowFilter] = useState(false);
+  const changeHandler = value => {
+    setValue(value)
+  }
 
   useEffect(() => {
     dispatch(listingsRequest());
@@ -40,16 +48,36 @@ function Listings() {
 
                   <div>
                     <div className="row g-md-3 g-0">
-                    <div className="col-md-4 mb-3">
-                        <div>
-                          <input
-                            type="text"
-                            id="dateSelect"
-                            name="location"
-                            className="form-control"
-                            placeholder="Where"
-                          />
-                        </div>
+                      <div className="col-md-4 mb-3">
+                      <Select
+                          placeholder={<div>Where</div>}
+                          menuColor='#6c4af2'
+                          styles={{
+                            control: base => ({
+                              ...base,
+                              "&:hover": {
+                                borderColor: "#b6a5f9"
+                              },
+                              "&:focus": {
+                                borderColor: "#b6a5f9"
+                              }
+                            }),
+                            menu: (provided, state) => ({
+                              ...provided,
+                              zIndex: 9999,
+                              color: state.selectProps.menuColor,
+                              padding: 20,
+                            }),
+                            option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+                              // console.log({ data, isDisabled, isFocused, isSelected });
+                              return {
+                                ...styles,
+                                backgroundColor: isFocused ? "#b6a5f9" : null,
+                                color: "#fffff"
+                              };
+                            }
+                          }}
+                          options={options} />
                       </div>
                       <div className="col-md-4 mb-3">
                         <div>
@@ -62,16 +90,45 @@ function Listings() {
                           />
                         </div>
                       </div>
+
                       <div className="col-md-4">
-                        <select className="select2">
-                          <option>Guest</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                        </select>
+                      
+                        <Select
+                          placeholder={<div>No of Guests</div>}
+                          menuColor='#6c4af2'
+                          styles={{
+                            control: base => ({
+                              ...base,
+                              "&:hover": {
+                                borderColor: "#b6a5f9"
+                              },
+                              "&:focus": {
+                                borderColor: "#b6a5f9"
+                              }
+                            }),
+                            menu: (provided, state) => ({
+                              ...provided,
+                              color: state.selectProps.menuColor,
+                              padding: 20,
+                            }),
+                            option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+                              // console.log({ data, isDisabled, isFocused, isSelected });
+                              return {
+                                ...styles,
+                                backgroundColor: isFocused ? "#b6a5f9" : null,
+                                color: "#fffff"
+                              };
+                            }
+                          }}
+                          options={[
+                            { value: '1', label: '1' },
+                            { value: '2', label: '2' },
+                            { value: '3', label: '3' },
+                            { value: '4', label: '4' },
+                            { value: '5', label: '5' }
+                          ]} />
                       </div>
+
                       <div className="col-md-7 mt-md-0 mt-3">
                         <button className="btn btn-primary me-2">Search</button>
                         <button
@@ -153,8 +210,8 @@ function Listings() {
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              
-             { listings.map(({latitude, longitude}, index)=> <Marker
+
+              {listings.map(({ latitude, longitude }, index) => <Marker
                 key={index}
                 position={[latitude, longitude]}
                 icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}>
@@ -162,7 +219,7 @@ function Listings() {
                   This is your destination.
                 </Popup>
               </Marker>)}
-            </MapContainer>} 
+            </MapContainer>}
           </div>
         </div>
       </div>
