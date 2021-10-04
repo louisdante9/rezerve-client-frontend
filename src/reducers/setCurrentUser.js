@@ -7,7 +7,6 @@ export const initialState = {
 };
 
 const setCurrentUser = (state = initialState, action = {}) => {
-  console.log(action.payload, 'payload')
   switch (action.type) {
       case "USER_AUTHENTICATED": {
         let { user } = action;

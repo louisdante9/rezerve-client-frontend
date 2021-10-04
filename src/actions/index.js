@@ -44,7 +44,6 @@ export function signinRequest(userData, navigate) {
       dispatch(setCurrentUser(decode(token)));
       navigate('/app/listings');
     }).catch(err => {
-      console.log(err.response)
       dispatch({ type: "USER_LOGIN_ERROR", payload: err.response.data });
     })
 }
@@ -101,7 +100,6 @@ export const delFavouriteRequest = ({apartmentId, userId}) => dispatch => {
 export const favouriteRequest = (obj) => dispatch => {
  axios.post(`${API}/favourite/add-favourite`, obj)
    .then((response) => {
-     console.log(response, 'response')
      dispatch({type: "ADD_USER_FAVOURITE_SUCCCESS", payload: response.data.newFavourite });
    })
    .catch((error) => {
@@ -120,7 +118,6 @@ export const getFavouriteRequest = ({userId}) => dispatch => {
 export const checkAvailability = (obj) => dispatch => {
  axios.post(`${API}/booking/check`, obj)
    .then((response) => {
-     console.log(response, 'response')
      dispatch({type: "CHECK_BOOKING_AVAILABILITY", payload: response.data });
    })
    .catch((error) => {
@@ -139,7 +136,6 @@ export const getAllAvailableBookingDate = ({apartmentId}) => dispatch => {
 export const createBooking = (obj) => dispatch => {
  axios.post(`${API}/booking`, obj)
    .then((response) => {
-      console.log(response, 'response')
      dispatch({type: "BOOKING_SUCCESSFUL", payload: response.data.booking });
    })
    .catch((error) => {

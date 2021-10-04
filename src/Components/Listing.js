@@ -13,7 +13,6 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
   useEffect(()=> {
     dispatch(getFavouriteRequest({userId: user.id}))
   }, []);
-
   const [current, setCurrent] = useState(0);
   const imgLen = img.length;
 
@@ -24,8 +23,8 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
   }
 
   const nextSlide = () => {
-    console.log(current, imgLen)
     setCurrent(current === imgLen - 1 ? 0 : current + 1);
+    console.log(current+1, imgLen-1)
   };
 
   const prevSlide = () => {
@@ -39,14 +38,14 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
             <div
               id="listcarousel"
               className="carousel slide"
-              data-bs-ride="carousel"
-              data-bs-interval="false"
+              // data-bs-ride="carousel"
+              // data-bs-interval="false"
             >
               <ol className="carousel-indicators">
                 {img.map((slide, index) => (
                   <div key={index}>
                     <li
-                      data-bs-target="#listcarousel"
+                      // data-bs-target="#listcarousel"
                       data-bs-slide-to={current}
                       className={index === current ? 'active rounded-circle' : 'rounded-circle'}
                       style={{ backgroundColor: 'red' }}
@@ -64,9 +63,9 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
                     {index === current &&
                       (<img
                         src={slide}
-                        alt="Rentkit Directory & Listing Bootstrap 5 Theme"
+                        alt="listings"
                         className="w-100"
-                        height="121"
+                        height="auto"
                       />)}
                   </div>)
                 ) : (<div className="carousel-item active">
@@ -78,7 +77,7 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
                 </div>)
                 }
               </div>
-              <div
+              {current > 0 && <div
                 className="carousel-control-prev"
                 href="#listcarousel"
                 role="button"
@@ -95,8 +94,8 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
               "
                 ></i>
                 <span className="visually-hidden">Previous</span>
-              </div>
-              <div
+              </div>}
+              {current < (imgLen - 1) && <div
                 className="carousel-control-next"
                 href="#listcarousel"
                 role="button"
@@ -113,7 +112,7 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
               "
                 ></i>
                 <span className="visually-hidden">Next</span>
-              </div>
+              </div>}
             </div>
             <div 
             className={favourites.find(f=> f.apartment?._id || f.apartment === listingId) ? "btn-wishlist liked" : "btn-wishlist"} 

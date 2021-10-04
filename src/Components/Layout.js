@@ -8,6 +8,7 @@ function Layout() {
     <div className="listinghalfmap-body">
       <Nav />
       <Outlet />
+      <Footer/>
     </div>
   );
 }

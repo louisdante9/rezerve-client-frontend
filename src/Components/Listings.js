@@ -49,7 +49,7 @@ function Listings() {
                   <div>
                     <div className="row g-md-3 g-0">
                       <div className="col-md-4 mb-3">
-                      <Select
+                        <Select
                           placeholder={<div>Where</div>}
                           menuColor='#6c4af2'
                           styles={{
@@ -64,7 +64,7 @@ function Listings() {
                             }),
                             menu: (provided, state) => ({
                               ...provided,
-                              zIndex: 9999,
+                              zIndex: 8888,
                               color: state.selectProps.menuColor,
                               padding: 20,
                             }),
@@ -92,7 +92,7 @@ function Listings() {
                       </div>
 
                       <div className="col-md-4">
-                      
+
                         <Select
                           placeholder={<div>No of Guests</div>}
                           menuColor='#6c4af2'
@@ -108,6 +108,7 @@ function Listings() {
                             }),
                             menu: (provided, state) => ({
                               ...provided,
+                              zIndex: 8888,
                               color: state.selectProps.menuColor,
                               padding: 20,
                             }),
@@ -150,29 +151,7 @@ function Listings() {
                   <div className="col-md-6 col-8">
                     {/* <p className="mb-0">Showing 1 – 8 of 10 results</p> */}
                   </div>
-                  <div className="col-md-6 col-4 text-end">
-                    <div>
-                      <div
-                        style={{ marginRight: '2px', cursor: 'pointer' }}
-                        onClick={() => console.log('clicked')}
-                        className="
-                          icon-shape icon-md
-                          bg-primary
-                          text-white
-                          border-primary
-                          rounded-1"
-                      >
-                        <AiOutlineArrowLeft />
-                      </div>
-                      <div
-                        style={{ cursor: 'pointer' }}
-                        className="icon-shape icon-md text-primary border rounded-1"
-                        onClick={() => console.log('clicked')}
-                      >
-                        <AiOutlineArrowRight />
-                      </div>
-                    </div>
-                  </div>
+
                 </div>
                 <div className="row">
                   {listings.map(
@@ -194,6 +173,29 @@ function Listings() {
                     )
                   )}
                 </div>
+              </div>
+              <div className="col-md- col-4 text-end">
+               {listings >= 10 &&  <div>
+                  <div
+                    style={{ marginRight: '2px', cursor: 'pointer' }}
+                    onClick={() => console.log('clicked')}
+                    className="
+                      icon-shape icon-md
+                      bg-primary
+                      text-white
+                      border-primary
+                      rounded-1"
+                  >
+                    <AiOutlineArrowLeft />
+                  </div>
+                  <div
+                    style={{ cursor: 'pointer' }}
+                    className="icon-shape icon-md text-primary border rounded-1"
+                    onClick={() => console.log('clicked')}
+                  >
+                    <AiOutlineArrowRight />
+                  </div>
+                </div>}
               </div>
             </div>
           </div>
