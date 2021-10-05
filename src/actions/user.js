@@ -1,5 +1,5 @@
 import axios from "axios";
-// const API = 'https://rezerve.herokuapp.com';
+//  const API = 'https://rezerve.herokuapp.com';
 const API = "http://localhost:9000";
 
 export const getProfile = (userId) => async (dispatch) => {

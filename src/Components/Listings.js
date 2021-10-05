@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet';
@@ -11,11 +11,17 @@ import Listing from "./Listing";
 import { listingsRequest } from '../actions'
 import 'leaflet/dist/leaflet.css';
 
+import ReactPaginate from "react-paginate";
 
 function Listings() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('')
-  const options = useMemo(() => countryList().getData(), [])
+  const options = useMemo(() => countryList().getData(), []);
+  const [offset, setOffset] = useState(offSet)
+  const [perPage, setPerPage] = useState(10)
+  const [currentPage, setCurrentPage] = useState(0);
+
+ 
 
   const [showFilter, setShowFilter] = useState(false);
   const changeHandler = value => {
@@ -26,12 +32,16 @@ function Listings() {
     dispatch(listingsRequest());
   }, [])
 
-  const { listings, ratingAvg } = useSelector((state) => state.getListings)
+  const { listings, limit, offSet, totalPage, ratingAvg } = useSelector((state) => state.getListings)
   const getAvg = (id) => ratingAvg.map(r => {
     if (r._id === id) return r.rating
   })
 
-  console.log(listings, 'listings')
+  console.log(listings, limit, offSet, totalPage, 'listings')
+  const handlePageClick =({ selected: selectedPage }) =>{
+    setCurrentPage(selectedPage);
+    console.log("clicked")
+  }
   return (
     <>
       {showFilter && <FilterModal close={() => setShowFilter(false)} />}
@@ -175,8 +185,8 @@ function Listings() {
                 </div>
               </div>
               <div className="col-md- col-4 text-end">
-               {listings >= 10 &&  <div>
-                  <div
+                {listings && <div>
+                  {/* <div
                     style={{ marginRight: '2px', cursor: 'pointer' }}
                     onClick={() => console.log('clicked')}
                     className="
@@ -186,7 +196,7 @@ function Listings() {
                       border-primary
                       rounded-1"
                   >
-                    <AiOutlineArrowLeft />
+                   
                   </div>
                   <div
                     style={{ cursor: 'pointer' }}
@@ -194,7 +204,19 @@ function Listings() {
                     onClick={() => console.log('clicked')}
                   >
                     <AiOutlineArrowRight />
-                  </div>
+                  </div> */}
+                  <ReactPaginate
+                    previousLabel={<AiOutlineLeft/>}
+                    nextLabel={<AiOutlineRight/>}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={totalPage}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick }
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                  />
                 </div>}
               </div>
             </div>
