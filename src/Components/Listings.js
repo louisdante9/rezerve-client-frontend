@@ -175,7 +175,7 @@ function Listings() {
                 </div>
               </div>
               <div className="col-md- col-4 text-end">
-               {listings >= 10 &&  <div>
+               {listings >= 0 &&  <div>
                   <div
                     style={{ marginRight: '2px', cursor: 'pointer' }}
                     onClick={() => console.log('clicked')}
