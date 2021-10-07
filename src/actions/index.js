@@ -3,8 +3,8 @@ import jwtDecode from 'jwt-decode';
 // import swal from 'sweetalert';
 import setAuthToken from "../utils/setAuthToken";
 
- const API = 'https://rezerve.herokuapp.com';
-//const API = "http://localhost:9000";
+//  const API = 'https://rezerve.herokuapp.com';
+const API = "http://localhost:9000";
 
 
 export function setCurrentUser(user) {
@@ -70,6 +70,7 @@ const getApartmentsError = data =>
 export const listingsRequest = () => dispatch => {
  axios.get(`${API}/apartment`)
    .then((response) => {
+     console.log(response.data.apartments, 'response')
      dispatch(getApartmentsSuccess(response.data.apartments));
    })
    .catch((error) => {
