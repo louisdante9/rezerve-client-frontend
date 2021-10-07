@@ -67,8 +67,8 @@ export function verifyUserRequest(activationCode, navigate) {
 const getApartmentsError = data =>
  ({ type: "GET_APARTMENTS_ERROR", payload: data });
 
-export const listingsRequest = () => dispatch => {
- axios.get(`${API}/apartment`)
+export const listingsRequest = (page) => dispatch => {
+ axios.get(`${API}/apartment?page=${page}`)
    .then((response) => {
      console.log(response.data.apartments, 'response')
      dispatch(getApartmentsSuccess(response.data.apartments));
