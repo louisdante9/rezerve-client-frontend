@@ -11,6 +11,7 @@ import ListSingle from "../Components/ListSingle";
 import Bookings from "../Components/user/Bookings";
 import Favourite from "../Components/user/Favourite";
 import Profile from "../Components/user/Profile";
+import CreateListing from "../Components/host/CreateListing";
 import Reviews from "../Components/user/Reviews";
 import NotFound from "../Components/NotFound";
 import Layout from "../Components/Layout";
@@ -28,6 +29,10 @@ const routes = (isSignedIn) => [
         { path: 'favourites', element: <Favourite /> },
         { path: 'listings', element: <Listings /> },
         { path: 'listing/:id', element: <ListSingle /> },
+        //this is a list of host routes
+        { path: 'host/listings', element: <ListSingle /> },
+        { path: 'host/become-a-host', element: <CreateListing /> },
+
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },

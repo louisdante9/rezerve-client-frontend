@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import { AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet';
@@ -205,9 +205,9 @@ function Listings() {
                   >
                     <AiOutlineArrowRight />
                   </div> */}
-                  <ReactPaginate
-                    previousLabel={<AiOutlineLeft/>}
-                    nextLabel={<AiOutlineRight/>}
+                  {/* <ReactPaginate
+                    previousLabel={<BsChevronLeft size="2em"/>}
+                    nextLabel={<BsChevronRight size="2em"/>}
                     breakLabel={'...'}
                     breakClassName={'break-me'}
                     pageCount={totalPage}
@@ -216,7 +216,7 @@ function Listings() {
                     onPageChange={handlePageClick }
                     containerClassName={'pagination'}
                     activeClassName={'active'}
-                  />
+                  /> */}
                 </div>}
               </div>
             </div>

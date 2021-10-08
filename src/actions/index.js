@@ -144,6 +144,15 @@ export const createBooking = (obj) => dispatch => {
    });
 }
 
+export const createProperty = (propertyData) => dispatch => {
+  return axios.post(`${API}/apartment`, propertyData)
+    .then(({data}) => {
+      // dispatch({ type: "GET_HOME_OWNER_LISTINGS", payload: data.apartmemt });
+      return data;
+    })
+   
+}
+
 export function logout() {
   return dispatch => {
     localStorage.removeItem('token');

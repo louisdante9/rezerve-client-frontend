@@ -29,7 +29,7 @@
 }
 .errors {
   color: red;
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 10px;
   display: block;
 }
@@ -51,4 +51,48 @@ button {
   to {
     transform: rotate(360deg);
   }
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.form-control {
+  line-height: 3.8;
+}
+
+.selectInput {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.suggestion-item  {
+  padding: 20px;
+}
+
+.dzu-inputLabel {
+  font-weight: 100 !important;
+  color: #6c4af2 !important;
+}
+
+.dzu-inputLabelWithFiles {
+  border: 2px solid #141313 !important;
+    background-color: transparent !important;
+    border-radius: 6px !important;
+    color: #141313 !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+}
+
+.dzu-submitButton {
+  background-color: #141313 !important;
+}
+progress {
+  background-color: #141313 !important;
 }

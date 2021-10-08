@@ -4,14 +4,14 @@ import { getApartments } from "../../actions/apartment";
 
 export const Popular = () => {
   const dispatch = useDispatch();
-  const { apartments } = useSelector((state) => state.apartments);
+  // const { apartments } = useSelector((state) => state.apartments);
 
   const fetchApartments = async () => {
     await dispatch(getApartments());
   };
 
   useEffect(() => {
-    fetchApartments();
+    // fetchApartments();
   }, []);
 
   const places = [
@@ -57,7 +57,7 @@ export const Popular = () => {
               </p>
             </div>
           </div>
-          {apartments.slice(0, 4).map(({ _id, location, price, img }) => (
+          {places.slice(0, 4).map(({ _id, location, price, img }) => (
             <div key={_id} className="col-xl-3 col-md-6 col-12">
               <a className="text-white" href="/app/listings">
                 <div className="position-relative text-white mb-4">
