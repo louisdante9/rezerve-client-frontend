@@ -108,21 +108,8 @@ const Profile = () => {
                       </p> */}
                       <ul className="list-inline mb-0">
                         <li className="list-inline-item">
-                          <span className="text-dark me-1">0</span>
+                          <span className="text-dark me-1">{homeOwnerBookings.length}</span>
                           Total bookings
-                        </li>
-                        <li className="list-inline-item">
-                          <i
-                            className="mdi mdi-circle
-                            mdi-8px align-middle
-                            text-black-50"
-                          ></i>
-                        </li>
-                        <li className="list-inline-item">
-                          <span className="text-dark me-1">
-                            {favourites.length}
-                          </span>
-                          Favourites
                         </li>
                       </ul>
                     </div>
