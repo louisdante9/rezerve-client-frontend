@@ -52,47 +52,32 @@ button {
     transform: rotate(360deg);
   }
 }
-
-.noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+.pagination {
+  font-size: 14px;
+  font-weight: 600;
+}
+.previous,
+.next,
+.pagination__link {
+  margin: 0 10px;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 32px;
+}
+.previous,
+.next {
+  font-size: 20px;
 }
 
-.form-control {
-  line-height: 3.8;
+.pagination__link.pagination__link--active {
+  color: #ffffff;
+  background-color: #6c4af2;
 }
 
-.selectInput {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.suggestion-item  {
-  padding: 20px;
-}
-
-.dzu-inputLabel {
-  font-weight: 100 !important;
-  color: #6c4af2 !important;
-}
-
-.dzu-inputLabelWithFiles {
-  border: 2px solid #141313 !important;
-    background-color: transparent !important;
-    border-radius: 6px !important;
-    color: #141313 !important;
-    font-size: 11px !important;
-    font-weight: 500 !important;
-}
-
-.dzu-submitButton {
-  background-color: #141313 !important;
-}
-progress {
-  background-color: #141313 !important;
+.previous.pagination__link--disabled a, 
+.next.pagination__link--disabled a {
+  color: rgb(221, 221, 221) !important;
+    cursor: not-allowed !important;
 }
