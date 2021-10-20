@@ -10,11 +10,11 @@ function BookingListItem({
     <div className="booking-list-item">
       <div className="row-horizontal">
         <div className="table-cells table-cells-first">
-          <img
+          {/* <img
             className="apartment-img"
             src={apartment.img[0]}
             alt=""
-          />
+          /> */}
         </div>
         <p className="table-cells">{apartment.apartmentName}</p>
         <p className="table-cells">{`${firstname} ${lastname}`}</p>

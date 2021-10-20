@@ -14,6 +14,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { profile, error, favourites } = useSelector((state) => state.user);
   const { homeOwnerBookings } = useSelector((state) => state.booking);
+  console.log(homeOwnerBookings, 'homeOwnerBookings')
   const {
     user: { id },
   } = useSelector((state) => state.setCurrentUser);

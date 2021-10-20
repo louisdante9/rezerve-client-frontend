@@ -7,7 +7,7 @@ export const getHomeOwnerBookings = (homeOwnerId) => async (dispatch) => {
       const {
         data: { bookings },
         status,
-      } = await axios.get(`${API}/booking/home/${homeOwnerId}`);
+      } = await axios.get(`${API}/booking/host/${homeOwnerId}`);
       if (status === 200) {
         dispatch({
           type: "BOOKINGS_OWNER_SUCCESSFUL",
