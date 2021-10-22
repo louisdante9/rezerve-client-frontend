@@ -22,7 +22,7 @@ const Bookings = ({ firstname, bookings }) => (
                   data-bs-interval="false"
                 >
                   <ol className="carousel-indicators">
-                    {img.map.length > 1 &&
+                    {/* {img.map.length > 1 &&
                       img.map((imgItem, index) => (
                         <li
                           key={`${imgItem}${index}`}
@@ -30,17 +30,17 @@ const Bookings = ({ firstname, bookings }) => (
                           data-bs-slide-to="0"
                           className="active rounded-circle"
                         ></li>
-                      ))}
+                      ))} */}
                   </ol>
                   <div className="carousel-inner rounded-3">
-                    {img.map((imgUrl, index) => (
+                    {/* {img.map((imgUrl, index) => (
                       <div
                         key={`${imgUrl}${index}`}
                         className="carousel-item active"
                       >
                         <img src={imgUrl} alt={apartmentName} className="w-100 " />
                       </div>
-                    ))}
+                    ))} */}
                   </div>
                   <a
                     className="carousel-control-prev"
@@ -95,7 +95,7 @@ const Bookings = ({ firstname, bookings }) => (
           </div>
         )
       )}
-      <div className="col-12 mt-8">
+      {/* <div className="col-12 mt-8">
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">
             <li className="page-item me-2">
@@ -129,8 +129,8 @@ const Bookings = ({ firstname, bookings }) => (
             </li>
           </ul>
         </nav>
-      </div>
-    </div>
+      </div>*/}
+    </div> 
   </>
 );
 export default Bookings;

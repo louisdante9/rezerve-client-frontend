@@ -3,6 +3,9 @@ export const initialState = {
   favourites: [],
   favouritesError: "",
   error: "",
+  limit: 0,
+    offSet:0,
+    totalPage:0,
 };
 
 const user = (state = initialState, action = {}) => {
@@ -14,7 +17,10 @@ const user = (state = initialState, action = {}) => {
       return { ...state, error: action.payload };
     }
     case "GET_FAVOURITES_SUCCESS": {
-      return { ...state, favourites: action.payload };
+      return { ...state, favourites: [...action.payload.docs],
+        limit: action.payload.limit,
+                offSet: action.payload.offset,
+                totalPage: action.payload.total,};
     }
     case "GET_FAVOURITES_ERROR": {
       return { ...state, favouritesError: action.payload };

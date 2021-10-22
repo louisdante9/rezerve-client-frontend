@@ -67,10 +67,9 @@ export function verifyUserRequest(activationCode, navigate) {
 const getApartmentsError = data =>
  ({ type: "GET_APARTMENTS_ERROR", payload: data });
 
-export const listingsRequest = () => dispatch => {
- axios.get(`${API}/apartment`)
+export const listingsRequest = (page) => dispatch => {
+ axios.get(`${API}/apartment?page=${page}`)
    .then((response) => {
-     console.log(response.data.apartments, 'response')
      dispatch(getApartmentsSuccess(response.data.apartments));
    })
    .catch((error) => {
@@ -101,6 +100,7 @@ export const delFavouriteRequest = ({apartmentId, userId}) => dispatch => {
 export const favouriteRequest = (obj) => dispatch => {
  axios.post(`${API}/favourite/add-favourite`, obj)
    .then((response) => {
+     
      dispatch({type: "ADD_USER_FAVOURITE_SUCCCESS", payload: response.data.newFavourite });
    })
    .catch((error) => {
@@ -110,10 +110,11 @@ export const favouriteRequest = (obj) => dispatch => {
 export const getFavouriteRequest = ({userId}) => dispatch => {
  axios.get(`${API}/favourite/${userId}`)
    .then((response) => {
+    
      dispatch({type: "GET_USER_FAVOURITES_SUCCCESS", payload: response.data.favourites });
    })
    .catch((error) => {
-     dispatch("FAVOURITES_FAILURE");
+     dispatch({type:"FAVOURITES_FAILURE", payload: error.response.data});
    });
 }
 export const checkAvailability = (obj) => dispatch => {

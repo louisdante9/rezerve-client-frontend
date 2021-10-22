@@ -6,16 +6,25 @@ import coverImg from "../../Assets/images/cover-img.jpg";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import Reviews from "./Reviews";
+import {  AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Favourite from "./Favourite";
-import { getProfile, getFavourites } from "../../actions/user";
+import { getProfile, getFavourites, getBookings } from "../../actions/user";
+
+import ReactPaginate from "react-paginate";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { profile, error, favourites } = useSelector((state) => state.user);
+  const { profile, error, favourites, totalPage,offSet, limit, } = useSelector((state) => state.user);
+  const { bookings,bookingsLimit, bookingsTotal,bookingsOffset } = useSelector((state) => state.booking);
+  const [currentPage, setCurrentPage] = useState(0);
+  const pageCount = Math.ceil(totalPage / limit);
+  const pagecount = Math.ceil(bookingsTotal / bookingsLimit);
+  console.log(favourites, offSet, 'favourite')
+  console.log(bookings, bookingsOffset, "bookings" )
   const {
     user: { id },
   } = useSelector((state) => state.setCurrentUser);
-
+const page = 0
   useEffect(() => {
     const fetchUserProfile = () => {
       dispatch(getProfile(id));
@@ -30,11 +39,21 @@ const Profile = () => {
     fetchUserFavourites();
   }, [dispatch, id]);
 
+  useEffect(() => {
+    const fetchUserBookings = () => {
+      dispatch(getBookings(id));
+    };
+    fetchUserBookings();
+  }, [dispatch, id]);
+
   const [subNavs, setSubNavs] = useState({
     bookings: true,
     // reviews: false,
     favourite: false,
   });
+  
+ 
+
 
   const navigationHandler = (nav) => {
     const newState = {};
@@ -47,6 +66,18 @@ const Profile = () => {
     });
     setSubNavs(newState);
   };
+
+  const handleFavouriteClick =({ selected: selectedPage }) =>{
+    setCurrentPage(selectedPage);
+    console.log(selectedPage, 'clicked');
+    dispatch(getFavourites(selectedPage))
+  };
+  const handleBookingClick =({ selected: selectedPage }) =>{
+    setCurrentPage(selectedPage);
+    console.log(selectedPage, 'clicked');
+    dispatch(getFavourites(selectedPage))
+  };
+
   return (
     <div className="container">
       <div className="py-lg-11 py-7">
@@ -98,8 +129,8 @@ const Profile = () => {
                       </p> */}
                       <ul className="list-inline mb-0">
                         <li className="list-inline-item">
-                          <span className="text-dark me-1">0</span>
-                          Total bookings
+                          <span className="text-dark me-1">{bookingsTotal}</span>
+                           Bookings
                         </li>
                         <li className="list-inline-item">
                           <i
@@ -110,7 +141,7 @@ const Profile = () => {
                         </li>
                         <li className="list-inline-item">
                           <span className="text-dark me-1">
-                            {favourites.length}
+                            {totalPage}
                           </span>
                           Favourites
                         </li>
@@ -140,17 +171,44 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            {subNavs.bookings && (
-              <Bookings firstname={"Your"} bookings={[]} />
-            )}
+            {subNavs.bookings && <div>
+              <Bookings firstname={profile.firstname} bookings={[]} />
+              <ReactPaginate
+              previousLabel={<AiOutlineLeft/>}
+              nextLabel={<AiOutlineRight/>}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={pagecount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handleBookingClick }
+              containerClassName={'pagination'}
+              activeClassName={'page-item me-2 active'}
+            />
+            </div>
+            }
             {/* {subNavs.reviews && <Reviews />} */}
-            {subNavs.favourite && (
+            {subNavs.favourite && <div>
+           
+              
               <Favourite
-                firstname={"Your"}
-                // firstname={profile.firstname}
+                firstname={profile.firstname}
                 favourites={favourites}
               />
-            )}
+              <ReactPaginate
+              previousLabel={<AiOutlineLeft/>}
+              nextLabel={<AiOutlineRight/>}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handleFavouriteClick }
+              containerClassName={'pagination'}
+              activeClassName={'page-item me-2 active'}
+            />
+        </div>
+            }
           </div>
         ) : (
           <div>*{error}</div>

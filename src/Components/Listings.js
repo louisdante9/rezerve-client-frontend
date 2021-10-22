@@ -17,9 +17,8 @@ function Listings() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('')
   const options = useMemo(() => countryList().getData(), []);
-  const [offset, setOffset] = useState(offSet)
-  const [perPage, setPerPage] = useState(10)
   const [currentPage, setCurrentPage] = useState(0);
+  
 
  
 
@@ -29,18 +28,19 @@ function Listings() {
   }
 
   useEffect(() => {
-    dispatch(listingsRequest());
+    dispatch(listingsRequest(0));
   }, [])
 
   const { listings, limit, offSet, totalPage, ratingAvg } = useSelector((state) => state.getListings)
   const getAvg = (id) => ratingAvg.map(r => {
     if (r._id === id) return r.rating
   })
-
+  const pageCount = Math.ceil(totalPage / limit);
   console.log(listings, limit, offSet, totalPage, 'listings')
   const handlePageClick =({ selected: selectedPage }) =>{
     setCurrentPage(selectedPage);
-    console.log("clicked")
+    console.log(selectedPage, 'clicked');
+    dispatch(listingsRequest(selectedPage))
   }
   return (
     <>
@@ -210,7 +210,7 @@ function Listings() {
                     nextLabel={<AiOutlineRight/>}
                     breakLabel={'...'}
                     breakClassName={'break-me'}
-                    pageCount={totalPage}
+                    pageCount={pageCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePageClick }

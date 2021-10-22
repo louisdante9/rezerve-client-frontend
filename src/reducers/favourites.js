@@ -21,7 +21,7 @@ const Favourite = (state = initialState, action) => {
             };
         case "GET_USER_FAVOURITES_SUCCCESS":
             return {
-                ...state, favourites: [...action.payload]
+                ...state, favourites: [...action.payload.docs]
             };
         case "FAVOURITES_FAILURE":
             return { errors: { ...action.payload } }

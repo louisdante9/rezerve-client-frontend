@@ -1,3 +1,4 @@
+
 const Favourite = ({ firstname, favourites }) => (
   <>
     <div className="row">
@@ -21,7 +22,7 @@ const Favourite = ({ firstname, favourites }) => (
                   data-bs-ride="carousel"
                   data-bs-interval="false"
                 >
-                  <ol className="carousel-indicators">
+                  {/* <ol className="carousel-indicators">
                     {img.map.length > 1 &&
                       img.map((imgItem, index) => (
                         <li
@@ -31,16 +32,16 @@ const Favourite = ({ firstname, favourites }) => (
                           className="active rounded-circle"
                         ></li>
                       ))}
-                  </ol>
+                  </ol> */}
                   <div className="carousel-inner rounded-3">
-                    {img.map((imgUrl, index) => (
+                    {/* {img.map((imgUrl, index) => (
                       <div
                         key={`${imgUrl}${index}`}
                         className="carousel-item active"
                       >
                         <img src={imgUrl} alt={apartmentName} className="w-100 " />
                       </div>
-                    ))}
+                    ))} */}
                   </div>
                   <a
                     className="carousel-control-prev"
@@ -95,7 +96,7 @@ const Favourite = ({ firstname, favourites }) => (
           </div>
         )
       )}
-      <div className="col-12 mt-8">
+      {/* <div className="col-12 mt-8">
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">
             <li className="page-item me-2">
@@ -129,7 +130,7 @@ const Favourite = ({ firstname, favourites }) => (
             </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
     </div>
   </>
 );

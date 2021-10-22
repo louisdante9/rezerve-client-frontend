@@ -11,7 +11,7 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
   const { favourites } = useSelector((state) => state.favourite)
 
   useEffect(()=> {
-    dispatch(getFavouriteRequest({userId: user.id}))
+    dispatch(getFavouriteRequest({userId: user.id,}, ))
   }, []);
   const [current, setCurrent] = useState(0);
   const imgLen = img.length;

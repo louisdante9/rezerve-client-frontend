@@ -4,7 +4,7 @@ import getListings from './listings'
 import favourite from './favourites'
 import user from "./user";
 import apartments from "./apartments";
-import booking from './Bookings'
+import booking from './bookings'
 
 
 const rootReducer = combineReducers({
