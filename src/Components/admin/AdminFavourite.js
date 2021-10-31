@@ -1,4 +1,4 @@
-const Favourite = ({ firstname, favourites }) => (
+const AdminFavourite = ({ firstname, favourites }) => (
   <>
     <div className="row">
       <div className="col-12 mb-6">
@@ -10,7 +10,7 @@ const Favourite = ({ firstname, favourites }) => (
       {favourites.map(
         ({
           _id,
-          apartment: { img, propertyName, address, pricePerNight, city },
+          apartment: { img, propertyName, address, location, price },
         }) => (
           <div key={_id} className="col-xl-4 col-md-6 col-12">
             <div className="mb-6">
@@ -74,11 +74,11 @@ const Favourite = ({ firstname, favourites }) => (
                   </a>
                 </h4>
                 <p className="text-sm font-weight-semi-bold">
-                  {`${address}, ${city}`}
+                  {`${address}, ${location}`}
                 </p>
                 <div className="d-flex justify-content-between mt-3">
                   <div>
-                    <span className="h5">N{pricePerNight}</span>
+                    <span className="h5">N{price}</span>
                     <span className="text-sm font-weight-semi-bold ms-1">
                       /night
                     </span>
@@ -133,4 +133,4 @@ const Favourite = ({ firstname, favourites }) => (
     </div>
   </>
 );
-export default Favourite;
+export default AdminFavourite;

@@ -3,9 +3,10 @@ export const initialState = {
   favourites: [],
   favouritesError: "",
   error: "",
+
 };
 
-const user = (state = initialState, action = {}) => {
+ export const user = (state = initialState, action = {}) => {
   switch (action.type) {
     case "GET_PROFILE_SUCCESS": {
       return { ...state, profile: action.payload };
@@ -19,9 +20,25 @@ const user = (state = initialState, action = {}) => {
     case "GET_FAVOURITES_ERROR": {
       return { ...state, favouritesError: action.payload };
     }
+   
+    
     default:
       return state;
   }
 };
 
-export default user;
+;
+
+export const userUpdate = (state = {}, action) => {
+  switch (action.type) {
+    case "USER_UPDATE_REQUEST":
+      return { loading: true };
+    case "USER_UPDATE_SUCCESS":
+      return { loading: false, success: true };
+   
+    case "USER_UPDATE_RESET":
+      return {};
+    default:
+      return state;
+  }
+};

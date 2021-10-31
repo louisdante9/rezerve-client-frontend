@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
-import Bookings from "./Bookings";
+import AdminBookings from "./AdminBookings";
 import checkedMark from "../../Assets/images/checked-mark.svg";
 import avatar from "../../Assets/images/avatar-3.jpg";
 import coverImg from "../../Assets/images/cover-img.jpg";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import Reviews from "./Reviews";
-import Favourite from "./Favourite";
+import AdminFavourite from "./AdminFavourite";
 import { getProfile, getFavourites } from "../../actions/user";
+import { getAllBookingsAdmin } from "../../actions/admin";
 
-const Profile = () => {
+const AdminProfile = () => {
   const dispatch = useDispatch();
   const { profile, error, favourites } = useSelector((state) => state.user);
+  const {  bookings} = useSelector((state) => state.admin);
+
   const {
     user: { id },
   } = useSelector((state) => state.setCurrentUser);
@@ -28,6 +31,13 @@ const Profile = () => {
       dispatch(getFavourites(id));
     };
     fetchUserFavourites();
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    const fetchAdminBookings = () => {
+      dispatch(getAllBookingsAdmin(id));
+    };
+    fetchAdminBookings();
   }, [dispatch, id]);
 
   const [subNavs, setSubNavs] = useState({
@@ -98,8 +108,8 @@ const Profile = () => {
                       </p> */}
                       <ul className="list-inline mb-0">
                         <li className="list-inline-item">
-                          <span className="text-dark me-1"></span>
-                          {}Booking
+                          <span className="text-dark me-1">{bookings.length}</span>
+                           bookings
                         </li>
                         <li className="list-inline-item">
                           <i
@@ -107,12 +117,6 @@ const Profile = () => {
                             mdi-8px align-middle
                             text-black-50"
                           ></i>
-                        </li>
-                        <li className="list-inline-item">
-                          <span className="text-dark me-1">
-                            {favourites.length}
-                          </span>
-                          Favourites
                         </li>
                         <li className="list-inline-item">
                           <span className="text-dark me-1">
@@ -147,12 +151,13 @@ const Profile = () => {
               </div>
             </div>
             {subNavs.bookings && (
-              <Bookings firstname={"Your"} bookings={[]} />
+              <AdminBookings firstname={"Your"} bookings={bookings} />
             )}
             {/* {subNavs.reviews && <Reviews />} */}
             {subNavs.favourite && (
-              <Favourite
-              firstname={profile.firstname}
+              <AdminFavourite
+                firstname={"Your"}
+                // firstname={profile.firstname}
                 favourites={favourites}
               />
             )}
@@ -164,4 +169,4 @@ const Profile = () => {
     </div>
   );
 };
-export default Profile;
+export default AdminProfile;

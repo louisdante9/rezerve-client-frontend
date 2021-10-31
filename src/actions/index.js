@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
+
 // import swal from 'sweetalert';
 import setAuthToken from "../utils/setAuthToken";
 
@@ -25,9 +26,9 @@ function registerToken({ token }) {
   return token;
 }
 
-export const registerUser = (user, navigate) => (dispatch) => {
+export const registerUser = (obj, navigate) => (dispatch) => {
   axios
-    .post(`${API}/user/register`, user)
+    .post(`${API}/user/register`, obj)
     .then((res) => navigate('/verify-user'))
     .catch((err) => {
       dispatch({
@@ -35,6 +36,16 @@ export const registerUser = (user, navigate) => (dispatch) => {
         payload: err.response.data,
       });
     });
+};
+
+export const updateUser = (userId,userData) => async (dispatch) => {
+     await axios.put(`/${API}/user/${userId}`, userData).then(res =>{
+      console.log(res.data, 'response')
+      dispatch({ type: "USER_UPDATE_PROFILE_SUCCESS", payload: res.data.updateUser });
+     }).catch ((err) =>{  
+       console.log("err" ,err.response.data)
+      dispatch({ type: "USER_UPDATE_ERROR", payload: err.response.data });
+    })
 };
 
 export function signinRequest(userData, navigate) {
@@ -67,8 +78,8 @@ export function verifyUserRequest(activationCode, navigate) {
 const getApartmentsError = data =>
  ({ type: "GET_APARTMENTS_ERROR", payload: data });
 
-export const listingsRequest = () => dispatch => {
- axios.get(`${API}/apartment`)
+export const listingsRequest = (page) => dispatch => {
+ axios.get(`${API}/apartment?page=${page}`)
    .then((response) => {
      console.log(response.data.apartments, 'response')
      dispatch(getApartmentsSuccess(response.data.apartments));
@@ -142,7 +153,9 @@ export const createBooking = (obj) => dispatch => {
    .catch((error) => {
      dispatch("BOOKING_FAILURE");
    });
-}
+};
+
+
 
 export function logout() {
   return dispatch => {

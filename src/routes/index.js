@@ -4,20 +4,21 @@ import Register from "../Components/auth/Registration/Register";
 import Login from "../Components/auth/Login/Login";
 import ForgotPassword from "../Components/auth/ForgotPassword";
 import About from "../Components/others/About";
-import Contact from "../Components/others/Contact";
-import Faq from "../Components/others/Faq";
+// import Contact from "../Components/others/Contact";
+// import Faq from "../Components/others/Faq";
 import Listings from "../Components/Listings";
 import ListSingle from "../Components/ListSingle";
-import Bookings from "../Components/user/Bookings";
+//import Bookings from "../Components/user/Bookings";
 import Favourite from "../Components/user/Favourite";
 import Profile from "../Components/user/Profile";
-import Reviews from "../Components/user/Reviews";
+//import Reviews from "../Components/user/Reviews";
 import NotFound from "../Components/NotFound";
 import Layout from "../Components/Layout";
 import MainLayout from "../Components/MainLayout";
-import Checkout from "../Components/others/Checkout";
-import Comingsoon from "../Components/others/Comingsoon";
+//import Checkout from "../Components/others/Checkout";
+//import Comingsoon from "../Components/others/Comingsoon";
 import VerifyUser from "../Components/auth/VerifyUser";
+import UpdateHomeOwner from "../Components/auth/Registration/HomeOwner";
 
 const routes = (isSignedIn) => [
     {
@@ -28,6 +29,7 @@ const routes = (isSignedIn) => [
         { path: 'favourites', element: <Favourite /> },
         { path: 'listings', element: <Listings /> },
         { path: 'listing/:id', element: <ListSingle /> },
+        { path: 'homeowner/:userId', element: <UpdateHomeOwner /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },

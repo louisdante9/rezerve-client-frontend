@@ -39,3 +39,23 @@ export const getFavourites = (userId) => async (dispatch) => {
     }
   }
 };
+
+export const getPayments = (userId) => async (dispatch) => {
+  try {
+    const { data, status } = await axios.get(`${API}/payment/${userId}`);
+    if (status === 200) {
+      dispatch({
+        type: "GET_PAYMENTS_SUCCESS",
+        payload: data.payments,
+      });
+    }
+  } catch (error) {
+    if (error.response.data) {
+      dispatch({
+        type: "GET_PAYMENTS_ERROR",
+        payload: error.response.data.message,
+      });
+    }
+  }
+};
+

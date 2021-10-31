@@ -10,7 +10,7 @@ const Bookings = ({ firstname, bookings }) => (
       {bookings.map(
         ({
           _id,
-          apartment: { img, apartmentName, address, location, price },
+          apartment: { img, propertyName, address, city, pricePerNight },
         }) => (
           <div key={_id} className="col-xl-4 col-md-6 col-12">
             <div className="mb-6">
@@ -38,7 +38,7 @@ const Bookings = ({ firstname, bookings }) => (
                         key={`${imgUrl}${index}`}
                         className="carousel-item active"
                       >
-                        <img src={imgUrl} alt={apartmentName} className="w-100 " />
+                        <img src={imgUrl} alt={propertyName} className="w-100 " />
                       </div>
                     ))}
                   </div>
@@ -70,15 +70,15 @@ const Bookings = ({ firstname, bookings }) => (
                 <h4 className="mb-0 text-truncate">
                   {" "}
                   <a href="list-single.html" className="text-inherit">
-                    {apartmentName}
+                    {propertyName}
                   </a>
                 </h4>
                 <p className="text-sm font-weight-semi-bold">
-                  {`${address}, ${location}`}
+                  {`${address}, ${city}`}
                 </p>
                 <div className="d-flex justify-content-between mt-3">
                   <div>
-                    <span className="h5">N{price}</span>
+                    <span className="h5">N{pricePerNight}</span>
                     <span className="text-sm font-weight-semi-bold ms-1">
                       /night
                     </span>

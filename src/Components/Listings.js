@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import { AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import {  AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet';
@@ -17,8 +17,6 @@ function Listings() {
   const dispatch = useDispatch();
   const [value, setValue] = useState('')
   const options = useMemo(() => countryList().getData(), []);
-  const [offset, setOffset] = useState(offSet)
-  const [perPage, setPerPage] = useState(10)
   const [currentPage, setCurrentPage] = useState(0);
 
  
@@ -29,18 +27,19 @@ function Listings() {
   }
 
   useEffect(() => {
-    dispatch(listingsRequest());
+    dispatch(listingsRequest(0));
   }, [])
 
   const { listings, limit, offSet, totalPage, ratingAvg } = useSelector((state) => state.getListings)
   const getAvg = (id) => ratingAvg.map(r => {
     if (r._id === id) return r.rating
   })
-
-  console.log(listings, limit, offSet, totalPage, 'listings')
+  const pageCount = Math.ceil(totalPage / limit);
+  
   const handlePageClick =({ selected: selectedPage }) =>{
     setCurrentPage(selectedPage);
     console.log("clicked")
+    dispatch(listingsRequest(selectedPage))
   }
   return (
     <>
@@ -210,7 +209,7 @@ function Listings() {
                     nextLabel={<AiOutlineRight/>}
                     breakLabel={'...'}
                     breakClassName={'break-me'}
-                    pageCount={totalPage}
+                    pageCount={pageCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePageClick }

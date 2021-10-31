@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import setCurrentUser from './setCurrentUser';
-import getListings from './listings'
-import favourite from './favourites'
-import user from "./user";
+import getListings from './listings';
+import favourite from './favourites';
+import {user, userUpdate} from "./user";
 import apartments from "./apartments";
-import booking from './Bookings'
+import booking from './Bookings';
 
 
 const rootReducer = combineReducers({
@@ -13,7 +13,9 @@ const rootReducer = combineReducers({
   favourite,
   apartments,
   user,
-  booking
+  booking,
+  userUpdate
+
 });
 
 export default rootReducer;
