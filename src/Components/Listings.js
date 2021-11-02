@@ -28,9 +28,9 @@ function Listings() {
 
   useEffect(() => {
     dispatch(listingsRequest(0));
-  }, [])
+  }, [dispatch])
 
-  const { listings, limit, offSet, totalPage, ratingAvg } = useSelector((state) => state.getListings)
+  const { listings, limit,  totalPage, ratingAvg } = useSelector((state) => state.getListings)
   const getAvg = (id) => ratingAvg.map(r => {
     if (r._id === id) return r.rating
   })

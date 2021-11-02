@@ -3,6 +3,9 @@ export const initialState = {
   favourites: [],
   favouritesError: "",
   error: "",
+  payments: [],
+  paymentError: "",
+update: {}
 
 };
 
@@ -20,7 +23,15 @@ export const initialState = {
     case "GET_FAVOURITES_ERROR": {
       return { ...state, favouritesError: action.payload };
     }
-   
+   case "GET_PAYMENTS_SUCCESS": {
+     return {...state, payments: action.payload}
+   }
+   case "GET_PAYMENTS_ERROR": {
+     return {...state, paymentError: action.payload}
+   }
+   case "USER_UPDATE_SUCCESS": {
+     return {...state, update: action.payload.updatedUser }
+   }
     
     default:
       return state;

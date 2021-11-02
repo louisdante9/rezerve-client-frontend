@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate,  } from "react-router-dom"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { updateUser } from "../../../actions";
@@ -11,25 +11,22 @@ import { getProfile}from "../../../actions/user"
 
 function UpdateHomeOwner() {
   const dispatch = useDispatch();
-  const { errors: error , user} = useSelector((state) => state.setCurrentUser);
+  const { errors: error , user:{id}} = useSelector((state) => state.setCurrentUser);
   const { profile, error: profileError} = useSelector((state) => state.user);
-  const userUpdate = useSelector((state) => state.userUpdate);
-  const {
-    loading: loadingUpdate,
-    success: successUpdate,
-    error: errorUpdate
-  } = userUpdate
+  //const userUpdate = useSelector((state) => state.userUpdate);
+  const navigate = useNavigate();
+  
 
   const [loading, setLoading] = useState(false);
- const {userId} = useParams()
+ 
 
   
   useEffect(() => {
     const fetchUserProfile = () => {
-      dispatch(getProfile(userId));
+      dispatch(getProfile(id));
     };
     fetchUserProfile();
-  }, [dispatch, userId]);
+  }, [dispatch, id]);
 
 console.log('profile', profile)
 
@@ -71,8 +68,8 @@ console.log('profile', profile)
     }),
     onSubmit: (values) => {
       setLoading(!loading);
-      //const { phone, city, state, country, placeOfBirth, postCode, dob, bank, address, nin, tin, accountNumber, accountName } = values;
-      dispatch(updateUser(userId, values))
+      const { phone, city, state, country, placeOfBirth, postCode, dob, bank, address, nin, tin, accountNumber, accountName } = values;
+      dispatch(updateUser(id, { phone, city, state, country, placeOfBirth, postCode, dob, bank, address, nin, tin, accountNumber, accountName }, navigate))
     },
   });
 
@@ -83,14 +80,7 @@ console.log('profile', profile)
         <div className="card-body p-8">
           <h3 className="mb-4">Update {profile.firstname}</h3>
           <form>
-          {errorUpdate && (
-              <div variant="danger">tyyy{errorUpdate}</div>
-            )}
-              {successUpdate && (
-              <div variant="success">
-                Profile Updated Successfully
-              </div>
-            )}
+     
             <div className="mb-3">
               <label htmlFor="phone" className="form-label">
                 Phone Number
@@ -100,7 +90,7 @@ console.log('profile', profile)
                 name="phone"
                 className="form-control"
                 placeholder="Enter Phone Number"
-                value={profile.firstname}
+                value={values.phone}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 required
@@ -313,7 +303,7 @@ console.log('profile', profile)
               className="btn btn-primary btn-block"
               onClick={handleSubmit}
             >
-              Update{loadingUpdate ? "ing" : ""}
+              Updat{ loading? "ing" : "e"}
             </button>
           </form>
 

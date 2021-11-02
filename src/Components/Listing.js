@@ -12,7 +12,7 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
 
   useEffect(()=> {
     dispatch(getFavouriteRequest({userId: user.id}))
-  }, []);
+  }, [dispatch, user.id]);
   const [current, setCurrent] = useState(0);
   const imgLen = img.length;
 

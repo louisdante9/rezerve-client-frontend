@@ -38,11 +38,8 @@ export const registerUser = (obj, navigate) => (dispatch) => {
     });
 };
 
-export const updateUser = (userId,userData) => async (dispatch) => {
-     await axios.put(`/${API}/user/${userId}`, userData).then(res =>{
-      console.log(res.data, 'response')
-      dispatch({ type: "USER_UPDATE_PROFILE_SUCCESS", payload: res.data.updateUser });
-     }).catch ((err) =>{  
+export const updateUser = (userId,userData, navigate) => async (dispatch) => {
+     await axios.put(`${API}/user/${userId}`, userData).then((res) => navigate('/profile')).catch ((err) =>{  
        console.log("err" ,err.response.data)
       dispatch({ type: "USER_UPDATE_ERROR", payload: err.response.data });
     })

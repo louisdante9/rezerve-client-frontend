@@ -1,16 +1,16 @@
-const Payments = ({ firstname, favourites }) => (
+const Payment = ({ firstname, payments }) => (
     <>
       <div className="row">
         <div className="col-12 mb-6">
           <h2 className="mb-0">{`${firstname
             .toLowerCase()
             .slice(0, 1)
-            .toUpperCase()}${firstname.toLowerCase().slice(1)} favourites`}</h2>
+            .toUpperCase()}${firstname.toLowerCase().slice(1)} payments`}</h2>
         </div>
-        {favourites.map(
+        {payments.map(
           ({
             _id,
-            apartment: { img, propertyName, address, city, pricePerNight },
+            apartment: {  propertyName, address, city, pricePerNight },
           }) => (
             <div key={_id} className="col-xl-4 col-md-6 col-12">
               <div className="mb-6">
@@ -21,7 +21,7 @@ const Payments = ({ firstname, favourites }) => (
                     data-bs-ride="carousel"
                     data-bs-interval="false"
                   >
-                    <ol className="carousel-indicators">
+                    {/* <ol className="carousel-indicators">
                       {img.map.length > 1 &&
                         img.map((imgItem, index) => (
                           <li
@@ -31,8 +31,8 @@ const Payments = ({ firstname, favourites }) => (
                             className="active rounded-circle"
                           ></li>
                         ))}
-                    </ol>
-                    <div className="carousel-inner rounded-3">
+                    </ol> */}
+                    {/* <div className="carousel-inner rounded-3">
                       {img.map((imgUrl, index) => (
                         <div
                           key={`${imgUrl}${index}`}
@@ -41,7 +41,7 @@ const Payments = ({ firstname, favourites }) => (
                           <img src={imgUrl} alt={propertyName} className="w-100 " />
                         </div>
                       ))}
-                    </div>
+                    </div> */}
                     <a
                       className="carousel-control-prev"
                       href="#listcarousel"
@@ -133,4 +133,4 @@ const Payments = ({ firstname, favourites }) => (
       </div>
     </>
   );
-  export default Payments;
+  export default Payment;

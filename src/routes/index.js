@@ -29,7 +29,7 @@ const routes = (isSignedIn) => [
         { path: 'favourites', element: <Favourite /> },
         { path: 'listings', element: <Listings /> },
         { path: 'listing/:id', element: <ListSingle /> },
-        { path: 'homeowner/:userId', element: <UpdateHomeOwner /> },
+        { path: 'homeowner/update', element: <UpdateHomeOwner /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },

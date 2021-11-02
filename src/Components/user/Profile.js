@@ -7,11 +7,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import Reviews from "./Reviews";
 import Favourite from "./Favourite";
-import { getProfile, getFavourites } from "../../actions/user";
+import Payment from "./PaymentHistory";
+import { getProfile, getFavourites, getPayments } from "../../actions/user";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { profile, error, favourites } = useSelector((state) => state.user);
+  const { profile, error, favourites, payments } = useSelector((state) => state.user);
   const {
     user: { id },
   } = useSelector((state) => state.setCurrentUser);
@@ -22,18 +23,25 @@ const Profile = () => {
     };
     fetchUserProfile();
   }, [dispatch, id]);
-
+  console.log('profile', profile)
   useEffect(() => {
     const fetchUserFavourites = () => {
       dispatch(getFavourites(id));
     };
     fetchUserFavourites();
   }, [dispatch, id]);
+  useEffect(() => {
+    const fetchUserPayments = () => {
+      dispatch(getPayments(id));
+    };
+    fetchUserPayments();
+  }, [dispatch, id]);
 
   const [subNavs, setSubNavs] = useState({
     bookings: true,
     // reviews: false,
     favourite: false,
+    payments: false
   });
 
   const navigationHandler = (nav) => {
@@ -116,9 +124,9 @@ const Profile = () => {
                         </li>
                         <li className="list-inline-item">
                           <span className="text-dark me-1">
-                            {favourites.length}
+                            {payments.length}
                           </span>
-                          Favourites
+                          Payments
                         </li>
                       </ul>
                     </div>
@@ -154,6 +162,12 @@ const Profile = () => {
               <Favourite
               firstname={profile.firstname}
                 favourites={favourites}
+              />
+            )}
+            {subNavs.payments && (
+              <Payment
+              firstname={profile.firstname}
+                payments={payments}
               />
             )}
           </div>
