@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { signinRequest } from "../../../actions";
 
-function Login(prQops) {
+function Login(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { errors: error } = useSelector((state) => state.setCurrentUser);

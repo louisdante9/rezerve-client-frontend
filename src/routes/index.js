@@ -11,14 +11,16 @@ import ListSingle from "../Components/ListSingle";
 //import Bookings from "../Components/user/Bookings";
 import Favourite from "../Components/user/Favourite";
 import Profile from "../Components/user/Profile";
-//import Reviews from "../Components/user/Reviews";
+import CreateListing from "../Components/host/CreateListing";
+import Reviews from "../Components/user/Reviews";
 import NotFound from "../Components/NotFound";
 import Layout from "../Components/Layout";
 import MainLayout from "../Components/MainLayout";
 //import Checkout from "../Components/others/Checkout";
 //import Comingsoon from "../Components/others/Comingsoon";
 import VerifyUser from "../Components/auth/VerifyUser";
-import UpdateHomeOwner from "../Components/auth/Registration/HomeOwner";
+import AccountUpdate from "../Components/commons/AccountUpdate";
+
 
 const routes = (isSignedIn) => [
     {
@@ -29,7 +31,12 @@ const routes = (isSignedIn) => [
         { path: 'favourites', element: <Favourite /> },
         { path: 'listings', element: <Listings /> },
         { path: 'listing/:id', element: <ListSingle /> },
-        { path: 'homeowner/update', element: <UpdateHomeOwner /> },
+        { path: 'account/update', element: <AccountUpdate /> },
+
+        //this is a list of host routes
+        { path: 'host/listings', element: <ListSingle /> },
+        { path: 'host/become-a-host', element: <CreateListing /> },
+
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },

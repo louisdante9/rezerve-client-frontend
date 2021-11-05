@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import Reviews from "./Reviews";
 import Favourite from "./Favourite";
 import Payment from "./PaymentHistory";
+import AccountDetails from "../commons/AccountDetails";
 import { getProfile, getFavourites, getPayments } from "../../actions/user";
 
 const Profile = () => {
@@ -23,7 +24,7 @@ const Profile = () => {
     };
     fetchUserProfile();
   }, [dispatch, id]);
-  console.log('profile', profile)
+  
   useEffect(() => {
     const fetchUserFavourites = () => {
       dispatch(getFavourites(id));
@@ -41,7 +42,8 @@ const Profile = () => {
     bookings: true,
     // reviews: false,
     favourite: false,
-    payments: false
+    payments: false,
+    account: false
   });
 
   const navigationHandler = (nav) => {
@@ -168,6 +170,10 @@ const Profile = () => {
               <Payment
               firstname={profile.firstname}
                 payments={payments}
+              />
+            )}
+            {subNavs.account && (
+              <AccountDetails
               />
             )}
           </div>

@@ -29,7 +29,7 @@
 }
 .errors {
   color: red;
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 10px;
   display: block;
 }
@@ -51,4 +51,33 @@ button {
   to {
     transform: rotate(360deg);
   }
+}
+.pagination {
+  font-size: 14px;
+  font-weight: 600;
+}
+.previous,
+.next,
+.pagination__link {
+  margin: 0 10px;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 32px;
+}
+.previous,
+.next {
+  font-size: 20px;
+}
+
+.pagination__link.pagination__link--active {
+  color: #ffffff;
+  background-color: #6c4af2;
+}
+
+.previous.pagination__link--disabled a, 
+.next.pagination__link--disabled a {
+  color: rgb(221, 221, 221) !important;
+    cursor: not-allowed !important;
 }

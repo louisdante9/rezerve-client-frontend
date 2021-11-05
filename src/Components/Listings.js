@@ -2,43 +2,34 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import {  AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { Icon } from 'leaflet';
 import FilterModal from "./FilterModal";
+import 'leaflet/dist/leaflet.css';
+import ReactPaginate from "react-paginate";
 import Listing from "./Listing";
 import { listingsRequest } from '../actions'
-import 'leaflet/dist/leaflet.css';
-
-import ReactPaginate from "react-paginate";
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
 
 function Listings() {
   const dispatch = useDispatch();
-  const [value, setValue] = useState('')
   const options = useMemo(() => countryList().getData(), []);
-  const [currentPage, setCurrentPage] = useState(0);
-
- 
-
   const [showFilter, setShowFilter] = useState(false);
-  const changeHandler = value => {
-    setValue(value)
-  }
-
   useEffect(() => {
     dispatch(listingsRequest(0));
-  }, [dispatch])
+  }, [])
 
   const { listings, limit,  totalPage, ratingAvg } = useSelector((state) => state.getListings)
   const getAvg = (id) => ratingAvg.map(r => {
     if (r._id === id) return r.rating
-  })
+  });
+
   const pageCount = Math.ceil(totalPage / limit);
-  
-  const handlePageClick =({ selected: selectedPage }) =>{
-    setCurrentPage(selectedPage);
-    console.log("clicked")
+
+  console.log(listings, limit,  totalPage, 'listings');
+
+  const handlePageClick = ({ selected: selectedPage }) => {
     dispatch(listingsRequest(selectedPage))
   }
   return (
@@ -183,40 +174,24 @@ function Listings() {
                   )}
                 </div>
               </div>
-              <div className="col-md- col-4 text-end">
+              <div className="col-md-12 col-12 d-flex align-items-center justify-content-center flex-column">
                 {listings && <div>
-                  {/* <div
-                    style={{ marginRight: '2px', cursor: 'pointer' }}
-                    onClick={() => console.log('clicked')}
-                    className="
-                      icon-shape icon-md
-                      bg-primary
-                      text-white
-                      border-primary
-                      rounded-1"
-                  >
-                   
-                  </div>
-                  <div
-                    style={{ cursor: 'pointer' }}
-                    className="icon-shape icon-md text-primary border rounded-1"
-                    onClick={() => console.log('clicked')}
-                  >
-                    <AiOutlineArrowRight />
-                  </div> */}
                   <ReactPaginate
-                    previousLabel={<AiOutlineLeft/>}
-                    nextLabel={<AiOutlineRight/>}
+                    previousLabel={<AiOutlineLeft />}
+                    nextLabel={<AiOutlineRight />}
                     breakLabel={'...'}
-                    breakClassName={'break-me'}
+                    breakClassName={'break'}
                     pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick }
+                    previousLinkClassName={'pagination__link--previous'}
                     containerClassName={'pagination'}
-                    activeClassName={'active'}
+                    onPageChange={handlePageClick}
+                    activeClassName={"pagination__link--active"}
+                    disabledClassName={"pagination__link--disabled"}
+                    nextLinkClassName={"pagination__link--next"}
+                    pageClassName={"pagination__link"}
                   />
                 </div>}
+                <div>{`1 ${listings.length > 10 ? ' – 10' : ` - ${listings.length}`} of ${listings.length} places to stay`}</div>
               </div>
             </div>
           </div>

@@ -119,7 +119,13 @@ function Nav(props) {
                 {profile?.firstname && width > 991 ? (
                   <>
                     {/* <Link className="nav-link" to="/#">
-                      Host your home
+                      Become a host
+                    </Link> */}
+                    {/* <Link className="nav-link" to="/#">
+                      Switch to hosting
+                    </Link> */}
+                    {/* <Link className="nav-link" to="/#">
+                      Switch to hosting
                     </Link> */}
                     <Link
                       to="/app/profile"
