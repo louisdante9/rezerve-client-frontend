@@ -39,7 +39,7 @@ export const registerUser = (obj, navigate) => (dispatch) => {
 };
 
 export const updateUser = (userId,userData, navigate) => async (dispatch) => {
-     await axios.put(`${API}/user/${userId}`, userData).then((res) => navigate('profile')).catch ((err) =>{  
+     await axios.put(`${API}/user/${userId}`, userData).then((res) => navigate('/app/profile')).catch ((err) =>{  
        console.log("err" ,err.response.data)
       dispatch({ type: "USER_UPDATE_ERROR", payload: err.response.data });
     })

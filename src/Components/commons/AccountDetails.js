@@ -57,7 +57,7 @@ console.log(profile, 'profile')
                   <p style={{fontSize: '12px'}}>{profile.email}</p>
                 </div>
                 <div className="col-lg-12 mb-1 d-flex justify-content-between">
-                  <h5 className="col-9">Addresss</h5>
+                  <h5 className="col-9">Address</h5>
                   <p style={{fontSize: '12px'}}>{profile.address}</p>
                 </div>
                 

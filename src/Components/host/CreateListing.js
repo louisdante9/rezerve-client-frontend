@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
-import swal from 'sweetalert'
+import swal from 'sweetalert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
-import { AiOutlineMinusCircle } from "react-icons/ai";
+// import { AiOutlineMinusCircle } from "react-icons/ai";
 import { BsCloudUpload } from "react-icons/bs";
 
-import 'react-dropzone-uploader/dist/styles.css'
-import Dropzone from 'react-dropzone-uploader'
+import 'react-dropzone-uploader/dist/styles.css';
+import Dropzone from 'react-dropzone-uploader';
 import axios from 'axios';
 import Geocode from "react-geocode";
 import ReactDependentScript from 'react-dependent-script';
@@ -18,12 +18,12 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
-import { createProperty } from '../../actions'
-import { selectStyle } from './styles'
+import { createProperty } from '../../actions';
+import { selectStyle } from './styles';
 import { privacyType, propertyType, propertyTypeGroup } from '../../utils';
-import CheckBox from '../commons/checkbox'
-import NumberInput from '../commons/numberInput'
-import SectionTitle from '../commons/SectionTitle'
+import CheckBox from '../commons/checkbox';
+import NumberInput from '../commons/numberInput';
+import SectionTitle from '../commons/SectionTitle';
 
 const CreateListing = () => {
 
@@ -35,16 +35,16 @@ const CreateListing = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const textInput = useRef(null);
-    const [addr, setAddr] = useState('')
-    const [city, setCity] = useState('')
-    const [stateLocale, setStateLocale] = useState('')
-    const [zipCode, setZipCode] = useState('')
-    const [country, setCountry] = useState('')
-    const [lng, setLng] = useState('')
+    const [addr, setAddr] = useState('');
+    const [city, setCity] = useState('');
+    const [stateLocale, setStateLocale] = useState('');
+    const [zipCode, setZipCode] = useState('');
+    const [country, setCountry] = useState('');
+    const [lng, setLng] = useState('');
     const [lat, setLat] = useState('');
-    const [noOfguest, setNoOfGuest] = useState(0)
-    const [noOfRooms, setNoOfRooms] = useState(0)
-    const [noOfBaths, setNoOfBaths] = useState(0)
+    // const [noOfguest, setNoOfGuest] = useState(0)
+    // const [noOfRooms, setNoOfRooms] = useState(0)
+    // const [noOfBaths, setNoOfBaths] = useState(0)
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState('');
     const [files, setFiles] = useState([]);
@@ -150,7 +150,7 @@ const CreateListing = () => {
         }),
 
         onSubmit: (values) => {
-            // console.log(textInput.current.outerText, files, 'textInput')
+            console.log(textInput.current.outerText, files, 'textInput')
             // return console.log(values, lng, lat)
             const amenityItems = [values.kitchen, values.tv, values.shower,
             values.airconditioning,
@@ -177,7 +177,7 @@ const CreateListing = () => {
                 amenities: amenityItems.filter(t => t !== '').join(',')
             }
             console.log(propertyData, 'property')
-            dispatch(createProperty(propertyData)).then((res) => navigate('/app/apartments')).catch(err => {
+            dispatch(createProperty(propertyData)).then((res) => navigate('/app/listings')).catch(err => {
                 setLoading(!loading)
                 setErrorMsg(err)
             })
