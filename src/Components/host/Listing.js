@@ -1,221 +1,167 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom"
-import moment from 'moment';
-import { useParams } from 'react-router-dom'
-import { DateRange } from 'react-date-range';
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import AmentiesListItems from "./AmentiesListItems";
+import AddressListItem from "./AddressListItem";
 import { AiOutlineCheckSquare } from "react-icons/ai";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import Zoom from 'react-medium-image-zoom'
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
-import 'react-medium-image-zoom/dist/styles.css'
-import markerIconPng from "leaflet/dist/images/marker-icon.png"
-import { Icon } from 'leaflet';
-// import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
-import { usePaystackPayment } from 'react-paystack';
-import { convertNumToCurrency } from '../utils'
-import 'leaflet/dist/leaflet.css';
-import { createBooking } from '../actions'
-
+import ListingItem from './ListingItem'
+import {
+  convertNumToCurrency,
+  privacyType,
+  propertyType,
+  propertyTypeGroup,
+} from "../../utils";
 
 import {
-  favouriteRequest,
-  getFavouriteRequest,
-  delFavouriteRequest,
   singleListing,
-  checkAvailability,
   // getAllAvailableBookingDate
-} from '../actions'
+} from "../../actions";
 
+import "./host.css";
 
-function ListSingle(props) {
+function ListingsListItem() {
+  
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { id } = useParams();
-  const { user } = useSelector((state) => state.setCurrentUser)
-  const { favourites } = useSelector((state) => state.favourite)
-  const { property } = useSelector((state) => state.getListings)
-  const { checks, booked } = useSelector((state) => state.booking)
-  const [loading, setLoading] = useState(false);
-  const [checkedIn, setcheckedIn] = useState(false);
-  const [error, setError] = useState('');
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: null,
-      key: 'selection'
-    }
-  ]);
-  const config = {
-    reference: (new Date()).getTime().toString(),
-    email: user?.email,
-    amount: parseInt(property?.apartment?.pricePerNight, 10) * 100,
-    publicKey: process.env.REACT_APP_PK_PUBLIC_KEY,
-  };
+  const { user } = useSelector((state) => state.setCurrentUser);
+  const { property } = useSelector((state) => state.getListings);
+  const [toggle, setToggle] = useState(false)
 
-  const onSuccess = (reference) => {
-    // Implementation for whatever you want to do with reference and after success call.
-    if (reference.status === 'success') {
-      const { startDate, endDate } = state[0]
-      dispatch(createBooking({
-        apartmentId: id,
-        userId: user.id,
-        startDate: moment(startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toISOString(),
-        endDate: moment(endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toISOString(),
-        amount: property?.apartment?.pricePerNight,
-        transactionId: reference.trxref
-      }))
-      navigate('/app/profile')
-    }
-  };
-
-  // you can call this function anything
-  const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log('closed')
-  }
-
-  const handleNavigate = () => {
-    window.location.reload()
-  }
-
-  const initializePayment = usePaystackPayment(config);
-
-  const { handleSubmit } = useFormik({
-    initialValues: {},
-    onSubmit: (values) => {
-      setLoading(!loading);
-      setcheckedIn(false);
-      setError('');
-      const { startDate, endDate } = state[0]
-      if (!endDate) {
-        return setError('A date range is required ')
-      }
-      let start = moment(startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-        .toISOString()
-      let end = moment(endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-        .toISOString()
-      dispatch(checkAvailability({
-        startDate: start,
-        endDate: end,
-        apartmentId: property?.apartment?._id
-      }));
-    },
-  });
-
+  console.log(property, 'property')
   useEffect(() => {
-    dispatch(getFavouriteRequest({ userId: user.id }))
-    dispatch(singleListing({ apartmentId: id, userId: user.id }))
+    dispatch(singleListing({ apartmentId: id, userId: user.id }));
+    // dispatch(getAllAvailableBookingDate({apartmentId: id}))
   }, []);
-
-  useEffect(() => {
-    if (booked !== undefined && !booked) {
-      setcheckedIn(!booked)
-    }
-  }, [booked])
-
-  const handleFavourite = () => {
-    favourites.find(f => f.apartment?._id || f.apartment === id)
-      ? dispatch(delFavouriteRequest({ apartmentId: id, userId: user.id }))
-      : dispatch(favouriteRequest({ apartmentId: id, userId: user.id }))
+  const handleEditToggle = () => {
+    console.log('hello there')
+    setToggle(!toggle)
   }
+
+  console.log(property, 'property')
+
   return (
     <div>
-      <div className="container mt-5">
-        <div
-          className="py-22 position-relative rounded-3"
+      <div className='container mt-5'>
+        {/* <div
+          className='py-22 position-relative rounded-3'
           style={{
-            background:
-              `url(${property?.apartment?.img[0] || '/assets/images/post-single-img.jpg'}) no-repeat center center`,
-          }}
-        >
-          <div className="row">
-            <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-              <div className="position-absolute bottom-0 mb-5 ms-5">
+            background: `url(${
+              property?.apartment?.img[0] ||
+              "/assets/images/post-single-img.jpg"
+            }) no-repeat center center`,
+          }}>
+          <div className='row'>
+            <div className='col-xl-12 col-lg-12 col-md-12 col-12'>
+              <div className='position-absolute bottom-0 mb-5 ms-5'>
                 <div>
                   <div
                     onClick={handleFavourite}
-                    style={{ marginRight: '10px' }}
-                    className="btn btn-white btn-sm">
-                    <span className={favourites.find(f => f.apartment?._id || f.apartment === id) ? "mdi mdi-heart me-1 text-danger" : "mdi mdi-heart me-1"}></span>Save
+                    style={{ marginRight: "10px" }}
+                    className='btn btn-white btn-sm'>
+                    <span
+                      className={
+                        favourites.find(
+                          (f) => f.apartment?._id || f.apartment === id
+                        )
+                          ? "mdi mdi-heart me-1 text-danger"
+                          : "mdi mdi-heart me-1"
+                      }></span>
+                    Save
                   </div>
-                  <a href="#gallery" className="btn btn-white btn-sm">
+                  <a href='#gallery' className='btn btn-white btn-sm'>
                     View Photos
                   </a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="py-6">
-        <div className="container">
-          <div className="row">
-            <div className="col-xl-8 col-lg-8 col-md-12 col-12">
-              <div className="card mb-4">
-                <div className="card-body p-4">
-                  <h2 className="mb-2">
-                    {property?.apartment?.propertyName}
-                  </h2>
-                  <p className="mb-4 fs-6">{property?.apartment?.address}, {property?.apartment?.state}</p>
-                  <div className="text-sm">
-                    <span className="me-2">
-                      <i className="mdi mdi-account text-primary"></i>
-                      <span className="ms-2">{property?.apartment?.noOfguest} Guest</span>
-                    </span>
-                    <span className="me-2">
-                      <i className="mdi mdi-home text-primary"></i>
-                      <span className="ms-2">{property?.apartment?.noOfRooms}  Bedroom</span>
-                    </span>
-                    <span className="me-2">
-                      <i className="mdi mdi-bed-empty text-primary"></i>
-                      <span className="ms-2">{property?.apartment?.noOfRooms}  Bed</span>
-                    </span>
-                    <span className="me-2">
-                      <i className="mdi mdi-scale-bathroom text-primary"></i>
-                      <span className="ms-2">{property?.apartment?.noOfBaths} Bath</span>
-                    </span>
-                  </div>
+      <div className='py-6'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-xl-8 col-lg-8 col-md-12 col-12'>
+              <div className='card mb-4'>
+                <div className='card-body p-4'>
+                  <h3 className='mb-2'>Listing basics</h3>
                 </div>
-              </div>
-              <div className="card mb-4">
-                <div className="card-body p-4">
-                  <h4>Overview</h4>
-                  <p>
-                    {property?.apartment?.description}
-                  </p>
-                </div>
-              </div>
-              <div className="card mb-4">
-                <div className="card-body p-4">
-                  <h4 className="mb-3">Amenities</h4>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <ul className="list-group list-unstyled">
-                        {property?.apartment?.amenities.split(',').slice(0, 4).map((amenity) => (
-                          <li className="list-item" key={amenity}>
-                            <AiOutlineCheckSquare />{" "}
-                            {amenity}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="col-md-6">
-                      <ul className="list-group list-unstyled">
-                        {property?.apartment?.amenities.split(',').slice(4,).map((amenity) => (
-                          <li className="list-item" key={amenity}>
-                            <AiOutlineCheckSquare />
-                            {amenity}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                <ListingItem
+                  title='Listing title'
+                  subTitle='Your listing title should highlight what makes your place
+                  special.'
+                  item={property?.apartment?.propertyName}
+                />
+                <ListingItem
+                  title='Listing group'
+                  subTitle='Give guests a sense of what it’s like to stay at your place, including why they’ll love staying there.'
+                  type='dropdown'
+                  option={propertyTypeGroup}
+                  item={property?.apartment?.propertyGroup}
+                />
+                <ListingItem
+                  title='Property type'
+                  subTitle='Which of these best describes your place?'
+                  type='dropdown'
+                  option={propertyType}
+                  item={property?.apartment?.propertyType}
+                />
+                <ListingItem
+                  title='Listing type'
+                  subTitle='What kind of space will guests have?'
+                  type='dropdown'
+                  option={privacyType}
+                  item={property?.apartment?.privacyType}
+                />
+
+                <ListingItem
+                  title='Listing description'
+                  subTitle='Give guests a sense of what it’s like to stay at your place, including why they’ll love staying there.'
+                  item={property?.apartment?.description}
+                />
+                <ListingItem
+                  title='Number of guests'
+                  subTitle=''
+                  itemTitle='Guests'
+                  type='number'
+                  item={property?.apartment?.noOfguest}
+                />
               </div>
 
+              <div className='card mb-4'>
+                <AmentiesListItems property={property} title="Amenities" type="amenities"/>
+              </div>
+              <AddressListItem property={property}/>
+              <div className='card mb-4'>
+                <div className='card-body p-4'>
+                  <h4>Pricing and rooms</h4>
+                </div>
+                <ListingItem
+                  title='Pricing'
+                  subTitle=''
+                  itemTitle='Standard price'
+                  item={property?.apartment?.pricePerNight}
+                />
+                <ListingItem
+                  title='Number of bedrooms'
+                  subTitle=''
+                  itemTitle='Bedrooms'
+                  type='number'
+                  item={property?.apartment?.noOfRooms}
+                />
+                <ListingItem
+                  title='Number of bathrooms'
+                  subTitle=''
+                  itemTitle='Bathrooms'
+                  type='number'
+                  item={property?.apartment?.noOfBaths}
+                />
+                {/* <div className='card-body p-4'>
+                  <div className='d-flex justify-content-between align-items-center'>
+                    <h5 className='mb-2'>Rooms and spaces</h5>
+                    <div className='editBtn'>Edit</div>
+                  </div>
+                </div> */}
+              </div>
               {/* <div className="card mb-4">
                 <div className="card-body p-4">
                   <h4>Reviews</h4>
@@ -557,106 +503,56 @@ function ListSingle(props) {
                   </form>
                 </div>
               </div> */}
-              <div className="card mb-4" id="gallery">
-                <div className="card-body p-4">
-                  <h4 className="mb-4">Gallery</h4>
-                  <div className="zoom-gallery">
-                    <div className="row">
-                      {property?.apartment?.img.length ? property?.apartment?.img.map((p) => (
-                        <div className="col-md-4" key={p}>
-                          <Zoom
-                            zoomMargin={40}
-                            style={{ 
-                              outline: "none"
-                            }}
-                          >
-                            <img
-                              src={p}
-                              className="img-fluid rounded-3 mb-4"
-                              alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                              style={{ height: '121px', width: '250px' }}
-                            />
-                          </Zoom>
-                        </div>
-                      )) : (
-                        <div className="card-body p-4">
-                          <h4 className="mb-1">No Photo available</h4>
+              <div className='card mb-4' id='gallery'>
+                <div className='card-body p-4'>
+                  <h4 className='mb-4'>Gallery</h4>
+                  <div className='zoom-gallery'>
+                    <div className='row'>
+                      {property?.apartment?.img.length ? (
+                        property?.apartment?.img.map((p) => (
+                          <div className='col-md-4' key={p}>
+                            {/* <Zoom
+                              zoomMargin={40}
+                              style={{
+                                outline: "none",
+                              }}>
+                              <img
+                                src={p}
+                                className='img-fluid rounded-3 mb-4'
+                                alt='Rentkit Directory & Listing Bootstrap 5 Theme'
+                                style={{ height: "121px", width: "250px" }}
+                              />
+                            </Zoom> */}
+                          </div>
+                        ))
+                      ) : (
+                        <div className='card-body p-4'>
+                          <h4 className='mb-1'>No Photo available</h4>
                         </div>
                       )}
-
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="card mb-4">
-                <div className="card-body p-4">
-                  <h4 className="mb-1">Location</h4>
-                  <p>
-                    {`${property?.apartment?.propertyName} ${property?.apartment?.propertyType} at located in 
-                    ${property?.apartment?.address}, ${property?.apartment?.city}, ${property?.apartment?.state}`}
-                  </p>
-                  {/* <div id="detailMap" className="listing-map"></div> */}
-                  {property?.apartment?.latitude
-                    && property?.apartment?.longitude
-                    && (<MapContainer center={[property?.apartment?.latitude, property?.apartment?.longitude]} zoom={13} scrollWheelZoom={false}>
-                      <TileLayer
-                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      />
-                      <Marker
-                        position={[property?.apartment?.latitude, property?.apartment?.longitude]}
-                        icon={new Icon({ iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41] })}>
-                        <Popup>
-                          This is your destination.
-                          {/* <br /> Easily customizable. */}
-                        </Popup>
-                      </Marker>
-                    </MapContainer>)}
-                </div>
-              </div>
-              <div className="card mb-4" id="faq">
-                <div className="card-body p-4">
-                  <h4 className="mb-2">House rules</h4>
-                  <li>
-                    Check-in: After 12:00 pm.
-                  </li>
-                  <li>
-                    No smoking
-                  </li>
-                  <li>
-                    No pets
-                  </li>
-                  <li>
-                    No parties or events
-                  </li>
-                  <div className="mb-3">
-                    <h4 className="mb-1">
-                      Health & safety
-                    </h4>
-                    <p>
-                      Committed to Rezerve's enhanced cleaning process. Show more
-                      Rezerve's social distancing and other COVID-19-related guidelines apply
-                      Carbon monoxide alarm not reported Show more
-                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-xl-4 col-lg-4 col-md-12 col-12">
+            <div className='col-xl-4 col-lg-4 col-md-12 col-12'>
               <div>
-                <div className="card mb-4">
-                  <div className="card-body p-4">
-                    <div className="d-flex align-items-center mb-3">
-                      <h3 className="fw-bold">{convertNumToCurrency(property?.apartment?.pricePerNight)}</h3>
-                      <small className="text-muted ms-2">/ night</small>
+                <div className='card mb-4'>
+                  <div className='card-body p-4'>
+                    <div className='d-flex align-items-center mb-3'>
+                      <h3 className='fw-bold'>
+                        {convertNumToCurrency(
+                          property?.apartment?.pricePerNight
+                        )}
+                      </h3>
+                      <small className='text-muted ms-2'>/ night</small>
                     </div>
                     <div>
                       <div>
-                        <div className="mb-3">
-                          <label className="form-label">Your Stay</label>
-                          <div className="input-group mb-3">
-                            <DateRange
+                        <div className='mb-3'>
+                          <label className='form-label'>Your Stay</label>
+                          <div className='input-group mb-3'>
+                            {/* <DateRange
                               editableDateInputs={false}
                               onChange={(item) => setState([item.selection])}
                               moveRangeOnFirstSelection={false}
@@ -664,70 +560,89 @@ function ListSingle(props) {
                               minDate={new Date()}
                               staticRanges={[]}
                               inputRanges={[]}
-                              rangeColors={['#6c4af2']}
-                            //  disabledDates={[ new Date(), new Date('2021/09/07') ]}
-                            />
+                              rangeColors={["#6c4af2"]}
+                              //  disabledDates={[ new Date(), new Date('2021/09/07') ]}
+                            /> */}
                           </div>
                         </div>
-                        {error && <span style={{ color: 'red', fontSize: '15px' }}>{error}</span>}
-                        <div className="mt-3 d-grid">
-                        {checkedIn ? <button className="btn btn-primary" type="submit" onClick={handleNavigate}>
-                            Check Again
-                          </button> : 
-                          <button className="btn btn-primary" type="submit" onClick={handleSubmit}>
-                            Check{loading ? "ing" : ""} Availability
-                          </button>}
-                          {checkedIn && (<button
-                            style={{ marginTop: '5px' }}
-                            className="btn btn-primary"
-                            onClick={() => {
-                              initializePayment(onSuccess, onClose)
-                              // handleFlutterPayment({
-                              //   callback: (response) => {
-                              //     if(response.status === 'successful'){
-                              //       console.log('got here', id, user.id, state, response.transaction_id)
-                              //       dispatch(createBooking({
-                              //         apartmentId: id, 
-                              //         userId: user.id, 
-                              //         startDate: moment(state.startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 
-                              //         endDate: moment(state.endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 
-                              //         transactionId: response.transaction_id
-                              //          trxref
-                              //       }))
-                              //     }
-                              //     closePaymentModal() // this will close the modal programmatically
-                              //   },
-                              //   onClose: () => { },
-                              // });
-                            }}>
-                            <i className="mdi mdi-lock me-2"></i>Book Now
-                          </button>)}
-                        </div>
+                        {/* {error && (
+                          <span style={{ color: "red", fontSize: "15px" }}>
+                            {error}
+                          </span>
+                        )} */}
+                        {/* <div className='mt-3 d-grid'>
+                          {checkedIn ? (
+                            <button
+                              className='btn btn-primary'
+                              type='submit'
+                              onClick={handleNavigate}>
+                              Check Again
+                            </button>
+                          ) : (
+                            <button
+                              className='btn btn-primary'
+                              type='submit'
+                              onClick={handleSubmit}>
+                              Check{loading ? "ing" : ""} Availability
+                            </button>
+                          )}
+                          {checkedIn && (
+                            <button
+                              style={{ marginTop: "5px" }}
+                              className='btn btn-primary'
+                              onClick={() => {
+                                initializePayment(onSuccess, onClose);
+                                // handleFlutterPayment({
+                                //   callback: (response) => {
+                                //     if(response.status === 'successful'){
+                                //       console.log('got here', id, user.id, state, response.transaction_id)
+                                //       dispatch(createBooking({
+                                //         apartmentId: id,
+                                //         userId: user.id,
+                                //         startDate: moment(state.startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
+                                //         endDate: moment(state.endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
+                                //         transactionId: response.transaction_id
+                                //          trxref
+                                //       }))
+                                //     }
+                                //     closePaymentModal() // this will close the modal programmatically
+                                //   },
+                                //   onClose: () => { },
+                                // });
+                              }}>
+                              <i className='mdi mdi-lock me-2'></i>Book Now
+                            </button>
+                          )}
+                        </div> */}
                       </div>
                     </div>
                   </div>
                 </div>
-                {checks.length > 0 && (<div className="card mb-4">
-                  <h5 className="mb-0" style={{ padding: '10px' }}>
-                    Booked Dates
-                    <span
-                      className="mdi mdi-medal text-primary float-right"
-                    ></span>
-                  </h5>
-                  <div className="border-top card-body p-4 text-center">
-                    {checks.map((check) => (
-                      <p className="mb-0" key={check._id}>
-                        <span className="text-primary">{moment(check?.startDate).format('YYYY-MM-DD')}</span>
-                        to <span className="text-primary">{moment(check?.endDate).format('YYYY-MM-DD')}</span>
-                      </p>
-                    ))
-                    }
+                {/* {checks.length > 0 && (
+                  <div className='card mb-4'>
+                    <h5 className='mb-0' style={{ padding: "10px" }}>
+                      Booked Dates
+                      <span className='mdi mdi-medal text-primary float-right'></span>
+                    </h5>
+                    <div className='border-top card-body p-4 text-center'>
+                      {checks.map((check) => (
+                        <p className='mb-0' key={check._id}>
+                          <span className='text-primary'>
+                            {moment(check?.startDate).format("YYYY-MM-DD")}
+                          </span>
+                          to{" "}
+                          <span className='text-primary'>
+                            {moment(check?.endDate).format("YYYY-MM-DD")}
+                          </span>
+                        </p>
+                      ))}
+                    </div>
                   </div>
-                </div>)}
+                )} */}
               </div>
-              <div className="d-grid">
-                <a href="#" className="btn btn-light mb-4">
-                  <i className="mdi mdi-flag-variant-outline me-1"></i>Report
+              <div className='d-grid'>
+                <a href='#' className='btn btn-light mb-4'>
+                  <i className='mdi mdi-flag-variant-outline me-1'></i>Report
                   this listing
                 </a>
               </div>
@@ -739,4 +654,4 @@ function ListSingle(props) {
   );
 }
 
-export default ListSingle;
+export default ListingsListItem;

@@ -5,26 +5,40 @@ import { convertNumToCurrency } from '../utils'
 import { favouriteRequest, getFavouriteRequest, delFavouriteRequest } from '../actions'
 
 
-function Listing({ name, location, price, rating, ratingCount, booked, img, listingId }) {
+function Listing({
+  name,
+  location,
+  price,
+  rating,
+  ratingCount,
+  booked,
+  img,
+  listingId,
+  noOfBaths,
+  noOfRooms,
+  noOfguest,
+  amenities,
+}) {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.setCurrentUser)
-  const { favourites } = useSelector((state) => state.favourite)
+  const { user } = useSelector((state) => state.setCurrentUser);
+  const { favourites } = useSelector((state) => state.favourite);
 
-  useEffect(()=> {
-    dispatch(getFavouriteRequest({userId: user.id}))
+  useEffect(() => {
+    dispatch(getFavouriteRequest({ userId: user.id }));
   }, []);
   const [current, setCurrent] = useState(0);
   const imgLen = img.length;
 
   const handleFavourite = () => {
-    favourites.find(f=> f.apartment?._id || f.apartment === listingId)
-    ? dispatch(delFavouriteRequest({apartmentId: listingId, userId: user.id}))
-    : dispatch(favouriteRequest({apartmentId: listingId, userId: user.id}))
-  }
+    favourites.find((f) => f.apartment?._id || f.apartment === listingId)
+      ? dispatch(
+          delFavouriteRequest({ apartmentId: listingId, userId: user.id })
+        )
+      : dispatch(favouriteRequest({ apartmentId: listingId, userId: user.id }));
+  };
 
   const nextSlide = () => {
     setCurrent(current === imgLen - 1 ? 0 : current + 1);
-    console.log(current+1, imgLen-1)
   };
 
   const prevSlide = () => {
@@ -32,130 +46,169 @@ function Listing({ name, location, price, rating, ratingCount, booked, img, list
   };
   return (
     <div>
-      <div className="row">
-        <div className="col-md-5 col-12">
-          <div className="position-relative mb-3 mb-lg-0">
+      <div className='row'>
+        <div className='col-md-5 col-12'>
+          <div className='position-relative mb-3 mb-lg-0'>
             <div
-              id="listcarousel"
-              className="carousel slide"
+              id='listcarousel'
+              className='carousel slide'
               // data-bs-ride="carousel"
               // data-bs-interval="false"
             >
-              <ol className="carousel-indicators">
+              <ol className='carousel-indicators'>
                 {img.map((slide, index) => (
                   <div key={index}>
                     <li
                       // data-bs-target="#listcarousel"
                       data-bs-slide-to={current}
-                      className={index === current ? 'active rounded-circle' : 'rounded-circle'}
-                      style={{ backgroundColor: 'red' }}
-
-                    ></li>
+                      className={
+                        index === current
+                          ? "active rounded-circle"
+                          : "rounded-circle"
+                      }
+                      style={{ backgroundColor: "red" }}></li>
                   </div>
                 ))}
               </ol>
-              <div className="carousel-inner rounded-3">
-                {img.length > 0 ? img.map((slide, index) => (
-                  <div
-                    className={index === current ? 'carousel-item active' : 'carousel-item'}
-                    key={index}
-                  >
-                    {index === current &&
-                      (<img
-                        src={slide}
-                        alt="listings"
-                        className="w-100"
-                        height="auto"
-                      />)}
-                  </div>)
-                ) : (<div className="carousel-item active">
-                  <img
-                    src="/assets/images/listing-img-4.jpg"
-                    alt="Rentkit Directory & Listing Bootstrap 5 Theme"
-                    className="w-100"
-                  />
-                </div>)
-                }
+              <div className='carousel-inner rounded-3'>
+                {img.length > 0 ? (
+                  img.map((slide, index) => (
+                    <div
+                      className={
+                        index === current
+                          ? "carousel-item active"
+                          : "carousel-item"
+                      }
+                      key={index}>
+                      {index === current && (
+                        <img
+                          src={slide}
+                          alt='listings'
+                          className='w-100'
+                          height='auto'
+                        />
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <div className='carousel-item active'>
+                    <img
+                      src='/assets/images/listing-img-4.jpg'
+                      alt='Rentkit Directory & Listing Bootstrap 5 Theme'
+                      className='w-100'
+                    />
+                  </div>
+                )}
               </div>
-              {current > 0 && <div
-                className="carousel-control-prev"
-                href="#listcarousel"
-                role="button"
-                data-bs-slide="prev"
-                onClick={prevSlide}
-              >
-                <i
-                  className="
+              {current > 0 && (
+                <div
+                  className='carousel-control-prev'
+                  href='#listcarousel'
+                  role='button'
+                  data-bs-slide='prev'
+                  onClick={prevSlide}>
+                  <i
+                    className='
                 mdi mdi-chevron-left
                 icon-shape icon-xs
                 bg-white
                 rounded-circle
                 fs-4
-              "
-                ></i>
-                <span className="visually-hidden">Previous</span>
-              </div>}
-              {current < (imgLen - 1) && <div
-                className="carousel-control-next"
-                href="#listcarousel"
-                role="button"
-                data-bs-slide="next"
-                onClick={nextSlide}
-              >
-                <i
-                  className="
+              '></i>
+                  <span className='visually-hidden'>Previous</span>
+                </div>
+              )}
+              {current < imgLen - 1 && (
+                <div
+                  className='carousel-control-next'
+                  href='#listcarousel'
+                  role='button'
+                  data-bs-slide='next'
+                  onClick={nextSlide}>
+                  <i
+                    className='
                 mdi mdi-chevron-right
                 icon-shape icon-xs
                 bg-white
                 rounded-circle
                 fs-4
-              "
-                ></i>
-                <span className="visually-hidden">Next</span>
-              </div>}
+              '></i>
+                  <span className='visually-hidden'>Next</span>
+                </div>
+              )}
             </div>
-            <div 
-            className={favourites.find(f=> f.apartment?._id || f.apartment === listingId) ? "btn-wishlist liked" : "btn-wishlist"} 
-            style={{ "hover": {
-              background: "#efefef"
-            },}}
-            onClick={handleFavourite}
-            ></div>
+            <div
+              className={
+                favourites.find(
+                  (f) => f.apartment?._id || f.apartment === listingId
+                )
+                  ? "btn-wishlist liked"
+                  : "btn-wishlist"
+              }
+              style={{
+                hover: {
+                  background: "#efefef",
+                },
+              }}
+              onClick={handleFavourite}></div>
             <span
               className={`
             badge
-            ${booked ? 'bg-success' : 'bg-danger'}
+            ${booked ? "bg-success" : "bg-danger"}
             position-absolute
             start-0
             ms-3
             mt-3
             top-0
             z-1
-          `}
-            >
-              {booked ? 'Booked' : 'Featured'}
+          `}>
+              {booked ? "Booked" : "Featured"}
             </span>
           </div>
         </div>
-        <Link to={`/app/listing/${listingId}`} className="col-md-7 col-12">
+        <Link to={`/app/listing/${listingId}`} className='col-md-7 col-12'>
           <div>
-            <h4 className="mb-0">
-              <Link to={`/app/listing/${listingId}`} className="text-inherit">
+            <h4 className='mb-0'>
+              <Link to={`/app/listing/${listingId}`} className='text-inherit'>
                 {name}
               </Link>
             </h4>
-            <p className="text-sm font-weight-semi-bold">{location}</p>
+            <p className='text-sm font-weight-semi-bold'>{location}</p>
           </div>
+          <hr style={{ width: "40px" }} />
 
-          <div className="d-flex justify-content-between">
+          <div className='d-flex justify-content-between'>
             <div>
-              <span className="h5">{convertNumToCurrency(price)}</span>
-              <span className="text-sm font-weight-semi-bold ms-1">/night</span>
+              <span className='text-dark text-sm font-weight-semi-bold ms-1'>
+                {noOfguest} {noOfguest > 1 ? `guests` : `guest`}
+              </span>
+              <span className='text-sm font-weight-semi-bold ms-1'>.</span>
+              <span className='text-dark text-sm font-weight-semi-bold ms-1'>
+                {noOfRooms} {noOfRooms > 1 ? `bedrooms` : `bedroom`}
+              </span>
+              <span className='text-sm font-weight-semi-bold ms-1'>.</span>
+              <span className='text-dark text-sm font-weight-semi-bold ms-1'>
+                {noOfBaths} {noOfBaths > 1 ? `baths` : `bathroom`}
+              </span>
+            </div>
+          </div>
+          <div className='d-flex justify-content-between'>
+            <div>
+              <span className='text-dark text-sm font-weight-semi-bold ms-1'>
+                {amenities}
+              </span>
+            </div>
+          </div>
+          <div className='d-flex justify-content-between'>
+            <div>
+              <span className='h5'>{convertNumToCurrency(price)}</span>
+              <span className='text-sm font-weight-semi-bold ms-1'>/night</span>
             </div>
             <div>
-              <span className="mdi mdi-star me-1 text-primary text-sm"></span>
-              <span className="font-weight-semi-bold text-sm">
-                <span className="text-dark">{rating[0] || 0}</span> ({ratingCount})
+              <span className='mdi mdi-star me-1 text-primary text-sm'></span>
+              <span className='font-weight-semi-bold text-sm'>
+                <span className='text-dark'>{rating[0] || 0}</span> (
+                {ratingCount})
               </span>
             </div>
           </div>

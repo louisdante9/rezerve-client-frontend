@@ -27,18 +27,22 @@
 .App-link {
   color: #61dafb;
 }
+
 .errors {
   color: red;
   font-size: 14px;
   margin-bottom: 10px;
   display: block;
 }
+
 button {
   outline: none !important;
 }
+
 /* .rdrDefinedRangesWrapper {
   display: none;
 } */
+
 /* 
 .leaflet-container {
   height: 100%;
@@ -52,13 +56,13 @@ button {
     transform: rotate(360deg);
   }
 }
+
 .pagination {
   font-size: 14px;
   font-weight: 600;
 }
-.previous,
-.next,
-.pagination__link {
+
+.previous, .next, .pagination__link {
   margin: 0 10px;
   height: 32px;
   width: 32px;
@@ -66,8 +70,8 @@ button {
   border-radius: 50%;
   line-height: 32px;
 }
-.previous,
-.next {
+
+.previous, .next {
   font-size: 20px;
 }
 
@@ -76,8 +80,20 @@ button {
   background-color: #6c4af2;
 }
 
-.previous.pagination__link--disabled a, 
-.next.pagination__link--disabled a {
+.previous.pagination__link--disabled a, .next.pagination__link--disabled a {
   color: rgb(221, 221, 221) !important;
-    cursor: not-allowed !important;
+  cursor: not-allowed !important;
+}
+
+.dzu-inputLabel {
+  font-weight: 100 !important;
+  color: #212529 !important;
+}
+
+.form-control:focus {
+  color: #6c757d;
+  background-color: #fff;
+  border-color: rgb(34, 34, 34) !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.04rem rgb(34 34 34) !important;
 }

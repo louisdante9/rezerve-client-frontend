@@ -61,7 +61,7 @@ export function verifyUserRequest(activationCode, navigate) {
   })
 }
 
- const getApartmentsSuccess = listings =>
+const getApartmentsSuccess = listings =>
  ({ type: "GET_APARTMENTS_SUCCESS", payload: listings });
 
 const getApartmentsError = data =>
@@ -70,13 +70,33 @@ const getApartmentsError = data =>
 export const listingsRequest = (page) => dispatch => {
  axios.get(`${API}/apartment?page=${page}`)
    .then((response) => {
-     console.log(response.data.apartments, 'response')
      dispatch(getApartmentsSuccess(response.data.apartments));
    })
    .catch((error) => {
      dispatch(getApartmentsError(error.response.data));
    });
 }
+
+const getHomeOwnerListingSuccess = (listings) => ({
+  type: "GET_HOME_APARTMENTS_SUCCESS",
+  payload: listings,
+});
+
+const getHomeOnwerListingError = (data) => ({
+  type: "GET_HOME_APARTMENTS_ERROR",
+  payload: data,
+});
+
+export const getHomeOwnerApartment = (userId) => dispatch => {
+  axios
+    .get(`${API}/apartment/${userId}`)
+    .then((response) => {
+      dispatch(getHomeOwnerListingSuccess(response.data.apartments));
+    })
+    .catch((error) => {
+      dispatch(getHomeOnwerListingError(error.response.data));
+    });
+};
 
 
 export const singleListing = ({apartmentId, userId}) => dispatch => {

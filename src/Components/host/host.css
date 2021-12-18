@@ -40,3 +40,44 @@
 .table-cells-first {
   width: 85px;
 }
+
+.listing {
+  border-top: 1px solid #EBEBEB;
+  padding: 26px;
+}
+
+.listing:last-child {
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.listing:hover {
+  cursor: pointer;
+  background-color: #F7F7F7;
+}
+
+.noHover {
+  cursor: default !important;
+}
+
+.editBtn {
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.editBtn.toggle {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.editBtn:hover {
+  border: none !important;
+  background: #F7F7F7 !important;
+  color: #000000 !important;
+}
