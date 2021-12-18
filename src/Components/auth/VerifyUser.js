@@ -53,7 +53,7 @@ function VerifyUser() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.activationCode}
-                    placeholder="0ta4d72e-....-4vc6-....-7b1fec0ad90b"
+                    placeholder="8XXX8"
                     required=""
                   />
                   {errors.activationCode && <span>{errors.activationCode}</span>}

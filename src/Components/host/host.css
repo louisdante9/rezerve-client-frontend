@@ -1,0 +1,83 @@
+.booking-list, .table-title {
+  overflow-x: scroll;
+}
+
+.booking-list-item {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  min-width: 800px;
+}
+
+.apartment-img {
+  height: 34px;
+  width: 44px;
+}
+
+.row-horizontal {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.row-horizontal p {
+  margin: 0px;
+}
+
+.table-rows {
+  min-width: 800px;
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.table-cells {
+  width: 195px;
+  word-break: break-word;
+  padding: 0 5px 0 5px;
+}
+
+.table-cells-first {
+  width: 85px;
+}
+
+.listing {
+  border-top: 1px solid #EBEBEB;
+  padding: 26px;
+}
+
+.listing:last-child {
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.listing:hover {
+  cursor: pointer;
+  background-color: #F7F7F7;
+}
+
+.noHover {
+  cursor: default !important;
+}
+
+.editBtn {
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.editBtn.toggle {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.editBtn:hover {
+  border: none !important;
+  background: #F7F7F7 !important;
+  color: #000000 !important;
+}
