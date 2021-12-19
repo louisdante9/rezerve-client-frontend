@@ -93,10 +93,10 @@ function ListSingle(props) {
       if (!endDate) {
         return setError('A date range is required ')
       }
-      let start = moment(startDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-        .toISOString()
-      let end = moment(endDate).utc(1).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-        .toISOString()
+      // Start date is a second after mid day. Just incase that day is the end date of another booking.
+      // End date for booking is mid day. So apartment should be available for booking.
+      let start = moment(startDate).add(12, 'hours').add(1, 'seconds').format();
+      let end = moment(endDate).add(36, 'hours').format();
       dispatch(checkAvailability({
         startDate: start,
         endDate: end,
