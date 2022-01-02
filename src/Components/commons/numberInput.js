@@ -1,11 +1,13 @@
 const NumberInput = ({ num, label, title, updater }) => {
-    const handleAdd = () => {
+    const handleMinus = () => {
         if (num === 0) {
             return
         }
+        console.log(num, 'num')
         updater(`${label}`, num - 1)
     }
-    const handleMinus = () => {
+    const handleAdd = () => {
+        console.log(num, 'num')
         updater(`${label}`, num + 1)
     }
     return (
@@ -22,7 +24,7 @@ const NumberInput = ({ num, label, title, updater }) => {
                     <div
                         className="button-minus border bg-white rounded-circle  icon-shape icon-xxl mx-1 lh-0 noselect"
                         style={{ cursor: 'pointer' }}
-                        onClick={handleAdd}
+                        onClick={handleMinus}
                     >
                         -
                     </div>
@@ -30,7 +32,7 @@ const NumberInput = ({ num, label, title, updater }) => {
                     <div
                         className="button-plus border bg-white rounded-circle icon-shape icon-xxl lh-0 noselect"
                         style={{ cursor: 'pointer' }}
-                        onClick={handleMinus}
+                        onClick={handleAdd}
                     >+</div>
                 </div>
             </div>

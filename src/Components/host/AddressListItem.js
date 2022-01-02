@@ -134,7 +134,7 @@ function AddressListItem({ property, title, subTitle, type }) {
                     />
                     <div className='autocomplete-dropdown-container'>
                       {loading && <div>Loading...</div>}
-                      {suggestions.map((suggestion) => {
+                      {suggestions.map((suggestion, idx) => {
                         const className = suggestion.active
                           ? "suggestion-item--active"
                           : "suggestion-item";
@@ -151,6 +151,7 @@ function AddressListItem({ property, title, subTitle, type }) {
                             };
                         return (
                           <div
+                            key={idx}
                             {...getSuggestionItemProps(suggestion, {
                               className,
                               style,
@@ -163,6 +164,10 @@ function AddressListItem({ property, title, subTitle, type }) {
                   </div>
                 )}
               </PlacesAutocomplete>
+              <div className='d-flex justify-content-between align-items-top' style={{marginTop: '10px'}}>
+                <div onClick={handleEditToggle}>Cancel</div>
+                <div onClick={handleSubmit}>Save</div>
+              </div>
               {errorMsg.address && (
                 <small className='errors'>{errorMsg.address}</small>
               )}

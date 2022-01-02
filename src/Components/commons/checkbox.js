@@ -6,7 +6,7 @@ const CheckBox = ({ values, setFieldValue, handleBlur, name, label }) => {
                 className="form-check-input"
                 id={`${name}`}
                 name={name}
-                value={values.doorman}
+                value={values}
                 onChange={() => setFieldValue(`${name}`, `${label}`)}
                 onBlur={handleBlur}
                 style={{ height: '2em', width: '2em', marginRight: '6px', float: 'none' }}

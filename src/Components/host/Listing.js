@@ -14,7 +14,6 @@ import {
 
 import {
   singleListing,
-  // getAllAvailableBookingDate
 } from "../../actions";
 
 import "./host.css";
@@ -27,17 +26,13 @@ function ListingsListItem() {
   const { property } = useSelector((state) => state.getListings);
   const [toggle, setToggle] = useState(false)
 
-  console.log(property, 'property')
   useEffect(() => {
     dispatch(singleListing({ apartmentId: id, userId: user.id }));
-    // dispatch(getAllAvailableBookingDate({apartmentId: id}))
   }, []);
   const handleEditToggle = () => {
     console.log('hello there')
     setToggle(!toggle)
   }
-
-  console.log(property, 'property')
 
   return (
     <div>
@@ -90,6 +85,8 @@ function ListingsListItem() {
                   subTitle='Your listing title should highlight what makes your place
                   special.'
                   item={property?.apartment?.propertyName}
+                  field={property?.apartment}
+                  fieldName='propertyName'
                 />
                 <ListingItem
                   title='Listing group'
@@ -97,6 +94,8 @@ function ListingsListItem() {
                   type='dropdown'
                   option={propertyTypeGroup}
                   item={property?.apartment?.propertyGroup}
+                  field={property?.apartment}
+                  fieldName='propertyGroup'
                 />
                 <ListingItem
                   title='Property type'
@@ -104,6 +103,8 @@ function ListingsListItem() {
                   type='dropdown'
                   option={propertyType}
                   item={property?.apartment?.propertyType}
+                  field={property?.apartment}
+                  fieldName='propertyType'
                 />
                 <ListingItem
                   title='Listing type'
@@ -111,12 +112,16 @@ function ListingsListItem() {
                   type='dropdown'
                   option={privacyType}
                   item={property?.apartment?.privacyType}
+                  field={property?.apartment}
+                  fieldName='privacyType'
                 />
 
                 <ListingItem
                   title='Listing description'
                   subTitle='Give guests a sense of what it’s like to stay at your place, including why they’ll love staying there.'
                   item={property?.apartment?.description}
+                  field={property?.apartment}
+                  fieldName='description'
                 />
                 <ListingItem
                   title='Number of guests'
@@ -124,13 +129,19 @@ function ListingsListItem() {
                   itemTitle='Guests'
                   type='number'
                   item={property?.apartment?.noOfguest}
+                  field={property?.apartment}
+                  fieldName='noOfguest'
                 />
               </div>
 
               <div className='card mb-4'>
-                <AmentiesListItems property={property} title="Amenities" type="amenities"/>
+                <AmentiesListItems
+                  property={property}
+                  title='Amenities'
+                  type='amenities'
+                />
               </div>
-              <AddressListItem property={property}/>
+              <AddressListItem property={property} />
               <div className='card mb-4'>
                 <div className='card-body p-4'>
                   <h4>Pricing and rooms</h4>
@@ -140,6 +151,8 @@ function ListingsListItem() {
                   subTitle=''
                   itemTitle='Standard price'
                   item={property?.apartment?.pricePerNight}
+                  field={property?.apartment}
+                  fieldName='pricePerNight'
                 />
                 <ListingItem
                   title='Number of bedrooms'
@@ -147,6 +160,8 @@ function ListingsListItem() {
                   itemTitle='Bedrooms'
                   type='number'
                   item={property?.apartment?.noOfRooms}
+                  field={property?.apartment}
+                  fieldName='noOfRooms'
                 />
                 <ListingItem
                   title='Number of bathrooms'
@@ -154,6 +169,8 @@ function ListingsListItem() {
                   itemTitle='Bathrooms'
                   type='number'
                   item={property?.apartment?.noOfBaths}
+                  field={property?.apartment}
+                  fieldName='noOfBaths'
                 />
                 {/* <div className='card-body p-4'>
                   <div className='d-flex justify-content-between align-items-center'>
